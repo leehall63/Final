@@ -53,11 +53,13 @@ function init(){
 	redWall.castShadow = true;
 	scene.add(redWall);
 
+var textureLoader = new THREE.TextureLoader (loadingManager);
+	whiteTexture = new textureLoader.load ("images/brick.jpg");
 //create white walls
 	//create first white wall
 		whiteWall1 = new THREE.Mesh (
 				new THREE.BoxGeometry (45,20,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
 				);
 			whiteWall1.position.x += 27;
 			whiteWall1.position.z += 5;
@@ -68,7 +70,7 @@ function init(){
 	//create second white wall
 		whiteWall2 = new THREE.Mesh (
 				new THREE.BoxGeometry (45,20,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
 				);
 			whiteWall2.position.x -= 27;
 			whiteWall2.position.z += 5;
@@ -79,7 +81,7 @@ function init(){
 	//create top of door frame for white wall
 		whiteWall3 = new THREE.Mesh (
 				new THREE.BoxGeometry (25,4,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
 				);
 			whiteWall3.position.y += 8;
 			whiteWall3.position.z += 5;
@@ -205,6 +207,7 @@ function init(){
 	var mtlLoader = new THREE.MTLLoader();
 	mtlLoader.load ("models/artGallery.mtl", function(materials){
 
+		materials.preload();
 		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials(materials);
 
