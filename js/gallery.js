@@ -1,18 +1,17 @@
-var scene, camera, renderer, mesh;
 var meshFloor;
 
 var crate, crateTexture, crateNormalMap, crateBumpMap;
 
 var keyboard = {};
 var player = { 
-height:1.8, 
+height:3, 
 speed:0.5, 
 turnSpeed:Math.PI*0.01,
 }; //player attributes
 
 var loadingScreen = {
 	scene: new THREE.Scene (),
-	camera: new THREE.PerspectiveCamera(90, 1280/720, 0.1, 90),
+	camera: new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 90),
 	box: new THREE.Mesh (
 		new THREE.BoxGeometry (0.5,0.5,0.5),
 		new THREE.MeshBasicMaterial({color: 0x4444ff})
@@ -24,7 +23,7 @@ var RESOURCES_LOADED = true;
 
 function init(){
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(90, 1280/720, 0.5, 500);
+	camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.5, 500);
 
 	loadingScreen.box.position.set(0,0,5);
 	loadingScreen.camera.lookAt(loadingScreen.box.position);
@@ -41,6 +40,12 @@ function init(){
 		RESOURCES_LOADED = true;
 	}
 
+//create sky
+	// build the skybox Mesh 
+	var sky = new THREE.Mesh( 
+		new THREE.SphereGeometry( 30, 50, 50 ), 
+		new THREE.MeshBasicMaterial( {color: 0x8CD9FF} ) );
+		scene.add( sky);
 
 //create red wall
 	redWall = new THREE.Mesh (
@@ -55,10 +60,10 @@ function init(){
 
 var textureLoader = new THREE.TextureLoader (loadingManager);
 	whiteTexture = new textureLoader.load ("images/brick.jpg");
-//create white walls
+//create front walls
 	//create first white wall
 		whiteWall1 = new THREE.Mesh (
-				new THREE.BoxGeometry (45,20,1),
+				new THREE.BoxGeometry (47,20,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
 				);
 			whiteWall1.position.x += 27;
@@ -69,7 +74,7 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 
 	//create second white wall
 		whiteWall2 = new THREE.Mesh (
-				new THREE.BoxGeometry (45,20,1),
+				new THREE.BoxGeometry (47,20,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
 				);
 			whiteWall2.position.x -= 27;
@@ -90,15 +95,15 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 			scene.add(whiteWall3);
 
 //create yellow wall
-	yellowWall = new THREE.Mesh (
+	rightWall = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,100),
-			new THREE.MeshPhongMaterial({color:0xffff33, wireframe:false})
+			new THREE.MeshPhongMaterial({color:0xffffff, map: whiteTexture, wireframe:false})
 			);
-		yellowWall.position.x -= 50;
-		yellowWall.position.z += 55;
-		yellowWall.receiveShadow = true;
-		yellowWall.castShadow = true;
-		scene.add(yellowWall);
+		rightWall.position.x -= 50;
+		rightWall.position.z += 55;
+		rightWall.receiveShadow = true;
+		rightWall.castShadow = true;
+		scene.add(rightWall);
 
 //create blue wall
 	blueWall = new THREE.Mesh (
@@ -155,11 +160,29 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 		ceiling.castShadow = true;
 		scene.add(ceiling);
 
-//create the floor
+
+//create the gallery floor
+	floor = new THREE.Mesh (
+			new THREE.BoxGeometry (100,1,100),
+			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
+			);
+		floor.position.y -= .4;
+		floor.position.z += 55;
+		floor.receiveShadow = true;
+		floor.castShadow = true;
+		scene.add(floor);
+
+//create the grass floor
+var textureLoader = new THREE.TextureLoader (loadingManager);
+	grassTexture = new textureLoader.load ("models/textures/grass/Tree Top_COLOR.png");
+
+var textureLoader = new THREE.TextureLoader (loadingManager);
+	grassNormal = new textureLoader.load ("models/textures/grass/Tree Top_NRM.png");
+
 	meshFloor = new THREE.Mesh(
 			new THREE.PlaneGeometry(200,225,9,9), //9,9 = how many "segments" of the floor there are
 			//more segments can mean more detail in some cases
-			new THREE.MeshPhongMaterial({color:0x808080, wireframe:false}) 
+			new THREE.MeshPhongMaterial({color:0x808080, map: grassTexture, normalMap: grassNormal, wireframe:false}) 
 			/* try toggling the wireframes every so often to see the true geometry of things in the early stages*/
 		);
 	meshFloor.rotation.x -= Math.PI / 2;
@@ -206,32 +229,48 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	crate.position.set(40, 1, 40);
 
 // MTL AND OBJ LOADERS
-	var mtlLoader = new THREE.MTLLoader();
-	mtlLoader.load ("models/Tree_02.mtl", function(materials){
 
-		materials.preload();
-		var objLoader = new THREE.OBJLoader();
-		objLoader.setMaterials(materials);
+	//TREE 1
+		var mtlLoader = new THREE.MTLLoader();
+		mtlLoader.load ("models/Tree_02.mtl", function(materials){
 
-		objLoader.load("models/Tree_02.obj", function(tree){
+			materials.preload();
+			var objLoader = new THREE.OBJLoader();
+			objLoader.setMaterials(materials);
 
-		for ( var i = 0; i < 10; i ++ ) {
-		    var tree = new THREE.Mesh( loadedMesh.geometry, loadedMesh.material );
-		    tree.position.set( i * 100, 0, 0 );
-		    scene.add( tree );
-		}
-			tree.scale.set (5, 5, 5);
+			objLoader.load("models/Tree_02.obj", function(tree){
+				tree.position.y += .5;
+				tree.position.x += 50;
+				tree.scale.set (5, 5, 5);
+				scene.add( tree );
+
+			});
+
 		});
 
-	});
+	//TREE 2
+		var mtlLoader = new THREE.MTLLoader();
+		mtlLoader.load ("models/Tree_02.mtl", function(materials){
 
-	//Couldn't add 3d models??
+			materials.preload();
+			var objLoader = new THREE.OBJLoader();
+			objLoader.setMaterials(materials);
+
+			objLoader.load("models/Tree_02.obj", function(tree){
+				tree.position.y += .5;
+				tree.position.x -= 50;
+				tree.scale.set (5, 5, 5);
+				scene.add( tree );
+
+			});
+
+		});
 
 	camera.position.set(0, player.height, -5);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
 
 	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(1280, 720);
+	renderer.setSize(window.innerWidth, window.innerHeight);
 
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.BasicShadowMap;
@@ -281,7 +320,11 @@ function animate(){
 		camera.rotation.y -= player.turnSpeed;
 	}
 	if (keyboard[39]){//right arrow key
-		camera.rotation.y += player.turnSpeed;;
+		camera.rotation.y += player.turnSpeed;
+	}
+
+	if (keyboard[32]) {//space bar
+		camera.position.y += 2;
 	}
 
 	renderer.render(scene,camera);
