@@ -166,6 +166,7 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	meshFloor.receiveShadow = true;
 	scene.add(meshFloor);
 
+// LIGHTS
 	ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 	scene.add(ambientLight);
 
@@ -183,13 +184,14 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	homeLight.shadow.camera.far = 25;
 	scene.add(homeLight);
 
+// TEXTURE LOADER
 	var textureLoader = new THREE.TextureLoader (loadingManager);
 	crateTexture = new textureLoader.load ("crate0/crate0_diffuse.png");
 	//Tried to add texture, but it wouldn't work?
 	//Reference this video if you try to make it work again
 		//https://www.youtube.com/watch?v=VdnN5nuxj-s
 
-
+//CRATE #1
 	crate = new THREE.Mesh (
 		new THREE.BoxGeometry(3,3,3),
 		new THREE.MeshPhongMaterial({
@@ -203,17 +205,22 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	crate.castShadow = true;
 	crate.position.set(40, 1, 40);
 
-
+// MTL AND OBJ LOADERS
 	var mtlLoader = new THREE.MTLLoader();
-	mtlLoader.load ("models/artGallery.mtl", function(materials){
+	mtlLoader.load ("models/Tree_02.mtl", function(materials){
 
 		materials.preload();
 		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials(materials);
 
-		objLoader.load("models/artGallery.obj", function(gallery){
-			scene.add(gallery);
-			gallery.position.x = 50;
+		objLoader.load("models/Tree_02.obj", function(tree){
+
+		for ( var i = 0; i < 10; i ++ ) {
+		    var tree = new THREE.Mesh( loadedMesh.geometry, loadedMesh.material );
+		    tree.position.set( i * 100, 0, 0 );
+		    scene.add( tree );
+		}
+			tree.scale.set (5, 5, 5);
 		});
 
 	});
