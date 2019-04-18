@@ -1,3 +1,7 @@
+if ( WEBGL.isWebGLAvailable() === false ) {
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+			}
+
 var meshFloor;
 
 var crate, crateTexture, crateNormalMap, crateBumpMap;
@@ -21,6 +25,14 @@ var loadingScreen = {
 var LOADING_MANAGER = null;
 var RESOURCES_LOADED = true;
 
+var models = {
+	tree: {
+		obj:"models/Tree_02.obj", 
+		mtl: "models/Tree_02.obj",
+		mesh: null
+	}
+};
+
 function init(){
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.5, 500);
@@ -41,11 +53,23 @@ function init(){
 	}
 
 //create sky
-	// build the skybox Mesh 
-	var sky = new THREE.Mesh( 
-		new THREE.SphereGeometry( 30, 50, 50 ), 
-		new THREE.MeshBasicMaterial( {color: 0x8CD9FF} ) );
-		scene.add( sky);
+	var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+	var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+	var uniforms = {
+		"topColor": { value: new THREE.Color( 0x0077ff ) },
+		"bottomColor": { value: new THREE.Color( 0xffffff ) },
+		"offset": { value: 33 },
+		"exponent": { value: 0.6 }
+	};
+	uniforms[ "topColor" ].value.copy( hemiLight.color );
+	scene.fog.color.copy( uniforms[ "bottomColor" ].value );
+	var skyGeo = new THREE.SphereBufferGeometry( 4000, 32, 15 );
+	var skyMat = new THREE.ShaderMaterial( {
+		uniforms: uniforms,
+		vertexShader: vertexShader,
+		fragmentShader: fragmentShader,
+		side: THREE.BackSide
+	} );
 
 //create red wall
 	redWall = new THREE.Mesh (
@@ -279,7 +303,7 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 
 	animate();
 
-}
+} 
 
 function animate(){
 
