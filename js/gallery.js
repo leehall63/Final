@@ -1,10 +1,8 @@
-if ( WEBGL.isWebGLAvailable() === false ) {
-				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
-			}
-
-var meshFloor;
+var scene, camera, renderer, mesh;
+var meshFloor, ambientLight, light;
 
 var crate, crateTexture, crateNormalMap, crateBumpMap;
+
 
 var keyboard = {};
 var player = { 
@@ -15,7 +13,7 @@ turnSpeed:Math.PI*0.01,
 
 var loadingScreen = {
 	scene: new THREE.Scene (),
-	camera: new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 90),
+	camera: new THREE.PerspectiveCamera(90, 1280/720, 0.1, 90),
 	box: new THREE.Mesh (
 		new THREE.BoxGeometry (0.5,0.5,0.5),
 		new THREE.MeshBasicMaterial({color: 0x4444ff})
@@ -23,53 +21,28 @@ var loadingScreen = {
 };
 
 var LOADING_MANAGER = null;
-var RESOURCES_LOADED = true;
+var RESOURCES_LOADED = false;
 
-var models = {
-	tree: {
-		obj:"models/Tree_02.obj", 
-		mtl: "models/Tree_02.obj",
-		mesh: null
-	}
-};
+function init() {
 
-function init(){
-	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.5, 500);
+	scene = new THREE.Scene(); 
+	scene.background = new THREE.Color( 0x8CD9FF );
+	camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.5, 500);
 
 	loadingScreen.box.position.set(0,0,5);
 	loadingScreen.camera.lookAt(loadingScreen.box.position);
 	loadingScreen.scene.add(loadingScreen.box);
-
+	
 	loadingManager = new THREE.LoadingManager();
-
 	loadingManager.onProgress = function(item, loaded, total){
 		console.log(item, loaded, total);
 	};
 
 	loadingManager.onLoad = function(){
-		console.log("all resources loaded");
+		console.log("loaded all resources");
 		RESOURCES_LOADED = true;
-	}
-
-//create sky
-	var vertexShader = document.getElementById( 'vertexShader' ).textContent;
-	var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
-	var uniforms = {
-		"topColor": { value: new THREE.Color( 0x0077ff ) },
-		"bottomColor": { value: new THREE.Color( 0xffffff ) },
-		"offset": { value: 33 },
-		"exponent": { value: 0.6 }
+		onResourcesLoaded();
 	};
-	uniforms[ "topColor" ].value.copy( hemiLight.color );
-	scene.fog.color.copy( uniforms[ "bottomColor" ].value );
-	var skyGeo = new THREE.SphereBufferGeometry( 4000, 32, 15 );
-	var skyMat = new THREE.ShaderMaterial( {
-		uniforms: uniforms,
-		vertexShader: vertexShader,
-		fragmentShader: fragmentShader,
-		side: THREE.BackSide
-	} );
 
 //create red wall
 	redWall = new THREE.Mesh (
@@ -82,8 +55,8 @@ function init(){
 	redWall.castShadow = true;
 	scene.add(redWall);
 
-var textureLoader = new THREE.TextureLoader (loadingManager);
-	whiteTexture = new textureLoader.load ("images/brick.jpg");
+	var textureLoader = new THREE.TextureLoader ();
+		whiteTexture = new textureLoader.load ("images/brick.jpg");
 //create front walls
 	//create first white wall
 		whiteWall1 = new THREE.Mesh (
@@ -197,10 +170,7 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 		scene.add(floor);
 
 //create the grass floor
-var textureLoader = new THREE.TextureLoader (loadingManager);
 	grassTexture = new textureLoader.load ("models/textures/grass/Tree Top_COLOR.png");
-
-var textureLoader = new THREE.TextureLoader (loadingManager);
 	grassNormal = new textureLoader.load ("models/textures/grass/Tree Top_NRM.png");
 
 	meshFloor = new THREE.Mesh(
@@ -231,29 +201,7 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	homeLight.shadow.camera.far = 25;
 	scene.add(homeLight);
 
-// TEXTURE LOADER
-	var textureLoader = new THREE.TextureLoader (loadingManager);
-	crateTexture = new textureLoader.load ("crate0/crate0_diffuse.png");
-	//Tried to add texture, but it wouldn't work?
-	//Reference this video if you try to make it work again
-		//https://www.youtube.com/watch?v=VdnN5nuxj-s
-
-//CRATE #1
-	crate = new THREE.Mesh (
-		new THREE.BoxGeometry(3,3,3),
-		new THREE.MeshPhongMaterial({
-			color: 0xffffff,
-			map: crateTexture
-			})
-		);
-
-	scene.add(crate);
-	crate.receiveShadow = true;
-	crate.castShadow = true;
-	crate.position.set(40, 1, 40);
-
 // MTL AND OBJ LOADERS
-
 	//TREE 1
 		var mtlLoader = new THREE.MTLLoader();
 		mtlLoader.load ("models/Tree_02.mtl", function(materials){
@@ -294,65 +242,56 @@ var textureLoader = new THREE.TextureLoader (loadingManager);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
 
 	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(1280, 720);
 
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.BasicShadowMap;
 
-	document.body.appendChild(renderer.domElement);
-
 	animate();
 
-} 
+}
 
 function animate(){
 
-	if ( RESOURCES_LOADED == false ) {
+	// Play the loading screen until resources are loaded.
+	if( RESOURCES_LOADED == false ){
 		requestAnimationFrame(animate);
-
+		
 		loadingScreen.box.position.x -= 0.05;
-		if (loadingScreen.box.position.x < -10) loadingScreen.box.position.x = 10;
+		if( loadingScreen.box.position.x < -10 ) loadingScreen.box.position.x = 10;
 		loadingScreen.box.position.y = Math.sin(loadingScreen.box.position.x);
-
+		
 		renderer.render(loadingScreen.scene, loadingScreen.camera);
 		return;
 	}
 
 	requestAnimationFrame(animate);
 
-	if (keyboard[87]){//W key
+	if(keyboard[87]){ // W key
 		camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
 		camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
 	}
-
-	if (keyboard[83]){//S key
+	if(keyboard[83]){ // S key
 		camera.position.x += Math.sin(camera.rotation.y) * player.speed;
 		camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
 	}
-
-	if (keyboard[65]){//A key
+	if(keyboard[65]){ // A key
 		camera.position.x += Math.sin(camera.rotation.y + Math.PI/2) * player.speed;
 		camera.position.z += -Math.cos(camera.rotation.y + Math.PI/2) * player.speed;
 	}
-
-	if (keyboard[68]){//D key
+	if(keyboard[68]){ // D key
 		camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
 		camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
 	}
-
-	if (keyboard[37]){//left arrow key
+	
+	if(keyboard[37]){ // left arrow key
 		camera.rotation.y -= player.turnSpeed;
 	}
-	if (keyboard[39]){//right arrow key
+	if(keyboard[39]){ // right arrow key
 		camera.rotation.y += player.turnSpeed;
 	}
-
-	if (keyboard[32]) {//space bar
-		camera.position.y += 2;
-	}
-
-	renderer.render(scene,camera);
-
+	
+	renderer.render(scene, camera);
 }
 
 function keyDown(event){
