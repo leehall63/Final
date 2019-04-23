@@ -51,7 +51,6 @@ function init() {
 			});
 
 	scene = new THREE.Scene();
-	//scene.background = new THREE.Color( 0x8CD9FF );
 	camera = new THREE.PerspectiveCamera (90, window.innerWidth/window.innerHeight, 0.5, 500);
 
 	// if (main.temp > 75) {
@@ -63,7 +62,7 @@ function init() {
 	//create red wall
 	redWall = new THREE.Mesh (
 		new THREE.BoxGeometry (1,20,100),
-		new THREE.MeshPhongMaterial({color:0xff9999, wireframe:false}) 
+		new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
 		);
 	redWall.position.x += 50;
 	redWall.position.z += 55;
@@ -187,28 +186,31 @@ function init() {
 
 	mesh = new THREE.Mesh(
 		new THREE.BoxGeometry(1,1,1),
-		new THREE.MeshBasicMaterial ({color: 0x000000, wireframe: false})
+		new THREE.MeshBasicMaterial ({color: 0xffffff, wireframe: false})
 		);
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
 	mesh.position.y += 1;
 	scene.add(mesh);
 
 	meshFloor = new THREE.Mesh(
 			new THREE.PlaneGeometry (250,225, 9, 9),
-			new THREE.MeshBasicMaterial({ color: 0xff9999, wireframe: false})
+			new THREE.MeshPhongMaterial({ color: 0xff9999, wireframe: false})
 		);
+	meshFloor.receiveShadow = true;
 	meshFloor.rotation.x -= Math.PI / 2;
 	scene.add(meshFloor);
 
 
 // LIGHTS
-	ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+	ambientLight = new THREE.AmbientLight(0x999999, 0.8);
 	scene.add(ambientLight);
 
 	light = new THREE.PointLight(0xffffff, 1, 100);
 	light.position.set(0,6,50);
 	light.castShadow = true;
 	light.shadow.camera.near = 0.1;
-	light.shadow.camera.far = 100;
+	light.shadow.camera.far = 25;
 	scene.add(light);
 
 	homeLight = new THREE.PointLight(0xffff33, 0.9, 20);
@@ -221,9 +223,13 @@ function init() {
 	camera.position.set (0,player.height,-5);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
 
-	renderer = new THREE.WebGLRenderer({alpha: true});
+	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 	renderer.setClearColor( 0x000000, 0 );
 	renderer.setSize(window.innerWidth, window.innerHeight);
+
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.BasicShadowMap;
+
 	document.body.appendChild(renderer.domElement);
 
 	animate();
