@@ -59,7 +59,7 @@ function init() {
 	// 	scene.background = new THREE.Color( 0x8CD9FF );
 	// };
 
-	//create red wall
+//create left wall
 	redWall = new THREE.Mesh (
 		new THREE.BoxGeometry (1,20,100),
 		new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
@@ -106,7 +106,7 @@ function init() {
 			whiteWall3.castShadow = true;
 			scene.add(whiteWall3);
 
-//create yellow wall
+//create right wall
 	rightWall = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,100),
 			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
@@ -184,15 +184,6 @@ function init() {
 		floor.castShadow = true;
 		scene.add(floor);
 
-	mesh = new THREE.Mesh(
-		new THREE.BoxGeometry(1,1,1),
-		new THREE.MeshBasicMaterial ({color: 0xffffff, wireframe: false})
-		);
-	mesh.receiveShadow = true;
-	mesh.castShadow = true;
-	mesh.position.y += 1;
-	scene.add(mesh);
-
 	meshFloor = new THREE.Mesh(
 			new THREE.PlaneGeometry (250,225, 9, 9),
 			new THREE.MeshPhongMaterial({ color: 0xff9999, wireframe: false})
@@ -202,11 +193,28 @@ function init() {
 	scene.add(meshFloor);
 
 
+	var mtlLoader = new THREE.MTLLoader();
+	mtlLoader.load("models/Tree_02.mtl", function(materials){
+
+		materials.preload();
+		var objLoader = new THREE.OBJLoader();
+		objLoader.setMaterials(materials);
+
+		objLoader.load("models/Tree_02.obj", function(mesh){
+			mesh.position.set (50, 1, 3);
+			mesh.scale.set(3,3,3);
+			scene.add(mesh);
+
+		});
+
+	});
+
+
 // LIGHTS
 	ambientLight = new THREE.AmbientLight(0x999999, 0.8);
 	scene.add(ambientLight);
 
-	light = new THREE.PointLight(0xffffff, 1, 100);
+	light = new THREE.PointLight(0xffffff, 1,20);
 	light.position.set(0,6,50);
 	light.castShadow = true;
 	light.shadow.camera.near = 0.1;
