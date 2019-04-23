@@ -14,13 +14,21 @@
 	<script type="text/javascript" src="js/controls/PointerLockControls.js"></script>
 
 	<!--Vue.js-->
-	<script types="text/javascript" src="js/vue-dev/dist/vue.min.js"></script>
+	<script type="text/javascript" src="js/vue-dev/dist/vue.min.js"></script>
+
+	<!--cdn codes-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 
 
 
 	<title>Dig Dig Productions</title>
 </head>
-<body id="myCanvas">
+<body>
+	<div id="myCanvas" v-if="currentTemp">
+		<div id="hot" v-if="currentTemp > 75"></div>
+		<div id="cold" v-else></div>
+		<div id="overcast"></div>
+	</div>
 
 	
 </body>

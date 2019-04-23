@@ -6,43 +6,16 @@ var crate, crateTexture, crateNormalMap, crateBumpMap;
 
 var keyboard = {};
 var player = { 
-height:3, 
+height:10, 
 speed:0.5, 
 turnSpeed:Math.PI*0.01,
 }; //player attributes
-
-var loadingScreen = {
-	scene: new THREE.Scene (),
-	camera: new THREE.PerspectiveCamera(90, 1280/720, 0.1, 90),
-	box: new THREE.Mesh (
-		new THREE.BoxGeometry (0.5,0.5,0.5),
-		new THREE.MeshBasicMaterial({color: 0x4444ff})
-		)
-};
-
-var LOADING_MANAGER = null;
-var RESOURCES_LOADED = false;
 
 function init() {
 
 	scene = new THREE.Scene(); 
 	scene.background = new THREE.Color( 0x8CD9FF );
-	camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.5, 500);
-
-	loadingScreen.box.position.set(0,0,5);
-	loadingScreen.camera.lookAt(loadingScreen.box.position);
-	loadingScreen.scene.add(loadingScreen.box);
-	
-	loadingManager = new THREE.LoadingManager();
-	loadingManager.onProgress = function(item, loaded, total){
-		console.log(item, loaded, total);
-	};
-
-	loadingManager.onLoad = function(){
-		console.log("loaded all resources");
-		RESOURCES_LOADED = true;
-		onResourcesLoaded();
-	};
+	camera = new THREE.PerspectiveCamera(90, 1280/720, 0.5, 500);
 
 //create red wall
 	redWall = new THREE.Mesh (
@@ -55,13 +28,11 @@ function init() {
 	redWall.castShadow = true;
 	scene.add(redWall);
 
-	var textureLoader = new THREE.TextureLoader ();
-		whiteTexture = new textureLoader.load ("images/brick.jpg");
 //create front walls
 	//create first white wall
 		whiteWall1 = new THREE.Mesh (
 				new THREE.BoxGeometry (47,20,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
 			whiteWall1.position.x += 27;
 			whiteWall1.position.z += 5;
@@ -72,7 +43,7 @@ function init() {
 	//create second white wall
 		whiteWall2 = new THREE.Mesh (
 				new THREE.BoxGeometry (47,20,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
 			whiteWall2.position.x -= 27;
 			whiteWall2.position.z += 5;
@@ -83,7 +54,7 @@ function init() {
 	//create top of door frame for white wall
 		whiteWall3 = new THREE.Mesh (
 				new THREE.BoxGeometry (25,4,1),
-				new THREE.MeshPhongMaterial({color:0xf0f0f0, map: whiteTexture, wireframe:false}) 
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
 			whiteWall3.position.y += 8;
 			whiteWall3.position.z += 5;
@@ -94,7 +65,7 @@ function init() {
 //create yellow wall
 	rightWall = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,100),
-			new THREE.MeshPhongMaterial({color:0xffffff, map: whiteTexture, wireframe:false})
+			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
 			);
 		rightWall.position.x -= 50;
 		rightWall.position.z += 55;
@@ -170,13 +141,11 @@ function init() {
 		scene.add(floor);
 
 //create the grass floor
-	grassTexture = new textureLoader.load ("models/textures/grass/Tree Top_COLOR.png");
-	grassNormal = new textureLoader.load ("models/textures/grass/Tree Top_NRM.png");
 
 	meshFloor = new THREE.Mesh(
 			new THREE.PlaneGeometry(200,225,9,9), //9,9 = how many "segments" of the floor there are
 			//more segments can mean more detail in some cases
-			new THREE.MeshPhongMaterial({color:0x808080, map: grassTexture, normalMap: grassNormal, wireframe:false}) 
+			new THREE.MeshPhongMaterial({color:0x808080, wireframe:false}) 
 			/* try toggling the wireframes every so often to see the true geometry of things in the early stages*/
 		);
 	meshFloor.rotation.x -= Math.PI / 2;
@@ -201,43 +170,6 @@ function init() {
 	homeLight.shadow.camera.far = 25;
 	scene.add(homeLight);
 
-// MTL AND OBJ LOADERS
-	//TREE 1
-		var mtlLoader = new THREE.MTLLoader();
-		mtlLoader.load ("models/Tree_02.mtl", function(materials){
-
-			materials.preload();
-			var objLoader = new THREE.OBJLoader();
-			objLoader.setMaterials(materials);
-
-			objLoader.load("models/Tree_02.obj", function(tree){
-				tree.position.y += .5;
-				tree.position.x += 50;
-				tree.scale.set (5, 5, 5);
-				scene.add( tree );
-
-			});
-
-		});
-
-	//TREE 2
-		var mtlLoader = new THREE.MTLLoader();
-		mtlLoader.load ("models/Tree_02.mtl", function(materials){
-
-			materials.preload();
-			var objLoader = new THREE.OBJLoader();
-			objLoader.setMaterials(materials);
-
-			objLoader.load("models/Tree_02.obj", function(tree){
-				tree.position.y += .5;
-				tree.position.x -= 50;
-				tree.scale.set (5, 5, 5);
-				scene.add( tree );
-
-			});
-
-		});
-
 	camera.position.set(0, player.height, -5);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
 
@@ -252,18 +184,6 @@ function init() {
 }
 
 function animate(){
-
-	// Play the loading screen until resources are loaded.
-	if( RESOURCES_LOADED == false ){
-		requestAnimationFrame(animate);
-		
-		loadingScreen.box.position.x -= 0.05;
-		if( loadingScreen.box.position.x < -10 ) loadingScreen.box.position.x = 10;
-		loadingScreen.box.position.y = Math.sin(loadingScreen.box.position.x);
-		
-		renderer.render(loadingScreen.scene, loadingScreen.camera);
-		return;
-	}
 
 	requestAnimationFrame(animate);
 
