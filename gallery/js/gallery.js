@@ -11,7 +11,7 @@ var USE_WIREFRAME = false;
 
 var loadingScreen = {
 	scene: new THREE.Scene(),
-	camera: new THREE.PerspectiveCamera (90, window.innerWidth/window.innerHeight, 0.5, 500),
+	camera: new THREE.PerspectiveCamera (70, window.innerWidth/window.innerHeight, 0.5, 500),
 	box: new THREE.Mesh (
 		new THREE.BoxGeometry(0.5,0.5,0.5),
 		new THREE.MeshBasicMaterial({color: 0x4444ff})
@@ -75,7 +75,7 @@ function init() {
 			});
 
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera (90, window.innerWidth/window.innerHeight, 0.5, 500);
+	camera = new THREE.PerspectiveCamera (70, window.innerWidth/window.innerHeight, 0.5, 500);
 
 	loadingScreen.box.position.set (0,0,5);
 	loadingScreen.camera.lookAt(loadingScreen.box.position);
@@ -233,36 +233,80 @@ function init() {
 		scene.add(homeRightdoorframe);
 
 	//HOME Back Wall
-		homeRightdoor1 = new THREE.Mesh (
+		homeBackdoor1 = new THREE.Mesh (
 			new THREE.BoxGeometry (16,20,0.1),
 			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
 			);
-		homeRightdoor1.position.x += 12;
-		homeRightdoor1.position.z += 34.5;
-		homeRightdoor1.receiveShadow = true;
-		homeRightdoor1.castShadow = true;
-		scene.add(homeRightdoor1);
+		homeBackdoor1.position.x += 12;
+		homeBackdoor1.position.z += 34.5;
+		homeBackdoor1.receiveShadow = true;
+		homeBackdoor1.castShadow = true;
+		scene.add(homeBackdoor1);
 
-		homeRightdoor2 = new THREE.Mesh (
+		homeBackdoor2 = new THREE.Mesh (
 			new THREE.BoxGeometry (16,20,0.1),
 			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
 			);
-		homeRightdoor2.position.x -= 12;
-		homeRightdoor2.position.z += 34.5;
-		homeRightdoor2.receiveShadow = true;
-		homeRightdoor2.castShadow = true;
-		scene.add(homeRightdoor2);
+		homeBackdoor2.position.x -= 12;
+		homeBackdoor2.position.z += 34.5;
+		homeBackdoor2.receiveShadow = true;
+		homeBackdoor2.castShadow = true;
+		scene.add(homeBackdoor2);
 
-		homeRightdoorframe = new THREE.Mesh (
+		homeBackdoorframe = new THREE.Mesh (
 			new THREE.BoxGeometry (10,6,0.1),
 			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
 			);
-		homeRightdoorframe.position.x = 0;
-		homeRightdoorframe.position.z += 34.5;
-		homeRightdoorframe.position.y += 8;
-		homeRightdoorframe.receiveShadow = true;
-		homeRightdoorframe.castShadow = true;
-		scene.add(homeRightdoorframe);
+		homeBackdoorframe.position.x = 0;
+		homeBackdoorframe.position.z += 34.5;
+		homeBackdoorframe.position.y += 8;
+		homeBackdoorframe.receiveShadow = true;
+		homeBackdoorframe.castShadow = true;
+		scene.add(homeBackdoorframe);
+
+	//HOME Front Wall
+		homeFrontdoor1 = new THREE.Mesh (
+			new THREE.BoxGeometry (17,20,0.1),
+			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+			);
+		homeFrontdoor1.position.x -= 12;
+		homeFrontdoor1.position.z += 5.5;
+		homeFrontdoor1.receiveShadow = true;
+		homeFrontdoor1.castShadow = true;
+		scene.add(homeFrontdoor1);
+
+		homeFrontdoor2 = new THREE.Mesh (
+			new THREE.BoxGeometry (17,20,0.1),
+			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+			);
+		homeFrontdoor2.position.x += 12;
+		homeFrontdoor2.position.z += 5.5;
+		homeFrontdoor2.receiveShadow = true;
+		homeFrontdoor2.castShadow = true;
+		scene.add(homeFrontdoor2);
+
+		homeFrontdoorframe = new THREE.Mesh (
+			new THREE.BoxGeometry (10,4,0.1),
+			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+			);
+		homeFrontdoorframe.position.x = 0;
+		homeFrontdoorframe.position.z += 5.5;
+		homeFrontdoorframe.position.y += 8;
+		homeFrontdoorframe.receiveShadow = true;
+		homeFrontdoorframe.castShadow = true;
+		scene.add(homeFrontdoorframe);
+
+	//HOME Ceiling
+		homeCeiling = new THREE.Mesh (
+			new THREE.BoxGeometry (40,0.5,30),
+			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false})
+			);
+		homeCeiling.position.y += 9.5;
+		homeCeiling.position.z += 20;
+		homeCeiling.position.x = 0;
+		homeCeiling.receiveShadow = true;
+		homeCeiling.castShadow = true;
+		scene.add(homeCeiling);
 
 //create ABOUT ME section
 	aboutDoor2 = new THREE.Mesh (
@@ -564,7 +608,7 @@ function init() {
 	scene.add(light);
 
 //HOME Light
-	homeLight = new THREE.PointLight(0xffffff, 0.9,20);
+	homeLight = new THREE.PointLight(0xffffff, 0.9,30);
 	homeLight.position.set(0,6,20);
 	homeLight.castShadow = true;
 	homeLight.shadow.camera.near = 0.1;
