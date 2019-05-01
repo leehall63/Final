@@ -26,6 +26,9 @@ var models = {
 	}
 };
 
+var cssScene = new THREE.Scene();
+
+
 var LOADING_MANAGER = null;
 var RESOURCES_LOADED = false;
 
@@ -263,88 +266,112 @@ function init() {
 		scene.add(homeCeiling);
 
 //create ABOUT ME section
-	aboutDoor2 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutDoor2.position.x += 20;
-	aboutDoor2.position.z += 29;
-	aboutDoor2.receiveShadow = true;
-	aboutDoor2.castShadow = true;
-	scene.add(aboutDoor2);
+	profilePic = new THREE.Mesh (
+	new THREE.PlaneGeometry(5,5, 1,1),
+	new THREE.MeshBasicMaterial({ wireframe: true })
+	);
+	profilePic.receiveShadow = true;
+	profilePic.castShadow = true;
+	profilePic.position.x += 40;
+	profilePic.position.y += 4;
+	profilePic.position.z += 15;
+	profilePic.rotation.y += Math.PI/2
+	scene.add(profilePic);
 
-	aboutDoor1 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutDoor1.position.x += 20;
-	aboutDoor1.position.z += 11;
-	aboutDoor1.receiveShadow = true;
-	aboutDoor1.castShadow = true;
-	scene.add(aboutDoor1);
+	// create the dom Element
+	var element = document.createElement( 'profilePic' );
+	element.src = '../images/Edited Headshot-1.jpg';
+	// create the object3d for this element
+	var cssObject = new THREE.CSS3DObject( element );
+	// we reference the same position and rotation 
+	cssObject.position = profilePic.position;
+	cssObject.rotation = profilePic.rotation;
+	// add it to the css scene
+	cssScene.add(cssObject);
 
-	aboutFrame = new THREE.Mesh (
-		new THREE.BoxGeometry (1,5,10),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutFrame.position.x += 20;
-	aboutFrame.position.z += 20;
-	aboutFrame.position.y += 8;
-	aboutFrame.receiveShadow = true;
-	aboutFrame.castShadow = true;
-	scene.add(aboutFrame);
-
-	aboutBack = new THREE.Mesh (
-		new THREE.BoxGeometry (0.5,20,30),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutBack.position.x += 49;
-	aboutBack.position.z += 20;
-	aboutBack.receiveShadow = true;
-	aboutBack.castShadow = true;
-	scene.add(aboutBack);
-
-	aboutLeft = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutLeft.position.x += 35;
-	aboutLeft.position.z += 6;
-	aboutLeft.receiveShadow = true;
-	aboutLeft.castShadow = true;
-	scene.add(aboutLeft);
-
-	aboutRight = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
-		);
-	aboutRight.position.x += 35;
-	aboutRight.position.z += 34;
-	aboutRight.receiveShadow = true;
-	aboutRight.castShadow = true;
-	scene.add(aboutRight);
-
-	aboutCeiling = new THREE.Mesh (
-			new THREE.BoxGeometry (30,0.5,30),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+	//ABOUT WALLS
+		aboutDoor2 = new THREE.Mesh (
+			new THREE.BoxGeometry (1,20,12),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
 			);
-		aboutCeiling.position.y += 9.5;
-		aboutCeiling.position.z += 20;
-		aboutCeiling.position.x += 35;
-		aboutCeiling.receiveShadow = true;
-		aboutCeiling.castShadow = true;
-		scene.add(aboutCeiling);
+		aboutDoor2.position.x += 20;
+		aboutDoor2.position.z += 29;
+		aboutDoor2.receiveShadow = true;
+		aboutDoor2.castShadow = true;
+		scene.add(aboutDoor2);
 
-	aboutFloor = new THREE.Mesh (
-			new THREE.BoxGeometry (30,1,30),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+		aboutDoor1 = new THREE.Mesh (
+			new THREE.BoxGeometry (1,20,12),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
 			);
-		aboutFloor.position.y -= .3;
-		aboutFloor.position.z += 20;
-		aboutFloor.position.x += 35;
-		aboutFloor.receiveShadow = true;
-		aboutFloor.castShadow = true;
-		scene.add(aboutFloor);
+		aboutDoor1.position.x += 20;
+		aboutDoor1.position.z += 11;
+		aboutDoor1.receiveShadow = true;
+		aboutDoor1.castShadow = true;
+		scene.add(aboutDoor1);
+
+		aboutFrame = new THREE.Mesh (
+			new THREE.BoxGeometry (1,5,10),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			);
+		aboutFrame.position.x += 20;
+		aboutFrame.position.z += 20;
+		aboutFrame.position.y += 8;
+		aboutFrame.receiveShadow = true;
+		aboutFrame.castShadow = true;
+		scene.add(aboutFrame);
+
+		aboutBack = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,30),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			);
+		aboutBack.position.x += 49;
+		aboutBack.position.z += 20;
+		aboutBack.receiveShadow = true;
+		aboutBack.castShadow = true;
+		scene.add(aboutBack);
+
+		aboutLeft = new THREE.Mesh (
+			new THREE.BoxGeometry (30,20,0.5),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			);
+		aboutLeft.position.x += 35;
+		aboutLeft.position.z += 6;
+		aboutLeft.receiveShadow = true;
+		aboutLeft.castShadow = true;
+		scene.add(aboutLeft);
+
+		aboutRight = new THREE.Mesh (
+			new THREE.BoxGeometry (30,20,0.5),
+			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			);
+		aboutRight.position.x += 35;
+		aboutRight.position.z += 34;
+		aboutRight.receiveShadow = true;
+		aboutRight.castShadow = true;
+		scene.add(aboutRight);
+
+		aboutCeiling = new THREE.Mesh (
+				new THREE.BoxGeometry (30,0.5,30),
+				new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+				);
+			aboutCeiling.position.y += 9.5;
+			aboutCeiling.position.z += 20;
+			aboutCeiling.position.x += 35;
+			aboutCeiling.receiveShadow = true;
+			aboutCeiling.castShadow = true;
+			scene.add(aboutCeiling);
+
+		aboutFloor = new THREE.Mesh (
+				new THREE.BoxGeometry (30,1,30),
+				new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+				);
+			aboutFloor.position.y -= .3;
+			aboutFloor.position.z += 20;
+			aboutFloor.position.x += 35;
+			aboutFloor.receiveShadow = true;
+			aboutFloor.castShadow = true;
+			scene.add(aboutFloor);
 
 //create INTERACTIVE section
 	interactDoor2 = new THREE.Mesh (
@@ -495,6 +522,7 @@ function init() {
 	meshFloor.receiveShadow = true;
 	meshFloor.rotation.x -= Math.PI / 2;
 	scene.add(meshFloor);
+
 
 
 // Model/Material Loader

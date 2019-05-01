@@ -2,9 +2,3 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
-#cold {
-	width: 100%;
-	height: auto;
-	background-image: linear-gradient(to top, rgba(255,0,0,0), rgba(71, 190, 255,1));
-}

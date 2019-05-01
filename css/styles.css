@@ -23,6 +23,11 @@ nav a:hover {
 }
 /* --- Home Page --- */
 
+#nav {
+	width: 70%;
+	height: 15%;
+}
+
 #homePage {
 	background-image:url("../images/brick.jpg");
 	background-repeat: no-repeat;
