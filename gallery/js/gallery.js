@@ -1,6 +1,8 @@
 var scene, camera, renderer, mesh;
 var meshFloor;
 
+var profilePic,profiletexture;
+
 var keyboard = {};
 var player = {
 	height:3,
@@ -26,8 +28,7 @@ var models = {
 	}
 };
 
-var cssScene = new THREE.Scene();
-
+var textureLoader = new THREE.TextureLoader();
 
 var LOADING_MANAGER = null;
 var RESOURCES_LOADED = false;
@@ -125,6 +126,27 @@ function init() {
 		scene.add(blueWall);
 
 //create HOME section
+	//Exhibit Signs
+		var fontLoader = new THREE.FontLoader();
+
+		fontLoader.load( 'fonts/Raleway Black_regular.json', function ( font ) {
+
+			var about = new THREE.TextGeometry( 'About', {
+				font: font,
+				size: 60,
+				height: 5,
+				curveSegments: 20,
+				bevelEnabled: false,
+				bevelThickness: 10,
+				bevelSize: 8,
+				bevelOffset: 0,
+				bevelSegments: 5
+			} );
+
+			about.position.set(0,0,0);
+			scene.add(about);
+		} );
+
 	//HOME Left Wall
 		homeLeftdoor1 = new THREE.Mesh (
 			new THREE.BoxGeometry (0.1,20,12),
@@ -265,29 +287,54 @@ function init() {
 		homeCeiling.castShadow = true;
 		scene.add(homeCeiling);
 
-//create ABOUT ME section
-	profilePic = new THREE.Mesh (
-	new THREE.PlaneGeometry(5,5, 1,1),
-	new THREE.MeshBasicMaterial({ wireframe: true })
-	);
-	profilePic.receiveShadow = true;
-	profilePic.castShadow = true;
-	profilePic.position.x += 40;
-	profilePic.position.y += 4;
-	profilePic.position.z += 15;
-	profilePic.rotation.y += Math.PI/2
-	scene.add(profilePic);
+	//create ABOUT ME section
 
-	// create the dom Element
-	var element = document.createElement( 'profilePic' );
-	element.src = '../images/Edited Headshot-1.jpg';
-	// create the object3d for this element
-	var cssObject = new THREE.CSS3DObject( element );
-	// we reference the same position and rotation 
-	cssObject.position = profilePic.position;
-	cssObject.rotation = profilePic.rotation;
-	// add it to the css scene
-	cssScene.add(cssObject);
+
+		profiletexture = new textureLoader.load("../images/Edited Headshot-1.jpg");
+
+		profilePic = new THREE.Mesh (
+		new THREE.BoxGeometry(0.2,8,12),
+		new THREE.MeshBasicMaterial({ map: profiletexture, wireframe: false })
+		);
+		profilePic.castShadow = true;
+		profilePic.position.x += 48.5;
+		profilePic.position.y += 4.6;
+		profilePic.position.z += 15;
+		scene.add(profilePic);
+
+		contacttexture = new textureLoader.load("../images/camera.jpg");
+
+		contactPic = new THREE.Mesh (
+		new THREE.BoxGeometry(0.2,7,10),
+		new THREE.MeshBasicMaterial({ map: contacttexture, wireframe: false })
+		);
+		contactPic.castShadow = true;
+		contactPic.position.x += 26;
+		contactPic.position.y += 4.6;
+		contactPic.position.z += 6.5;
+		contactPic.rotation.y += Math.PI/2;
+		scene.add(contactPic);
+
+	//EXIT SIGN ABOUT
+		exittexture = new textureLoader.load("../images/Exit Sign.png");
+
+		exitAbout = new THREE.Mesh (
+		new THREE.BoxGeometry(5,2,0.2),
+		new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+		);
+		exitAbout.castShadow = true;
+		exitAbout.position.x += 20.5;
+		exitAbout.position.y += 6.5;
+		exitAbout.position.z += 20;
+		exitAbout.rotation.y += Math.PI/2;
+		scene.add(exitAbout);
+
+		exitLight1 = new THREE.PointLight(0xff0000, 0.2,10);
+		exitLight1.position.set(21,5.5,20);
+		exitLight1.shadow.camera.near = 0.1;
+		exitLight1.shadow.camera.far = 25;
+		scene.add(exitLight1);
+
 
 	//ABOUT WALLS
 		aboutDoor2 = new THREE.Mesh (
@@ -457,6 +504,24 @@ function init() {
 		interactFloor.castShadow = true;
 		scene.add(interactFloor);
 
+	//EXIT SIGN INTERACT
+		exitinteract = new THREE.Mesh (
+		new THREE.BoxGeometry(5,2,0.2),
+		new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+		);
+		exitinteract.castShadow = true;
+		exitinteract.position.x -= 20.5;
+		exitinteract.position.y += 6.5;
+		exitinteract.position.z += 20;
+		exitinteract.rotation.y += Math.PI/2;
+		scene.add(exitinteract);
+
+		exitLight2 = new THREE.PointLight(0xff0000, 0.,10);
+		exitLight2.position.set(-21,5.5,20);
+		exitLight2.shadow.camera.near = 0.1;
+		exitLight2.shadow.camera.far = 25;
+		scene.add(exitLight2);
+
 
 //create green wall
 	//create first green wall
@@ -597,7 +662,7 @@ function init() {
 	homeLight.shadow.camera.far = 25;
 	scene.add(homeLight);
 //ABOUT Light
-	aboutLight = new THREE.PointLight(0xffffff, 0.5,20);
+	aboutLight = new THREE.PointLight(0xffffff, 0.7,20);
 	aboutLight.position.set(35,6,20);
 	aboutLight.castShadow = true;
 	aboutLight.shadow.camera.near = 0.1;
