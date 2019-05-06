@@ -36,6 +36,8 @@ var RESOURCES_LOADED = false;
 //Meshes Index
 var meshes = {};
 
+exittexture = new textureLoader.load("../images/Exit Sign.png");
+
 function init() {
 
 	scene = new THREE.Scene();
@@ -57,7 +59,7 @@ function init() {
 		onResourcesLoaded();
 	};
 
-//create left wall
+//create MAIN GALLERY Frame
 	leftWall = new THREE.Mesh (
 		new THREE.BoxGeometry (1,20,100),
 		new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
@@ -68,9 +70,6 @@ function init() {
 	leftWall.castShadow = true;
 	scene.add(leftWall);
 
-	// var textureLoader = new THREE.TextureLoader ();
-	// 	whiteTexture = new textureLoader.load ("images/brick.jpg");
-//create front walls
 	//create first white wall
 		whiteWall1 = new THREE.Mesh (
 				new THREE.BoxGeometry (47,20,1),
@@ -104,325 +103,450 @@ function init() {
 			whiteWall3.castShadow = true;
 			scene.add(whiteWall3);
 
-//create right wall
-	rightWall = new THREE.Mesh (
-			new THREE.BoxGeometry (1,20,100),
-			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
-			);
-		rightWall.position.x -= 50;
-		rightWall.position.z += 55;
-		rightWall.receiveShadow = true;
-		rightWall.castShadow = true;
-		scene.add(rightWall);
+	//create right wall
+		rightWall = new THREE.Mesh (
+				new THREE.BoxGeometry (1,20,100),
+				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
+				);
+			rightWall.position.x -= 50;
+			rightWall.position.z += 55;
+			rightWall.receiveShadow = true;
+			rightWall.castShadow = true;
+			scene.add(rightWall);
 
-//create blue wall
-	blueWall = new THREE.Mesh (
-			new THREE.BoxGeometry (101,20,1),
-			new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false})
+	//create blue wall
+		blueWall = new THREE.Mesh (
+				new THREE.BoxGeometry (101,20,1),
+				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false})
+				);
+			blueWall.position.z += 105;
+			blueWall.receiveShadow = true;
+			blueWall.castShadow = true;
+			scene.add(blueWall);
+
+	//create ceiling
+		ceiling = new THREE.Mesh (
+				new THREE.BoxGeometry (101,1,101),
+				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
+				);
+			ceiling.position.y += 10;
+			ceiling.position.z += 55;
+			ceiling.receiveShadow = true;
+			ceiling.castShadow = true;
+			scene.add(ceiling);
+
+
+	//create the gallery floor
+		floor = new THREE.Mesh (
+				new THREE.BoxGeometry (100,1,100),
+				new THREE.MeshBasicMaterial({color:0xffffff, wireframe:false})
+				);
+			floor.position.y -= .4;
+			floor.position.z += 55;
+			floor.receiveShadow = true;
+			floor.castShadow = true;
+			scene.add(floor);
+
+	//create the "grass"
+		meshFloor = new THREE.Mesh(
+				new THREE.PlaneGeometry (250,225, 9, 9),
+				new THREE.MeshPhongMaterial({ color: 0x539e1a, wireframe: false})
 			);
-		blueWall.position.z += 105;
-		blueWall.receiveShadow = true;
-		blueWall.castShadow = true;
-		scene.add(blueWall);
+		meshFloor.receiveShadow = true;
+		meshFloor.rotation.x -= Math.PI / 2;
+		scene.add(meshFloor);
 
 //create HOME section
+	//CONTENT
+		//BACK WALL
+			homePicback1 = new THREE.Mesh (
+				new THREE.BoxGeometry(11,8,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				homePicback1.castShadow = true;
+				homePicback1.position.x += 12;
+				homePicback1.position.y += 4.7;
+				homePicback1.position.z += 34.5;
+				scene.add(homePicback1);
+
+			homePicback2 = new THREE.Mesh (
+				new THREE.BoxGeometry(11,8,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				homePicback2.castShadow = true;
+				homePicback2.position.x -= 12;
+				homePicback2.position.y += 4.7;
+				homePicback2.position.z += 34.5;
+				scene.add(homePicback2);
+
+		//FRONT WALL
+			homePicfront1 = new THREE.Mesh (
+				new THREE.BoxGeometry(11,8,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				homePicfront1.castShadow = true;
+				homePicfront1.position.x += 12;
+				homePicfront1.position.y += 4.7;
+				homePicfront1.position.z += 6;
+				scene.add(homePicfront1);
+
+			homePicfront2 = new THREE.Mesh (
+				new THREE.BoxGeometry(11,8,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				homePicfront2.castShadow = true;
+				homePicfront2.position.x -= 12;
+				homePicfront2.position.y += 4.7;
+				homePicfront2.position.z += 6;
+				scene.add(homePicfront2);
+
 	//Exhibit Signs
-		var fontLoader = new THREE.FontLoader();
-
-		fontLoader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-
-		var geometry = new THREE.TextGeometry( 'About', {
-			font: font,
-			size: 80,
-			height: 5,
-			curveSegments: 12,
-			bevelEnabled: true,
-			bevelThickness: 10,
-			bevelSize: 8,
-			bevelOffset: 0,
-			bevelSegments: 5
-		} );
-	} );
-
-	//HOME Left Wall
-		homeLeftdoor1 = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,20,12),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+		aboutSignbg = new THREE.Mesh (
+			new THREE.BoxGeometry (5,2,0.2),
+			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
-		homeLeftdoor1.position.x += 19.5;
-		homeLeftdoor1.position.z += 29;
-		homeLeftdoor1.receiveShadow = true;
-		homeLeftdoor1.castShadow = true;
-		scene.add(homeLeftdoor1);
+		aboutSignbg.position.x += 19.5;
+		aboutSignbg.position.y += 6.5;
+		aboutSignbg.position.z += 20;
+		aboutSignbg.rotation.y += Math.PI/2;
+		scene.add(aboutSignbg);
 
-		homeLeftdoor2 = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,20,12),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+		interactiveSignbg = new THREE.Mesh (
+			new THREE.BoxGeometry (5,2,0.2),
+			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
-		homeLeftdoor2.position.x += 19.5;
-		homeLeftdoor2.position.z += 11;
-		homeLeftdoor2.receiveShadow = true;
-		homeLeftdoor2.castShadow = true;
-		scene.add(homeLeftdoor2);
+		interactiveSignbg.position.x -= 19.5;
+		interactiveSignbg.position.y += 6.5;
+		interactiveSignbg.position.z += 20;
+		interactiveSignbg.rotation.y += Math.PI/2;
+		scene.add(interactiveSignbg);
 
-		homeLeftdoorframe = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,5,10),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
+		mediaSignbg = new THREE.Mesh (
+			new THREE.BoxGeometry (0.2,2,5),
+			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
-		homeLeftdoorframe.position.x += 19.5;
-		homeLeftdoorframe.position.z += 20;
-		homeLeftdoorframe.position.y += 8;
-		homeLeftdoorframe.receiveShadow = true;
-		homeLeftdoorframe.castShadow = true;
-		scene.add(homeLeftdoorframe);
+		mediaSignbg.position.x = 0;
+		mediaSignbg.position.y += 6.5;
+		mediaSignbg.position.z += 34.5;
+		mediaSignbg.rotation.y += Math.PI/2;
+		scene.add(mediaSignbg);
 
-	//HOME Right Wall
-		homeRightdoor1 = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,20,12),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeRightdoor1.position.x -= 19.5;
-		homeRightdoor1.position.z += 29;
-		homeRightdoor1.receiveShadow = true;
-		homeRightdoor1.castShadow = true;
-		scene.add(homeRightdoor1);
+	//WALLS
+		//HOME Left Wall
+			homeLeftdoor1 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeLeftdoor1.position.x += 19.5;
+			homeLeftdoor1.position.z += 29;
+			homeLeftdoor1.receiveShadow = true;
+			homeLeftdoor1.castShadow = true;
+			scene.add(homeLeftdoor1);
 
-		homeRightdoor2 = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,20,12),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeRightdoor2.position.x -= 19.5;
-		homeRightdoor2.position.z += 11;
-		homeRightdoor2.receiveShadow = true;
-		homeRightdoor2.castShadow = true;
-		scene.add(homeRightdoor2);
+			homeLeftdoor2 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeLeftdoor2.position.x += 19.5;
+			homeLeftdoor2.position.z += 11;
+			homeLeftdoor2.receiveShadow = true;
+			homeLeftdoor2.castShadow = true;
+			scene.add(homeLeftdoor2);
 
-		homeRightdoorframe = new THREE.Mesh (
-			new THREE.BoxGeometry (0.1,5,10),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeRightdoorframe.position.x -= 19.5;
-		homeRightdoorframe.position.z += 20;
-		homeRightdoorframe.position.y += 8;
-		homeRightdoorframe.receiveShadow = true;
-		homeRightdoorframe.castShadow = true;
-		scene.add(homeRightdoorframe);
+			homeLeftdoorframe = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,5,10),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeLeftdoorframe.position.x += 19.5;
+			homeLeftdoorframe.position.z += 20;
+			homeLeftdoorframe.position.y += 8;
+			homeLeftdoorframe.receiveShadow = true;
+			homeLeftdoorframe.castShadow = true;
+			scene.add(homeLeftdoorframe);
 
-	//HOME Back Wall
-		homeBackdoor1 = new THREE.Mesh (
-			new THREE.BoxGeometry (16,20,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeBackdoor1.position.x += 12;
-		homeBackdoor1.position.z += 34.5;
-		homeBackdoor1.receiveShadow = true;
-		homeBackdoor1.castShadow = true;
-		scene.add(homeBackdoor1);
+		//HOME Right Wall
+			homeRightdoor1 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeRightdoor1.position.x -= 19.5;
+			homeRightdoor1.position.z += 29;
+			homeRightdoor1.receiveShadow = true;
+			homeRightdoor1.castShadow = true;
+			scene.add(homeRightdoor1);
 
-		homeBackdoor2 = new THREE.Mesh (
-			new THREE.BoxGeometry (16,20,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeBackdoor2.position.x -= 12;
-		homeBackdoor2.position.z += 34.5;
-		homeBackdoor2.receiveShadow = true;
-		homeBackdoor2.castShadow = true;
-		scene.add(homeBackdoor2);
+			homeRightdoor2 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeRightdoor2.position.x -= 19.5;
+			homeRightdoor2.position.z += 11;
+			homeRightdoor2.receiveShadow = true;
+			homeRightdoor2.castShadow = true;
+			scene.add(homeRightdoor2);
 
-		homeBackdoorframe = new THREE.Mesh (
-			new THREE.BoxGeometry (10,6,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeBackdoorframe.position.x = 0;
-		homeBackdoorframe.position.z += 34.5;
-		homeBackdoorframe.position.y += 8;
-		homeBackdoorframe.receiveShadow = true;
-		homeBackdoorframe.castShadow = true;
-		scene.add(homeBackdoorframe);
+			homeRightdoorframe = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,5,10),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeRightdoorframe.position.x -= 19.5;
+			homeRightdoorframe.position.z += 20;
+			homeRightdoorframe.position.y += 8;
+			homeRightdoorframe.receiveShadow = true;
+			homeRightdoorframe.castShadow = true;
+			scene.add(homeRightdoorframe);
 
-	//HOME Front Wall
-		homeFrontdoor1 = new THREE.Mesh (
-			new THREE.BoxGeometry (17,20,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeFrontdoor1.position.x -= 12;
-		homeFrontdoor1.position.z += 5.5;
-		homeFrontdoor1.receiveShadow = true;
-		homeFrontdoor1.castShadow = true;
-		scene.add(homeFrontdoor1);
+		//HOME Back Wall
+			homeBackdoor1 = new THREE.Mesh (
+				new THREE.BoxGeometry (16,20,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeBackdoor1.position.x += 12;
+			homeBackdoor1.position.z += 34.5;
+			homeBackdoor1.receiveShadow = true;
+			homeBackdoor1.castShadow = true;
+			scene.add(homeBackdoor1);
 
-		homeFrontdoor2 = new THREE.Mesh (
-			new THREE.BoxGeometry (17,20,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeFrontdoor2.position.x += 12;
-		homeFrontdoor2.position.z += 5.5;
-		homeFrontdoor2.receiveShadow = true;
-		homeFrontdoor2.castShadow = true;
-		scene.add(homeFrontdoor2);
+			homeBackdoor2 = new THREE.Mesh (
+				new THREE.BoxGeometry (16,20,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeBackdoor2.position.x -= 12;
+			homeBackdoor2.position.z += 34.5;
+			homeBackdoor2.receiveShadow = true;
+			homeBackdoor2.castShadow = true;
+			scene.add(homeBackdoor2);
 
-		homeFrontdoorframe = new THREE.Mesh (
-			new THREE.BoxGeometry (10,4,0.1),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false}) 
-			);
-		homeFrontdoorframe.position.x = 0;
-		homeFrontdoorframe.position.z += 5.5;
-		homeFrontdoorframe.position.y += 8;
-		homeFrontdoorframe.receiveShadow = true;
-		homeFrontdoorframe.castShadow = true;
-		scene.add(homeFrontdoorframe);
+			homeBackdoorframe = new THREE.Mesh (
+				new THREE.BoxGeometry (10,6,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeBackdoorframe.position.x = 0;
+			homeBackdoorframe.position.z += 34.5;
+			homeBackdoorframe.position.y += 8;
+			homeBackdoorframe.receiveShadow = true;
+			homeBackdoorframe.castShadow = true;
+			scene.add(homeBackdoorframe);
 
-	//HOME Ceiling
-		homeCeiling = new THREE.Mesh (
-			new THREE.BoxGeometry (40,0.5,30),
-			new THREE.MeshPhongMaterial({color:0x636363, wireframe:false})
+		//HOME Front Wall
+			homeFrontdoor1 = new THREE.Mesh (
+				new THREE.BoxGeometry (17,20,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeFrontdoor1.position.x -= 12;
+			homeFrontdoor1.position.z += 5.5;
+			homeFrontdoor1.receiveShadow = true;
+			homeFrontdoor1.castShadow = true;
+			scene.add(homeFrontdoor1);
+
+			homeFrontdoor2 = new THREE.Mesh (
+				new THREE.BoxGeometry (17,20,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeFrontdoor2.position.x += 12;
+			homeFrontdoor2.position.z += 5.5;
+			homeFrontdoor2.receiveShadow = true;
+			homeFrontdoor2.castShadow = true;
+			scene.add(homeFrontdoor2);
+
+			homeFrontdoorframe = new THREE.Mesh (
+				new THREE.BoxGeometry (10,4,0.1),
+				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
+				);
+			homeFrontdoorframe.position.x = 0;
+			homeFrontdoorframe.position.z += 5.5;
+			homeFrontdoorframe.position.y += 8;
+			homeFrontdoorframe.receiveShadow = true;
+			homeFrontdoorframe.castShadow = true;
+			scene.add(homeFrontdoorframe);
+
+		//HOME Ceiling
+			homeCeiling = new THREE.Mesh (
+				new THREE.BoxGeometry (40,0.5,30),
+				new THREE.MeshBasicMaterial({color:0x444444, wireframe:false})
+				);
+			homeCeiling.position.y += 9.5;
+			homeCeiling.position.z += 20;
+			homeCeiling.position.x = 0;
+			homeCeiling.receiveShadow = true;
+			homeCeiling.castShadow = true;
+			scene.add(homeCeiling);
+
+		//HOME Floor
+			homeFloor = new THREE.Mesh (
+				new THREE.BoxGeometry (40,0.5,30.7),
+				new THREE.MeshBasicMaterial({color:0x444444, wireframe:false})
+				);
+			homeFloor.position.y -= 0.1;
+			homeFloor.position.z += 20;
+			homeFloor.position.x = 0;
+			homeFloor.receiveShadow = true;
+			homeFloor.castShadow = true;
+			scene.add(homeFloor);
+
+	//EXIT SIGN HOME
+			exitHome = new THREE.Mesh (
+			new THREE.BoxGeometry(0.2,2,5),
+			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
-		homeCeiling.position.y += 9.5;
-		homeCeiling.position.z += 20;
-		homeCeiling.position.x = 0;
-		homeCeiling.receiveShadow = true;
-		homeCeiling.castShadow = true;
-		scene.add(homeCeiling);
+			exitHome.castShadow = true;
+			exitHome.position.x = 0;
+			exitHome.position.y += 7.1;
+			exitHome.position.z += 5.6;
+			exitHome.rotation.y += Math.PI/2;
+			scene.add(exitHome);
+
+			exitHomebg = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			exitHomebg.position.x = 0;
+			exitHomebg.position.y += 7.1;
+			exitHomebg.position.z += 5.6;
+			exitHomebg.rotation.y += Math.PI/2;
+			scene.add(exitHomebg);
 
 //create ABOUT ME section
 
+	profiletexture = new textureLoader.load("../images/Edited Headshot-1.jpg");
 
-		profiletexture = new textureLoader.load("../images/Edited Headshot-1.jpg");
+	profilePic = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,8,12),
+	new THREE.MeshBasicMaterial({ map: profiletexture, wireframe: false })
+	);
+	profilePic.castShadow = true;
+	profilePic.position.x += 48.5;
+	profilePic.position.y += 4.6;
+	profilePic.position.z += 13.5;
+	scene.add(profilePic);
 
-		profilePic = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,8,12),
-		new THREE.MeshBasicMaterial({ map: profiletexture, wireframe: false })
-		);
-		profilePic.castShadow = true;
-		profilePic.position.x += 48.5;
-		profilePic.position.y += 4.6;
-		profilePic.position.z += 13.5;
-		scene.add(profilePic);
+	biographyBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,8,10),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	biographyBg.castShadow = true;
+	biographyBg.position.x += 48.5;
+	biographyBg.position.y += 4.6;
+	biographyBg.position.z += 27;
+	scene.add(biographyBg);
 
-		biographyBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,8,10),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		biographyBg.castShadow = true;
-		biographyBg.position.x += 48.5;
-		biographyBg.position.y += 4.6;
-		biographyBg.position.z += 27;
-		scene.add(biographyBg);
+	contacttexture = new textureLoader.load("../images/camera.jpg");
 
-		contacttexture = new textureLoader.load("../images/camera.jpg");
+	contactPic = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,7,10),
+	new THREE.MeshBasicMaterial({ map: contacttexture, wireframe: false })
+	);
+	contactPic.castShadow = true;
+	contactPic.position.x += 25;
+	contactPic.position.y += 4.6;
+	contactPic.position.z += 6.5;
+	contactPic.rotation.y += Math.PI/2;
+	scene.add(contactPic);
 
-		contactPic = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,7,10),
-		new THREE.MeshBasicMaterial({ map: contacttexture, wireframe: false })
-		);
-		contactPic.castShadow = true;
-		contactPic.position.x += 25;
-		contactPic.position.y += 4.6;
-		contactPic.position.z += 6.5;
-		contactPic.rotation.y += Math.PI/2;
-		scene.add(contactPic);
+	contactBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,2,7),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	contactBg.castShadow = true;
+	contactBg.position.x += 35;
+	contactBg.position.y += 7.7;
+	contactBg.position.z += 6.5;
+	contactBg.rotation.y += Math.PI/2;
+	scene.add(contactBg);
 
-		contactBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,2,7),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		contactBg.castShadow = true;
-		contactBg.position.x += 35;
-		contactBg.position.y += 7.7;
-		contactBg.position.z += 6.5;
-		contactBg.rotation.y += Math.PI/2;
-		scene.add(contactBg);
+	emailBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,5,8),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	emailBg.castShadow = true;
+	emailBg.position.x += 35;
+	emailBg.position.y += 3.5;
+	emailBg.position.z += 6.5;
+	emailBg.rotation.y += Math.PI/2;
+	scene.add(emailBg);
 
-		emailBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,5,8),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		emailBg.castShadow = true;
-		emailBg.position.x += 35;
-		emailBg.position.y += 3.5;
-		emailBg.position.z += 6.5;
-		emailBg.rotation.y += Math.PI/2;
-		scene.add(emailBg);
+	twitterBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,2.5,2.5),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	twitterBg.castShadow = true;
+	twitterBg.position.x += 41;
+	twitterBg.position.y += 6.5;
+	twitterBg.position.z += 6.5;
+	twitterBg.rotation.y += Math.PI/2;
+	scene.add(twitterBg);
 
-		twitterBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,2.5,2.5),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		twitterBg.castShadow = true;
-		twitterBg.position.x += 41;
-		twitterBg.position.y += 6.5;
-		twitterBg.position.z += 6.5;
-		twitterBg.rotation.y += Math.PI/2;
-		scene.add(twitterBg);
+	ytBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,2.5,2.5),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	ytBg.castShadow = true;
+	ytBg.position.x += 41;
+	ytBg.position.y += 3.5;
+	ytBg.position.z += 6.5;
+	ytBg.rotation.y += Math.PI/2;
+	scene.add(ytBg);
 
-		ytBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,2.5,2.5),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		ytBg.castShadow = true;
-		ytBg.position.x += 41;
-		ytBg.position.y += 3.5;
-		ytBg.position.z += 6.5;
-		ytBg.rotation.y += Math.PI/2;
-		scene.add(ytBg);
+	instaBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,2.5,2.5),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	instaBg.castShadow = true;
+	instaBg.position.x += 45;
+	instaBg.position.y += 6.5;
+	instaBg.position.z += 6.5;
+	instaBg.rotation.y += Math.PI/2;
+	scene.add(instaBg);
 
-		instaBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,2.5,2.5),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		instaBg.castShadow = true;
-		instaBg.position.x += 45;
-		instaBg.position.y += 6.5;
-		instaBg.position.z += 6.5;
-		instaBg.rotation.y += Math.PI/2;
-		scene.add(instaBg);
+	linkedBg = new THREE.Mesh (
+	new THREE.BoxGeometry(0.2,2.5,2.5),
+	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	);
+	linkedBg.castShadow = true;
+	linkedBg.position.x += 45;
+	linkedBg.position.y += 3.5;
+	linkedBg.position.z += 6.5;
+	linkedBg.rotation.y += Math.PI/2;
+	scene.add(linkedBg);
 
-		linkedBg = new THREE.Mesh (
-		new THREE.BoxGeometry(0.2,2.5,2.5),
-		new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false })
-		);
-		linkedBg.castShadow = true;
-		linkedBg.position.x += 45;
-		linkedBg.position.y += 3.5;
-		linkedBg.position.z += 6.5;
-		linkedBg.rotation.y += Math.PI/2;
-		scene.add(linkedBg);
-
+	//RESUME WALL
+		worktexture = new textureLoader.load("../images/Work.png");
 		workBG = new THREE.Mesh (
-			new THREE.BoxGeometry (4,3,0.2),
-			new THREE.MeshPhongMaterial({color:0xaaaaaa, wireframe:false}) 
+			new THREE.BoxGeometry (8,8,0.2),
+			new THREE.MeshBasicMaterial({map: worktexture, wireframe:false}) 
 			);
 		workBG.position.x += 44;
-		workBG.position.y += 4.5;
+		workBG.position.y += 4.6;
 		workBG.position.z += 33;
 		workBG.receiveShadow = true;
 		workBG.castShadow = true;
 		scene.add(workBG);
 
+		educationtexture = new textureLoader.load("../images/Education.png");
 		educationBG = new THREE.Mesh (
-			new THREE.BoxGeometry (4,3,0.2),
-			new THREE.MeshPhongMaterial({color:0xaaaaaa, wireframe:false}) 
+			new THREE.BoxGeometry (7,4,0.2),
+			new THREE.MeshBasicMaterial({map: educationtexture, wireframe:false}) 
 			);
 		educationBG.position.x += 35;
-		educationBG.position.y += 4.5;
+		educationBG.position.y += 6.8;
 		educationBG.position.z += 33;
 		educationBG.receiveShadow = true;
 		educationBG.castShadow = true;
 		scene.add(educationBG);
 
+		skilltexture = new textureLoader.load("../images/Skills.png");
 		extracurricularBG = new THREE.Mesh (
-			new THREE.BoxGeometry (4,3,0.2),
-			new THREE.MeshPhongMaterial({color:0xaaaaaa, wireframe:false}) 
+			new THREE.BoxGeometry (9,4,0.2),
+			new THREE.MeshBasicMaterial({map: skilltexture, wireframe:false}) 
 			);
-		extracurricularBG.position.x += 25;
-		extracurricularBG.position.y += 4.5;
+		extracurricularBG.position.x += 35;
+		extracurricularBG.position.y += 2.5;
 		extracurricularBG.position.z += 33;
 		extracurricularBG.receiveShadow = true;
 		extracurricularBG.castShadow = true;
 		scene.add(extracurricularBG);
 
 	//EXIT SIGN ABOUT
-		exittexture = new textureLoader.load("../images/Exit Sign.png");
 
 		exitAbout = new THREE.Mesh (
 		new THREE.BoxGeometry(5,2,0.2),
@@ -436,7 +560,7 @@ function init() {
 
 		exitAboutbg = new THREE.Mesh (
 			new THREE.BoxGeometry (5,2,0.2),
-			new THREE.MeshPhongMaterial({color:0x000000, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
 		exitAboutbg.position.x += 20.5;
 		exitAboutbg.position.y += 6.5;
@@ -456,7 +580,7 @@ function init() {
 	//ABOUT WALLS
 		aboutDoor2 = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,12),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutDoor2.position.x += 20;
 		aboutDoor2.position.z += 29;
@@ -466,7 +590,7 @@ function init() {
 
 		aboutDoor1 = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,12),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutDoor1.position.x += 20;
 		aboutDoor1.position.z += 11;
@@ -476,7 +600,7 @@ function init() {
 
 		aboutFrame = new THREE.Mesh (
 			new THREE.BoxGeometry (1,5,10),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutFrame.position.x += 20;
 		aboutFrame.position.z += 20;
@@ -487,7 +611,7 @@ function init() {
 
 		aboutBack = new THREE.Mesh (
 			new THREE.BoxGeometry (0.5,20,30),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutBack.position.x += 49;
 		aboutBack.position.z += 20;
@@ -497,7 +621,7 @@ function init() {
 
 		aboutLeft = new THREE.Mesh (
 			new THREE.BoxGeometry (30,20,0.5),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutLeft.position.x += 35;
 		aboutLeft.position.z += 6;
@@ -507,7 +631,7 @@ function init() {
 
 		aboutRight = new THREE.Mesh (
 			new THREE.BoxGeometry (30,20,0.5),
-			new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
 		aboutRight.position.x += 35;
 		aboutRight.position.z += 34;
@@ -517,7 +641,7 @@ function init() {
 
 		aboutCeiling = new THREE.Mesh (
 				new THREE.BoxGeometry (30,0.5,30),
-				new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+				new THREE.MeshBasicMaterial({color:0x4e0893, wireframe:false})
 				);
 			aboutCeiling.position.y += 9.5;
 			aboutCeiling.position.z += 20;
@@ -528,7 +652,7 @@ function init() {
 
 		aboutFloor = new THREE.Mesh (
 				new THREE.BoxGeometry (30,1,30),
-				new THREE.MeshPhongMaterial({color:0x772fe2, wireframe:false})
+				new THREE.MeshBasicMaterial({color:0x4e0893, wireframe:false})
 				);
 			aboutFloor.position.y -= .3;
 			aboutFloor.position.z += 20;
@@ -538,417 +662,1076 @@ function init() {
 			scene.add(aboutFloor);
 
 //create MUSIC section
-	musicDoor1 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicDoor1.position.x -= 20;
-	musicDoor1.position.z += 40;
-	musicDoor1.receiveShadow = true;
-	musicDoor1.castShadow = true;
-	scene.add(musicDoor1);
+	//CONTENT
+		//FRONT WALL
+			//POLYLANE (BACK WALL)
 
-	musicDoor2 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicDoor2.position.x -= 20;
-	musicDoor2.position.z += 59.2;
-	musicDoor2.receiveShadow = true;
-	musicDoor2.castShadow = true;
-	scene.add(musicDoor2);
+				// create an AudioListener and add it to the camera
+				var listener = new THREE.AudioListener();
+				camera.add( listener );
 
-	musicFrame = new THREE.Mesh (
-		new THREE.BoxGeometry (1,5,10),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicFrame.position.x -= 20;
-	musicFrame.position.z += 50;
-	musicFrame.position.y += 8;
-	musicFrame.receiveShadow = true;
-	musicFrame.castShadow = true;
-	scene.add(musicFrame);
+				// create the PositionalAudio object (passing in the listener)
+				var sunbreak = new THREE.PositionalAudio( listener );
 
-	musicBack = new THREE.Mesh (
-		new THREE.BoxGeometry (0.5,20,30),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicBack.position.x -= 49;
-	musicBack.position.z += 50;
-	musicBack.receiveShadow = true;
-	musicBack.castShadow = true;
-	scene.add(musicBack);
+				// load a sound and set it as the PositionalAudio object's buffer
+				var audioLoader = new THREE.AudioLoader();
+				audioLoader.load( 'sounds/Sunbreak-polylane.wav', function( buffer ) {
+					sunbreak.setBuffer( buffer );
+					sunbreak.setRefDistance( 2 );
+					sunbreak.setMaxDistance( 0.5 );
+					sunbreak.play();
+				});
 
-	musicLeft = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicLeft.position.x -= 35;
-	musicLeft.position.z += 65;
-	musicLeft.receiveShadow = true;
-	musicLeft.castShadow = true;
-	scene.add(musicLeft);
+				polylane1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,9,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				polylane1.castShadow = true;
+				polylane1.position.x -= 48.7;
+				polylane1.position.y += 4.75;
+				polylane1.position.z += 60;
+				scene.add(polylane1);
 
-	musicRight = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false}) 
-		);
-	musicRight.position.x -= 35;
-	musicRight.position.z += 36;
-	musicRight.receiveShadow = true;
-	musicRight.castShadow = true;
-	scene.add(musicRight);
+				polylane1.add(sunbreak);
 
-	musicCeiling = new THREE.Mesh (
-			new THREE.BoxGeometry (30,0.5,30),
-			new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false})
-			);
-		musicCeiling.position.y += 9.5;
-		musicCeiling.position.z += 50;
-		musicCeiling.position.x -= 35;
-		musicCeiling.receiveShadow = true;
-		musicCeiling.castShadow = true;
-		scene.add(musicCeiling);
+				polylane2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				polylane2.castShadow = true;
+				polylane2.position.x -= 48.7;
+				polylane2.position.y += 7;
+				polylane2.position.z += 42;
+				scene.add(polylane2);
 
-	musicFloor = new THREE.Mesh (
-			new THREE.BoxGeometry (30,1,30),
-			new THREE.MeshPhongMaterial({color:0xa53d30, wireframe:false})
-			);
-		musicFloor.position.y -= .3;
-		musicFloor.position.z += 50;
-		musicFloor.position.x -= 35;
-		musicFloor.receiveShadow = true;
-		musicFloor.castShadow = true;
-		scene.add(musicFloor);
+				polylane3 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				polylane3.castShadow = true;
+				polylane3.position.x -= 48.7;
+				polylane3.position.y += 2.5;
+				polylane3.position.z += 42;
+				scene.add(polylane3);
 
-	//EXIT SIGN Music
-		exitMusic = new THREE.Mesh (
-		new THREE.BoxGeometry(5,2,0.2),
-		new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
-		);
-		exitMusic.castShadow = true;
-		exitMusic.position.x -= 20.5;
-		exitMusic.position.y += 6.5;
-		exitMusic.position.z += 20;
-		exitMusic.rotation.y += Math.PI/2;
-		scene.add(exitMusic);
+			//TSBU (LEFT WALL)
+				tsbuDemo1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,9,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				tsbuDemo1.castShadow = true;
+				tsbuDemo1.position.x -= 25;
+				tsbuDemo1.position.y += 4.7;
+				tsbuDemo1.position.z += 64.5;
+				scene.add(tsbuDemo1);
 
-		exitMusicbg = new THREE.Mesh (
-			new THREE.BoxGeometry (5,2,0.2),
-			new THREE.MeshPhongMaterial({color:0x000000, wireframe:false}) 
-			);
-		exitMusicbg.position.x -= 20.5;
-		exitMusicbg.position.y += 6.5;
-		exitMusicbg.position.z += 20;
-		exitMusicbg.rotation.y += Math.PI/2;
-		exitMusicbg.receiveShadow = true;
-		exitMusicbg.castShadow = true;
-		scene.add(exitMusicbg);
-
-		exitLight3 = new THREE.PointLight(0xff0000, 0.,10);
-		exitLight3.position.set(-21,5.5,20);
-		exitLight3.shadow.camera.near = 0.1;
-		exitLight3.shadow.camera.far = 25;
-		scene.add(exitLight3);
-
-//create INTERACTIVE Section
-
-	interactDoor2 = new THREE.Mesh (
+				tsbuDemo2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,9,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				tsbuDemo2.castShadow = true;
+				tsbuDemo2.position.x -= 43;
+				tsbuDemo2.position.y += 4.7;
+				tsbuDemo2.position.z += 64.5;
+				scene.add(tsbuDemo2);
+	
+	//WALLS
+		musicDoor1 = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,12),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactDoor2.position.x -= 20;
-		interactDoor2.position.z += 29;
-		interactDoor2.receiveShadow = true;
-		interactDoor2.castShadow = true;
-		scene.add(interactDoor2);
+		musicDoor1.position.x -= 20;
+		musicDoor1.position.z += 40;
+		musicDoor1.receiveShadow = true;
+		musicDoor1.castShadow = true;
+		scene.add(musicDoor1);
 
-		interactDoor1 = new THREE.Mesh (
+		musicDoor2 = new THREE.Mesh (
 			new THREE.BoxGeometry (1,20,12),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactDoor1.position.x -= 20;
-		interactDoor1.position.z += 11;
-		interactDoor1.receiveShadow = true;
-		interactDoor1.castShadow = true;
-		scene.add(interactDoor1);
+		musicDoor2.position.x -= 20;
+		musicDoor2.position.z += 59.2;
+		musicDoor2.receiveShadow = true;
+		musicDoor2.castShadow = true;
+		scene.add(musicDoor2);
 
-		interactFrame = new THREE.Mesh (
+		musicFrame = new THREE.Mesh (
 			new THREE.BoxGeometry (1,5,10),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactFrame.position.x -= 20;
-		interactFrame.position.z += 20;
-		interactFrame.position.y += 8;
-		interactFrame.receiveShadow = true;
-		interactFrame.castShadow = true;
-		scene.add(interactFrame);
+		musicFrame.position.x -= 20;
+		musicFrame.position.z += 50;
+		musicFrame.position.y += 8;
+		musicFrame.receiveShadow = true;
+		musicFrame.castShadow = true;
+		scene.add(musicFrame);
 
-		interactBack = new THREE.Mesh (
+		musicBack = new THREE.Mesh (
 			new THREE.BoxGeometry (0.5,20,30),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactBack.position.x -= 49;
-		interactBack.position.z += 20;
-		interactBack.receiveShadow = true;
-		interactBack.castShadow = true;
-		scene.add(interactBack);
+		musicBack.position.x -= 49;
+		musicBack.position.z += 50;
+		musicBack.receiveShadow = true;
+		musicBack.castShadow = true;
+		scene.add(musicBack);
 
-		interactLeft = new THREE.Mesh (
+		musicLeft = new THREE.Mesh (
 			new THREE.BoxGeometry (30,20,0.5),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactLeft.position.x -= 35;
-		interactLeft.position.z += 6;
-		interactLeft.receiveShadow = true;
-		interactLeft.castShadow = true;
-		scene.add(interactLeft);
+		musicLeft.position.x -= 35;
+		musicLeft.position.z += 65;
+		musicLeft.receiveShadow = true;
+		musicLeft.castShadow = true;
+		scene.add(musicLeft);
 
-		interactRight = new THREE.Mesh (
+		musicRight = new THREE.Mesh (
 			new THREE.BoxGeometry (30,20,0.5),
-			new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false}) 
+			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
-		interactRight.position.x -= 35;
-		interactRight.position.z += 34;
-		interactRight.receiveShadow = true;
-		interactRight.castShadow = true;
-		scene.add(interactRight);
+		musicRight.position.x -= 35;
+		musicRight.position.z += 36;
+		musicRight.receiveShadow = true;
+		musicRight.castShadow = true;
+		scene.add(musicRight);
 
-		interactCeiling = new THREE.Mesh (
+		musicCeiling = new THREE.Mesh (
 				new THREE.BoxGeometry (30,0.5,30),
-				new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false})
+				new THREE.MeshBasicMaterial({color:0x772c22, wireframe:false})
 				);
-			interactCeiling.position.y += 9.5;
-			interactCeiling.position.z += 20;
-			interactCeiling.position.x -= 35;
-			interactCeiling.receiveShadow = true;
-			interactCeiling.castShadow = true;
-			scene.add(interactCeiling);
+			musicCeiling.position.y += 9.5;
+			musicCeiling.position.z += 50;
+			musicCeiling.position.x -= 35;
+			scene.add(musicCeiling);
 
-		interactFloor = new THREE.Mesh (
+		musicFloor = new THREE.Mesh (
 				new THREE.BoxGeometry (30,1,30),
-				new THREE.MeshPhongMaterial({color:0xffb6ad, wireframe:false})
+				new THREE.MeshBasicMaterial({color:0x772c22, wireframe:false})
 				);
-			interactFloor.position.y -= .3;
-			interactFloor.position.z += 20;
-			interactFloor.position.x -= 35;
-			interactFloor.receiveShadow = true;
-			interactFloor.castShadow = true;
-			scene.add(interactFloor);
+			musicFloor.position.y -= .3;
+			musicFloor.position.z += 50;
+			musicFloor.position.x -= 35;
+			scene.add(musicFloor);
 
-		//EXIT SIGN INTERACT
-			exitinteract = new THREE.Mesh (
+		//EXIT SIGN MUSIC
+
+			exitMusic = new THREE.Mesh (
 			new THREE.BoxGeometry(5,2,0.2),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
-			exitinteract.castShadow = true;
-			exitinteract.position.x -= 20.5;
-			exitinteract.position.y += 6.5;
-			exitinteract.position.z += 20;
-			exitinteract.rotation.y += Math.PI/2;
-			scene.add(exitinteract);
+			exitMusic.position.x -= 20.5;
+			exitMusic.position.y += 6.5;
+			exitMusic.position.z += 49.5;
+			exitMusic.rotation.y += Math.PI/2;
+			scene.add(exitMusic);
 
-			exitInteractbg = new THREE.Mesh (
+			exitMusicbg = new THREE.Mesh (
 				new THREE.BoxGeometry (5,2,0.2),
-				new THREE.MeshPhongMaterial({color:0x000000, wireframe:false}) 
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
-			exitInteractbg.position.x -= 20.5;
-			exitInteractbg.position.y += 6.5;
-			exitInteractbg.position.z += 20;
-			exitInteractbg.rotation.y += Math.PI/2;
-			exitInteractbg.receiveShadow = true;
-			exitInteractbg.castShadow = true;
-			scene.add(exitInteractbg);
+			exitMusicbg.position.x -= 20.5;
+			exitMusicbg.position.y += 6.5;
+			exitMusicbg.position.z += 49.5;
+			exitMusicbg.rotation.y += Math.PI/2;
+			scene.add(exitMusicbg);
 
-			exitLight2 = new THREE.PointLight(0xff0000, 0.,10);
-			exitLight2.position.set(-21,5.5,20);
-			exitLight2.shadow.camera.near = 0.1;
-			exitLight2.shadow.camera.far = 25;
-			scene.add(exitLight2);
+//create INTERACTIVE Section
 
+		interactDoor2 = new THREE.Mesh (
+				new THREE.BoxGeometry (1,20,12),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactDoor2.position.x -= 20;
+			interactDoor2.position.z += 29;
+			interactDoor2.receiveShadow = true;
+			interactDoor2.castShadow = true;
+			scene.add(interactDoor2);
 
+			interactDoor1 = new THREE.Mesh (
+				new THREE.BoxGeometry (1,20,12),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactDoor1.position.x -= 20;
+			interactDoor1.position.z += 11;
+			interactDoor1.receiveShadow = true;
+			interactDoor1.castShadow = true;
+			scene.add(interactDoor1);
+
+			interactFrame = new THREE.Mesh (
+				new THREE.BoxGeometry (1,5,10),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactFrame.position.x -= 20;
+			interactFrame.position.z += 20;
+			interactFrame.position.y += 8;
+			interactFrame.receiveShadow = true;
+			interactFrame.castShadow = true;
+			scene.add(interactFrame);
+
+			interactBack = new THREE.Mesh (
+				new THREE.BoxGeometry (0.5,20,30),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactBack.position.x -= 49;
+			interactBack.position.z += 20;
+			interactBack.receiveShadow = true;
+			interactBack.castShadow = true;
+			scene.add(interactBack);
+
+			interactLeft = new THREE.Mesh (
+				new THREE.BoxGeometry (30,20,0.5),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactLeft.position.x -= 35;
+			interactLeft.position.z += 6;
+			interactLeft.receiveShadow = true;
+			interactLeft.castShadow = true;
+			scene.add(interactLeft);
+
+			interactRight = new THREE.Mesh (
+				new THREE.BoxGeometry (30,20,0.5),
+				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
+				);
+			interactRight.position.x -= 35;
+			interactRight.position.z += 34;
+			interactRight.receiveShadow = true;
+			interactRight.castShadow = true;
+			scene.add(interactRight);
+
+			interactCeiling = new THREE.Mesh (
+					new THREE.BoxGeometry (30,0.5,30),
+					new THREE.MeshBasicMaterial({color:0xd69991, wireframe:false})
+					);
+				interactCeiling.position.y += 9.5;
+				interactCeiling.position.z += 20;
+				interactCeiling.position.x -= 35;
+				interactCeiling.receiveShadow = true;
+				interactCeiling.castShadow = true;
+				scene.add(interactCeiling);
+
+			interactFloor = new THREE.Mesh (
+					new THREE.BoxGeometry (30,1,30),
+					new THREE.MeshBasicMaterial({color:0xd69991, wireframe:false})
+					);
+				interactFloor.position.y -= .3;
+				interactFloor.position.z += 20;
+				interactFloor.position.x -= 35;
+				interactFloor.receiveShadow = true;
+				interactFloor.castShadow = true;
+				scene.add(interactFloor);
+
+			//EXIT SIGN INTERACT
+				exitinteract = new THREE.Mesh (
+				new THREE.BoxGeometry(5,2,0.2),
+				new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+				);
+				exitinteract.castShadow = true;
+				exitinteract.position.x -= 20.5;
+				exitinteract.position.y += 6.5;
+				exitinteract.position.z += 20;
+				exitinteract.rotation.y += Math.PI/2;
+				scene.add(exitinteract);
+
+				exitInteractbg = new THREE.Mesh (
+					new THREE.BoxGeometry (5,2,0.2),
+					new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+					);
+				exitInteractbg.position.x -= 20.5;
+				exitInteractbg.position.y += 6.5;
+				exitInteractbg.position.z += 20;
+				exitInteractbg.rotation.y += Math.PI/2;
+				exitInteractbg.receiveShadow = true;
+				exitInteractbg.castShadow = true;
+				scene.add(exitInteractbg);
+
+				exitLight2 = new THREE.PointLight(0xff0000, 0.,10);
+				exitLight2.position.set(-21,5.5,20);
+				exitLight2.shadow.camera.near = 0.1;
+				exitLight2.shadow.camera.far = 25;
+				scene.add(exitLight2);
 
 //create PHOTO Section
-	//create MUSIC section
-	photoDoor1 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoDoor1.position.x += 20;
-	photoDoor1.position.z += 40;
-	photoDoor1.receiveShadow = true;
-	photoDoor1.castShadow = true;
-	scene.add(photoDoor1);
-
-	photoDoor2 = new THREE.Mesh (
-		new THREE.BoxGeometry (1,20,12),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoDoor2.position.x += 20;
-	photoDoor2.position.z += 59.2;
-	photoDoor2.receiveShadow = true;
-	photoDoor2.castShadow = true;
-	scene.add(photoDoor2);
-
-	photoFrame = new THREE.Mesh (
-		new THREE.BoxGeometry (1,5,10),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoFrame.position.x += 20;
-	photoFrame.position.z += 50;
-	photoFrame.position.y += 8;
-	photoFrame.receiveShadow = true;
-	photoFrame.castShadow = true;
-	scene.add(photoFrame);
-
-	photoBack = new THREE.Mesh (
-		new THREE.BoxGeometry (0.5,20,30),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoBack.position.x += 49;
-	photoBack.position.z += 50;
-	photoBack.receiveShadow = true;
-	photoBack.castShadow = true;
-	scene.add(photoBack);
-
-	photoLeft = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoLeft.position.x += 35;
-	photoLeft.position.z += 65;
-	photoLeft.receiveShadow = true;
-	photoLeft.castShadow = true;
-	scene.add(photoLeft);
-
-	photoRight = new THREE.Mesh (
-		new THREE.BoxGeometry (30,20,0.5),
-		new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false}) 
-		);
-	photoRight.position.x += 35;
-	photoRight.position.z += 36;
-	photoRight.receiveShadow = true;
-	photoRight.castShadow = true;
-	scene.add(photoRight);
-
-	photoCeiling = new THREE.Mesh (
-			new THREE.BoxGeometry (30,0.5,30),
-			new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false})
-			);
-		photoCeiling.position.y += 9.5;
-		photoCeiling.position.z += 50;
-		photoCeiling.position.x += 35;
-		photoCeiling.receiveShadow = true;
-		photoCeiling.castShadow = true;
-		scene.add(photoCeiling);
-
-	photoFloor = new THREE.Mesh (
-			new THREE.BoxGeometry (30,1,30),
-			new THREE.MeshPhongMaterial({color:0xd86b27, wireframe:false})
-			);
-		photoFloor.position.y -= .3;
-		photoFloor.position.z += 50;
-		photoFloor.position.x += 35;
-		photoFloor.receiveShadow = true;
-		photoFloor.castShadow = true;
-		scene.add(photoFloor);
-
-	//EXIT SIGN Music
-		exitPhoto = new THREE.Mesh (
-		new THREE.BoxGeometry(5,2,0.2),
-		new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
-		);
-		exitPhoto.castShadow = true;
-		exitPhoto.position.x += 20.5;
-		exitPhoto.position.y += 6.5;
-		exitPhoto.position.z += 20;
-		exitPhoto.rotation.y += Math.PI/2;
-		scene.add(exitPhoto);
-
-		exitPhotobg = new THREE.Mesh (
-			new THREE.BoxGeometry (5,2,0.2),
-			new THREE.MeshPhongMaterial({color:0x000000, wireframe:false}) 
-			);
-		exitPhotobg.position.x += 20.5;
-		exitPhotobg.position.y += 6.5;
-		exitPhotobg.position.z += 20;
-		exitPhotobg.rotation.y += Math.PI/2;
-		exitPhotobg.receiveShadow = true;
-		exitPhotobg.castShadow = true;
-		scene.add(exitMusicbg);
-
-		exitLight4 = new THREE.PointLight(0xff0000, 0.,10);
-		exitLight4.position.set(21,5.5,20);
-		exitLight4.shadow.camera.near = 0.1;
-		exitLight4.shadow.camera.far = 25;
-		scene.add(exitLight4);
-
-//create first sectional wall
-	//create first green wall
-		greenWall1 = new THREE.Mesh (
-				new THREE.BoxGeometry (46,20,1),
-				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
+	//CONTENT
+		//BACK WALL
+			//TOP ROW
+				galleryPictop1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
-			greenWall1.position.x += 27;
-			greenWall1.position.z += 35;
-			greenWall1.receiveShadow = true;
-			greenWall1.castShadow = true;
-			scene.add(greenWall1);
+				galleryPictop1.castShadow = true;
+				galleryPictop1.position.x += 48.5;
+				galleryPictop1.position.y += 7;
+				galleryPictop1.position.z += 40;
+				scene.add(galleryPictop1);
 
-	//create second green wall
-		greenWall2 = new THREE.Mesh (
-				new THREE.BoxGeometry (46,20,1),
-				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
+				galleryPictop2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
-			greenWall2.position.x -= 27;
-			greenWall2.position.z += 35;
-			greenWall2.receiveShadow = true;
-			greenWall2.castShadow = true;
-			scene.add(greenWall2);
+				galleryPictop2.castShadow = true;
+				galleryPictop2.position.x += 48.5;
+				galleryPictop2.position.y += 7;
+				galleryPictop2.position.z += 47;
+				scene.add(galleryPictop2);
 
-	//create top of door frame for green wall
-		greenWall3 = new THREE.Mesh (
-				new THREE.BoxGeometry (25,5,1),
-				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
+				galleryPictop3 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
-			greenWall3.position.y += 7.5;
-			greenWall3.position.z += 35;
-			greenWall3.receiveShadow = true;
-			greenWall3.castShadow = true;
-			scene.add(greenWall3);
+				galleryPictop3.castShadow = true;
+				galleryPictop3.position.x += 48.5;
+				galleryPictop3.position.y += 7;
+				galleryPictop3.position.z += 54;
+				scene.add(galleryPictop3);
 
-//create ceiling
-	ceiling = new THREE.Mesh (
-			new THREE.BoxGeometry (101,1,101),
-			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
+				galleryPictop4 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPictop4.castShadow = true;
+				galleryPictop4.position.x += 48.5;
+				galleryPictop4.position.y += 7;
+				galleryPictop4.position.z += 61;
+				scene.add(galleryPictop4);
+
+			//BOTTOM ROW
+				galleryPicbottom1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicbottom1.castShadow = true;
+				galleryPicbottom1.position.x += 48.5;
+				galleryPicbottom1.position.y += 2.5;
+				galleryPicbottom1.position.z += 40;
+				scene.add(galleryPicbottom1);
+
+				galleryPicbottom2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicbottom2.castShadow = true;
+				galleryPicbottom2.position.x += 48.5;
+				galleryPicbottom2.position.y += 2.5;
+				galleryPicbottom2.position.z += 47;
+				scene.add(galleryPicbottom2);
+
+				galleryPicbottom3 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicbottom3.castShadow = true;
+				galleryPicbottom3.position.x += 48.5;
+				galleryPicbottom3.position.y += 2.5;
+				galleryPicbottom3.position.z += 54;
+				scene.add(galleryPicbottom3);
+
+				galleryPicbottom4 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicbottom4.castShadow = true;
+				galleryPicbottom4.position.x += 48.5;
+				galleryPicbottom4.position.y += 2.5;
+				galleryPicbottom4.position.z += 61;
+				scene.add(galleryPicbottom4);
+
+		//LEFT WALL
+			//TOP ROW
+				galleryPiclefttop1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPiclefttop1.castShadow = true;
+				galleryPiclefttop1.position.x += 24;
+				galleryPiclefttop1.position.y += 7;
+				galleryPiclefttop1.position.z += 36.5;
+				scene.add(galleryPiclefttop1);
+
+				galleryPiclefttop2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPiclefttop2.castShadow = true;
+				galleryPiclefttop2.position.x += 31;
+				galleryPiclefttop2.position.y += 7;
+				galleryPiclefttop2.position.z += 36.5;
+				scene.add(galleryPiclefttop2);
+
+				galleryPiclefttop3 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPiclefttop3.castShadow = true;
+				galleryPiclefttop3.position.x += 38;
+				galleryPiclefttop3.position.y += 7;
+				galleryPiclefttop3.position.z += 36.5;
+				scene.add(galleryPiclefttop3);
+
+				galleryPiclefttop4 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPiclefttop4.castShadow = true;
+				galleryPiclefttop4.position.x += 45;
+				galleryPiclefttop4.position.y += 7;
+				galleryPiclefttop4.position.z += 36.5;
+				scene.add(galleryPiclefttop4);
+
+			//BOTTOM ROW
+				galleryPicleftbottom1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicleftbottom1.castShadow = true;
+				galleryPicleftbottom1.position.x += 24;
+				galleryPicleftbottom1.position.y += 2.5;
+				galleryPicleftbottom1.position.z += 36.5;
+				scene.add(galleryPicleftbottom1);
+
+				galleryPicleftbottom2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicleftbottom2.castShadow = true;
+				galleryPicleftbottom2.position.x += 31;
+				galleryPicleftbottom2.position.y += 2.5;
+				galleryPicleftbottom2.position.z += 36.5;
+				scene.add(galleryPicleftbottom2);
+
+				galleryPicleftbottom3 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicleftbottom3.castShadow = true;
+				galleryPicleftbottom3.position.x += 38;
+				galleryPicleftbottom3.position.y += 2.5;
+				galleryPicleftbottom3.position.z += 36.5;
+				scene.add(galleryPicleftbottom3);
+
+				galleryPicleftbottom4 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicleftbottom4.castShadow = true;
+				galleryPicleftbottom4.position.x += 45;
+				galleryPicleftbottom4.position.y += 2.5;
+				galleryPicleftbottom4.position.z += 36.5;
+				scene.add(galleryPicleftbottom4);
+
+		//RIGHT WALL
+			//TOP ROW
+				galleryPicrighttop1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrighttop1.castShadow = true;
+				galleryPicrighttop1.position.x += 24;
+				galleryPicrighttop1.position.y += 7;
+				galleryPicrighttop1.position.z += 64.5;
+				scene.add(galleryPicrighttop1);
+
+				galleryPicrighttop2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrighttop2.castShadow = true;
+				galleryPicrighttop2.position.x += 31;
+				galleryPicrighttop2.position.y += 7;
+				galleryPicrighttop2.position.z += 64.5;
+				scene.add(galleryPicrighttop2);
+
+				galleryPicrighttop3 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrighttop3.castShadow = true;
+				galleryPicrighttop3.position.x += 38;
+				galleryPicrighttop3.position.y += 7;
+				galleryPicrighttop3.position.z += 64.5;
+				scene.add(galleryPicrighttop3);
+
+				galleryPicrighttop4 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrighttop4.castShadow = true;
+				galleryPicrighttop4.position.x += 45;
+				galleryPicrighttop4.position.y += 7;
+				galleryPicrighttop4.position.z += 64.5;
+				scene.add(galleryPicrighttop4);
+
+			//BOTTOM ROW
+				galleryPicrightbottom1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrightbottom1.castShadow = true;
+				galleryPicrightbottom1.position.x += 24;
+				galleryPicrightbottom1.position.y += 2.5;
+				galleryPicrightbottom1.position.z += 64.5;
+				scene.add(galleryPicrightbottom1);
+
+				galleryPicrightbottom2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrightbottom2.castShadow = true;
+				galleryPicrightbottom2.position.x += 31;
+				galleryPicrightbottom2.position.y += 2.5;
+				galleryPicrightbottom2.position.z += 64.5;
+				scene.add(galleryPicrightbottom2);
+
+				galleryPicrightbottom3 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrightbottom3.castShadow = true;
+				galleryPicrightbottom3.position.x += 38;
+				galleryPicrightbottom3.position.y += 2.5;
+				galleryPicrightbottom3.position.z += 64.5;
+				scene.add(galleryPicrightbottom3);
+
+				galleryPicrightbottom4 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicrightbottom4.castShadow = true;
+				galleryPicrightbottom4.position.x += 45;
+				galleryPicrightbottom4.position.y += 2.5;
+				galleryPicrightbottom4.position.z += 64.5;
+				scene.add(galleryPicrightbottom4);
+
+		//FRONT WALL
+			//TOP ROW
+				galleryPicfront1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,9,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicfront1.castShadow = true;
+				galleryPicfront1.position.x += 20.5;
+				galleryPicfront1.position.y += 4.7;
+				galleryPicfront1.position.z += 41;
+				scene.add(galleryPicfront1);
+
+				galleryPicfront2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,9,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				galleryPicfront2.castShadow = true;
+				galleryPicfront2.position.x += 20.5;
+				galleryPicfront2.position.y += 4.7;
+				galleryPicfront2.position.z += 59;
+				scene.add(galleryPicfront2);
+
+	//WALLS
+		photoDoor1 = new THREE.Mesh (
+			new THREE.BoxGeometry (1,20,12),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
-		ceiling.position.y += 10;
-		ceiling.position.z += 55;
-		ceiling.receiveShadow = true;
-		ceiling.castShadow = true;
-		scene.add(ceiling);
+		photoDoor1.position.x += 20;
+		photoDoor1.position.z += 40;
+		photoDoor1.receiveShadow = true;
+		photoDoor1.castShadow = true;
+		scene.add(photoDoor1);
 
-
-//create the gallery floor
-	floor = new THREE.Mesh (
-			new THREE.BoxGeometry (100,1,100),
-			new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
+		photoDoor2 = new THREE.Mesh (
+			new THREE.BoxGeometry (1,20,12),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
-		floor.position.y -= .4;
-		floor.position.z += 55;
-		floor.receiveShadow = true;
-		floor.castShadow = true;
-		scene.add(floor);
+		photoDoor2.position.x += 20;
+		photoDoor2.position.z += 59.2;
+		photoDoor2.receiveShadow = true;
+		photoDoor2.castShadow = true;
+		scene.add(photoDoor2);
 
-	meshFloor = new THREE.Mesh(
-			new THREE.PlaneGeometry (250,225, 9, 9),
-			new THREE.MeshPhongMaterial({ color: 0xff9999, wireframe: false})
-		);
-	meshFloor.receiveShadow = true;
-	meshFloor.rotation.x -= Math.PI / 2;
-	scene.add(meshFloor);
+		photoFrame = new THREE.Mesh (
+			new THREE.BoxGeometry (1,5,10),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
+			);
+		photoFrame.position.x += 20;
+		photoFrame.position.z += 50;
+		photoFrame.position.y += 8;
+		photoFrame.receiveShadow = true;
+		photoFrame.castShadow = true;
+		scene.add(photoFrame);
 
+		photoBack = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,30),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
+			);
+		photoBack.position.x += 49;
+		photoBack.position.z += 50;
+		photoBack.receiveShadow = true;
+		photoBack.castShadow = true;
+		scene.add(photoBack);
 
+		photoLeft = new THREE.Mesh (
+			new THREE.BoxGeometry (30,20,0.5),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
+			);
+		photoLeft.position.x += 35;
+		photoLeft.position.z += 65;
+		photoLeft.receiveShadow = true;
+		photoLeft.castShadow = true;
+		scene.add(photoLeft);
+
+		photoRight = new THREE.Mesh (
+			new THREE.BoxGeometry (30,20,0.5),
+			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
+			);
+		photoRight.position.x += 35;
+		photoRight.position.z += 36;
+		photoRight.receiveShadow = true;
+		photoRight.castShadow = true;
+		scene.add(photoRight);
+
+		photoCeiling = new THREE.Mesh (
+				new THREE.BoxGeometry (30,0.5,30),
+				new THREE.MeshBasicMaterial({color:0xb2571e, wireframe:false})
+				);
+			photoCeiling.position.y += 9.5;
+			photoCeiling.position.z += 50;
+			photoCeiling.position.x += 35;
+			photoCeiling.receiveShadow = true;
+			photoCeiling.castShadow = true;
+			scene.add(photoCeiling);
+
+		photoFloor = new THREE.Mesh (
+				new THREE.BoxGeometry (30,1,30),
+				new THREE.MeshBasicMaterial({color:0xb2571e, wireframe:false})
+				);
+			photoFloor.position.y -= .3;
+			photoFloor.position.z += 50;
+			photoFloor.position.x += 35;
+			photoFloor.receiveShadow = true;
+			photoFloor.castShadow = true;
+			scene.add(photoFloor);
+
+		//EXIT SIGN PHOTO
+
+			exitPhoto = new THREE.Mesh (
+			new THREE.BoxGeometry(5,2,0.2),
+			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+			);
+			exitPhoto.position.x += 20.5;
+			exitPhoto.position.y += 6.5;
+			exitPhoto.position.z += 49.5;
+			exitPhoto.rotation.y += Math.PI/2;
+			scene.add(exitPhoto);
+
+			exitPhotobg = new THREE.Mesh (
+				new THREE.BoxGeometry (5,2,0.2),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			exitPhotobg.position.x += 20.5;
+			exitPhotobg.position.y += 6.5;
+			exitPhotobg.position.z += 49.5;
+			exitPhotobg.rotation.y += Math.PI/2;
+			scene.add(exitPhotobg);
+
+//create PROJECTIONS Section
+		projectionsDoorleft = new THREE.Mesh (
+			new THREE.BoxGeometry (40,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsDoorleft.position.x += 30;
+		projectionsDoorleft.position.z += 65.5;
+		projectionsDoorleft.receiveShadow = true;
+		projectionsDoorleft.castShadow = true;
+		scene.add(projectionsDoorleft);
+
+		projectionsDoorright = new THREE.Mesh (
+			new THREE.BoxGeometry (3,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsDoorright.position.x += 1;
+		projectionsDoorright.position.z += 65.5;
+		projectionsDoorright.receiveShadow = true;
+		projectionsDoorright.castShadow = true;
+		scene.add(projectionsDoorright);
+
+		projectionsFrame = new THREE.Mesh (
+			new THREE.BoxGeometry (10,5,0.5),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsFrame.position.y += 8;
+		projectionsFrame.position.x += 5;
+		projectionsFrame.position.z += 65.5;
+		projectionsFrame.receiveShadow = true;
+		projectionsFrame.castShadow = true;
+		scene.add(projectionsFrame);
+
+		projectionsBack = new THREE.Mesh (
+			new THREE.BoxGeometry (50,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsBack.position.x += 25;
+		projectionsBack.position.z += 102;
+		projectionsBack.receiveShadow = true;
+		projectionsBack.castShadow = true;
+		scene.add(projectionsBack);
+
+		projectionsLeft = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,40),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsLeft.position.x += 49;
+		projectionsLeft.position.z += 85;
+		projectionsLeft.receiveShadow = true;
+		projectionsLeft.castShadow = true;
+		scene.add(projectionsLeft);
+
+		projectionsRight = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,39),
+			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
+			);
+		projectionsRight.position.x += 0.25;
+		projectionsRight.position.z += 85;
+		projectionsRight.receiveShadow = true;
+		projectionsRight.castShadow = true;
+		scene.add(projectionsRight);
+
+		projectionsFloor = new THREE.Mesh (
+				new THREE.BoxGeometry (49,1,39),
+				new THREE.MeshBasicMaterial({color:0x119dc4, wireframe:false})
+				);
+			projectionsFloor.position.y -= .3;
+			projectionsFloor.position.z += 85;
+			projectionsFloor.position.x += 25;
+			projectionsFloor.receiveShadow = true;
+			projectionsFloor.castShadow = true;
+			scene.add(projectionsFloor);
+
+		projectionsCeiling = new THREE.Mesh (
+				new THREE.BoxGeometry (49,1,39),
+				new THREE.MeshBasicMaterial({color:0x119dc4, wireframe:false})
+				);
+			projectionsCeiling.position.y += 9.5;
+			projectionsCeiling.position.z += 85;
+			projectionsCeiling.position.x += 25;
+			projectionsCeiling.receiveShadow = true;
+			projectionsCeiling.castShadow = true;
+			scene.add(projectionsCeiling);
+
+		//EXIT SIGN PROJECTIONS
+			exitProjections = new THREE.Mesh (
+			new THREE.BoxGeometry(0.2,2,5),
+			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+			);
+			exitProjections.castShadow = true;
+			exitProjections.position.x += 6.5;
+			exitProjections.position.y += 6.5;
+			exitProjections.position.z += 66;
+			exitProjections.rotation.y += Math.PI/2;
+			scene.add(exitProjections);
+
+			exitProjectionsbg = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			exitProjectionsbg.position.x += 6.5;
+			exitProjectionsbg.position.y += 6.5;
+			exitProjectionsbg.position.z += 66;
+			exitProjectionsbg.rotation.y += Math.PI/2;
+			exitProjectionsbg.receiveShadow = true;
+			exitProjectionsbg.castShadow = true;
+			scene.add(exitProjectionsbg);
+
+//create VIDEO Section
+
+		videoDoorright = new THREE.Mesh (
+			new THREE.BoxGeometry (40,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoDoorright.position.x -= 30;
+		videoDoorright.position.z += 65.5;
+		videoDoorright.receiveShadow = true;
+		videoDoorright.castShadow = true;
+		scene.add(videoDoorright);
+
+		videoDoorleft = new THREE.Mesh (
+			new THREE.BoxGeometry (3,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoDoorleft.position.x -= 1;
+		videoDoorleft.position.z += 65.5;
+		videoDoorleft.receiveShadow = true;
+		videoDoorleft.castShadow = true;
+		scene.add(videoDoorleft);
+
+		videoFrame = new THREE.Mesh (
+			new THREE.BoxGeometry (10,5,0.5),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoFrame.position.y += 8;
+		videoFrame.position.x -= 5;
+		videoFrame.position.z += 65.5;
+		videoFrame.receiveShadow = true;
+		videoFrame.castShadow = true;
+		scene.add(videoFrame);
+
+		videoBack = new THREE.Mesh (
+			new THREE.BoxGeometry (50,20,0.5),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoBack.position.x -= 25;
+		videoBack.position.z += 102;
+		videoBack.receiveShadow = true;
+		videoBack.castShadow = true;
+		scene.add(videoBack);
+
+		videoLeft = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,39),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoLeft.position.x -= 0.25;
+		videoLeft.position.z += 85;
+		videoLeft.receiveShadow = true;
+		videoLeft.castShadow = true;
+		scene.add(videoLeft);
+
+		videoRight = new THREE.Mesh (
+			new THREE.BoxGeometry (0.5,20,39),
+			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
+			);
+		videoRight.position.x -= 49;
+		videoRight.position.z += 85;
+		videoRight.receiveShadow = true;
+		videoRight.castShadow = true;
+		scene.add(videoRight);
+
+		videoFloor = new THREE.Mesh (
+				new THREE.BoxGeometry (49,1,39),
+				new THREE.MeshBasicMaterial({color:0x0dc6a1, wireframe:false})
+				);
+			videoFloor.position.y -= .3;
+			videoFloor.position.z += 85;
+			videoFloor.position.x -= 25;
+			videoFloor.receiveShadow = true;
+			videoFloor.castShadow = true;
+			scene.add(videoFloor);
+
+		videoCeiling = new THREE.Mesh (
+				new THREE.BoxGeometry (49,1,39),
+				new THREE.MeshBasicMaterial({color:0x0dc6a1, wireframe:false})
+				);
+			videoCeiling.position.y += 9.5;
+			videoCeiling.position.z += 85;
+			videoCeiling.position.x -= 25;
+			videoCeiling.receiveShadow = true;
+			videoCeiling.castShadow = true;
+			scene.add(videoCeiling);
+
+		//EXIT SIGN VIDEO
+			exitVideo = new THREE.Mesh (
+			new THREE.BoxGeometry(0.2,2,5),
+			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+			);
+			exitVideo.castShadow = true;
+			exitVideo.position.x -= 6.5;
+			exitVideo.position.y += 6.5;
+			exitVideo.position.z += 66;
+			exitVideo.rotation.y += Math.PI/2;
+			scene.add(exitVideo);
+
+			exitVideobg = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			exitVideobg.position.x -= 6.5;
+			exitVideobg.position.y += 6.5;
+			exitVideobg.position.z += 66;
+			exitVideobg.rotation.y += Math.PI/2;
+			exitVideobg.receiveShadow = true;
+			exitVideobg.castShadow = true;
+			scene.add(exitVideobg);
+
+//create MEDIA section
+		//create first media wall
+			mediaDoor1 = new THREE.Mesh (
+					new THREE.BoxGeometry (46,20,1),
+					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+					);
+				mediaDoor1.position.x += 27;
+				mediaDoor1.position.z += 35;
+				mediaDoor1.receiveShadow = true;
+				mediaDoor1.castShadow = true;
+				scene.add(mediaDoor1);
+
+		//create second media wall
+			mediaDoor2 = new THREE.Mesh (
+					new THREE.BoxGeometry (46,20,1),
+					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+					);
+				mediaDoor2.position.x -= 27;
+				mediaDoor2.position.z += 35;
+				mediaDoor2.receiveShadow = true;
+				mediaDoor2.castShadow = true;
+				scene.add(mediaDoor2);
+
+		//create top of door frame for media wall
+			mediaFrame = new THREE.Mesh (
+					new THREE.BoxGeometry (25,5,1),
+					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+					);
+				mediaFrame.position.y += 7.5;
+				mediaFrame.position.z += 35;
+				mediaFrame.receiveShadow = true;
+				mediaFrame.castShadow = true;
+				scene.add(mediaFrame);
+
+			mediaFloor = new THREE.Mesh (
+			new THREE.BoxGeometry (40,0.5,32),
+			new THREE.MeshBasicMaterial({color:0xd1bf00, wireframe:false})
+			);
+				mediaFloor.position.y -= 0.1;
+				mediaFloor.position.z += 51;
+				mediaFloor.position.x = 0;
+				mediaFloor.receiveShadow = true;
+				mediaFloor.castShadow = true;
+				scene.add(mediaFloor);
+
+			mediaCeiling = new THREE.Mesh (
+			new THREE.BoxGeometry (40,0.5,32),
+			new THREE.MeshBasicMaterial({color:0xd1bf00, wireframe:false})
+			);
+				mediaCeiling.position.y += 9.5;
+				mediaCeiling.position.z += 51;
+				mediaCeiling.position.x = 0;
+				mediaCeiling.receiveShadow = true;
+				mediaCeiling.castShadow = true;
+				scene.add(mediaCeiling);
+
+		//MEDIA LEFT door
+			mediaLeft1 = new THREE.Mesh (
+			new THREE.BoxGeometry (0.1,20,11),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaLeft1.position.x += 19.5;
+			mediaLeft1.position.z += 40.5;
+			mediaLeft1.receiveShadow = true;
+			mediaLeft1.castShadow = true;
+			scene.add(mediaLeft1);
+
+			mediaLeft2 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+				);
+			mediaLeft2.position.x += 19.5;
+			mediaLeft2.position.z += 59.2;
+			mediaLeft2.receiveShadow = true;
+			mediaLeft2.castShadow = true;
+			scene.add(mediaLeft2);
+
+			mediaLeftframe = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,5,10),
+				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+				);
+			mediaLeftframe.position.x += 19.5;
+			mediaLeftframe.position.z += 51;
+			mediaLeftframe.position.y += 8;
+			mediaLeftframe.receiveShadow = true;
+			mediaLeftframe.castShadow = true;
+			scene.add(mediaLeftframe);
+
+		//MEDIA RIGHT DOOR
+			mediaRight1 = new THREE.Mesh (
+			new THREE.BoxGeometry (0.1,20,11),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaRight1.position.x -= 19.5;
+			mediaRight1.position.z += 40.5;
+			mediaRight1.receiveShadow = true;
+			mediaRight1.castShadow = true;
+			scene.add(mediaRight1);
+
+			mediaRight2 = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,20,12),
+				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+				);
+			mediaRight2.position.x -= 19.5;
+			mediaRight2.position.z += 59.2;
+			mediaRight2.receiveShadow = true;
+			mediaRight2.castShadow = true;
+			scene.add(mediaRight2);
+
+			mediaRightframe = new THREE.Mesh (
+				new THREE.BoxGeometry (0.1,5,10),
+				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+				);
+			mediaRightframe.position.x -= 19.5;
+			mediaRightframe.position.z += 51;
+			mediaRightframe.position.y += 8;
+			mediaRightframe.receiveShadow = true;
+			mediaRightframe.castShadow = true;
+			scene.add(mediaRightframe);
+
+		//MEDIA BACK
+			mediaBackmiddle = new THREE.Mesh (
+			new THREE.BoxGeometry (5,20,0.1),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaBackmiddle.position.x = 0;
+			mediaBackmiddle.position.z += 65.2;
+			mediaBackmiddle.receiveShadow = true;
+			mediaBackmiddle.castShadow = true;
+			scene.add(mediaBackmiddle);
+
+			mediaBackleft = new THREE.Mesh (
+			new THREE.BoxGeometry (10,20,0.1),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaBackleft.position.x += 15;
+			mediaBackleft.position.z += 65.2;
+			mediaBackleft.receiveShadow = true;
+			mediaBackleft.castShadow = true;
+			scene.add(mediaBackleft);
+
+			mediaBackright = new THREE.Mesh (
+			new THREE.BoxGeometry (10,20,0.1),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaBackright.position.x -= 15;
+			mediaBackright.position.z += 65.2;
+			mediaBackright.receiveShadow = true;
+			mediaBackright.castShadow = true;
+			scene.add(mediaBackright);
+
+		//MEDIA door frame
+			mediaFrame = new THREE.Mesh (
+			new THREE.BoxGeometry (30,5,0.1),
+			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
+			);
+			mediaFrame.position.y += 8;
+			mediaFrame.position.x -= 5;
+			mediaFrame.position.z += 65.2;
+			mediaFrame.receiveShadow = true;
+			mediaFrame.castShadow = true;
+			scene.add(mediaFrame);
+
+		//EXIT SIGN MEDIA
+			exitMedia = new THREE.Mesh (
+			new THREE.BoxGeometry(0.2,2,5),
+			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
+			);
+			exitMedia.castShadow = true;
+			exitMedia.position.x = 0;
+			exitMedia.position.y += 6.5;
+			exitMedia.position.z += 35.6;
+			exitMedia.rotation.y += Math.PI/2;
+			scene.add(exitMedia);
+
+			exitMediabg = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			exitMediabg.position.x = 0;
+			exitMediabg.position.y += 6.5;
+			exitMediabg.position.z += 35.5;
+			exitMediabg.rotation.y += Math.PI/2;
+			scene.add(exitMediabg);
 
 // Model/Material Loader
 
@@ -1007,183 +1790,300 @@ function init() {
 	ambientLight = new THREE.AmbientLight(0x999999, 0.8);
 	scene.add(ambientLight);
 
-	light = new THREE.PointLight(0xffffff, 1,20);
-	light.position.set(0,6,50);
-	light.castShadow = true;
-	light.shadow.camera.near = 0.1;
-	light.shadow.camera.far = 25;
-	scene.add(light);
+	mediaLight = new THREE.PointLight(0xffffff, 0.5,60);
+	mediaLight.position.set(0,6,50);
+	mediaLight.castShadow = true;
+	mediaLight.shadow.camera.near = 0.1;
+	mediaLight.shadow.camera.far = 25;
+	scene.add(mediaLight);
 
-//HOME Light
-	homeLight = new THREE.PointLight(0xffffff, 0.9,30);
-	homeLight.position.set(0,6,20);
-	homeLight.castShadow = true;
-	homeLight.shadow.camera.near = 0.1;
-	homeLight.shadow.camera.far = 25;
-	scene.add(homeLight);
-//ABOUT Light
-	aboutLight = new THREE.PointLight(0xffffff, 0.7,20);
-	aboutLight.position.set(35,6,20);
-	aboutLight.castShadow = true;
-	aboutLight.shadow.camera.near = 0.1;
-	aboutLight.shadow.camera.far = 25;
-	scene.add(aboutLight);
+	//HOME Light
+		homeLight = new THREE.PointLight(0xffffff, 0.9,30);
+		homeLight.position.set(0,6,20);
+		homeLight.castShadow = true;
+		homeLight.shadow.camera.near = 0.1;
+		homeLight.shadow.camera.far = 25;
+		scene.add(homeLight);
 
-//INTERACTIVE MEDIA Light
-	interactLight = new THREE.PointLight(0xffffff, 0.5,20);
-	interactLight.position.set(-35,6,20);
-	interactLight.castShadow = true;
-	interactLight.shadow.camera.near = 0.1;
-	interactLight.shadow.camera.far = 25;
-	scene.add(interactLight);
+	//FRONT DOOR Light
+		frontLight = new THREE.PointLight(0xffff33, 0.9, 20);
+		frontLight.position.set(0,6,0);
+		frontLight.castShadow = true;
+		frontLight.shadow.camera.near = 0.1;
+		frontLight.shadow.camera.far = 25;
+		scene.add(frontLight);
 
-//MUSIC LIGHT
-	musicLight = new THREE.PointLight(0xffffff, 0.5,20);
-	musicLight.position.set(-35,6,50);
-	musicLight.castShadow = true;
-	musicLight.shadow.camera.near = 0.1;
-	musicLight.shadow.camera.far = 25;
-	scene.add(musicLight);
+		camera.position.set (0,player.height,-5);
+		camera.lookAt(new THREE.Vector3(0,player.height,0));
 
+		renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+		renderer.setClearColor( 0x000000, 0 );
+		renderer.setSize(window.innerWidth, window.innerHeight);
 
-//PHOTO LIGHT
-	photoLight = new THREE.PointLight(0xffffff, 0.5,20);
-	photoLight.position.set(35,6,50);
-	photoLight.castShadow = true;
-	photoLight.shadow.camera.near = 0.1;
-	photoLight.shadow.camera.far = 25;
-	scene.add(photoLight);
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.type = THREE.BasicShadowMap;
 
-//FRONT DOOR Light
-	frontLight = new THREE.PointLight(0xffff33, 0.9, 20);
-	frontLight.position.set(0,6,0);
-	frontLight.castShadow = true;
-	frontLight.shadow.camera.near = 0.1;
-	frontLight.shadow.camera.far = 25;
-	scene.add(frontLight);
+		document.body.appendChild(renderer.domElement);
 
-	camera.position.set (0,player.height,-5);
-	camera.lookAt(new THREE.Vector3(0,player.height,0));
-
-	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
-	renderer.setClearColor( 0x000000, 0 );
-	renderer.setSize(window.innerWidth, window.innerHeight);
-
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.BasicShadowMap;
-
-	document.body.appendChild(renderer.domElement);
-
-	animate();
-}
-
-// Runs when all resources are loaded
-function onResourcesLoaded() {
-	//clone models into meshes
-	meshes["tree1"] = models.tree.mesh.clone();
-	meshes["tree2"] = models.tree.mesh.clone();
-	meshes["tree3"] = models.tree.mesh.clone();
-	meshes["tree4"] = models.tree.mesh.clone();
-	meshes["tree5"] = models.tree.mesh.clone();
-	meshes["tree6"] = models.tree.mesh.clone();
-	meshes["tree7"] = models.tree.mesh.clone();
-	meshes["tree8"] = models.tree.mesh.clone();
-	meshes["tree9"] = models.tree.mesh.clone();
-	meshes["tree10"] = models.tree.mesh.clone();
-	meshes["tree11"] = models.tree.mesh.clone();
-	meshes["tree12"] = models.tree.mesh.clone();
-	meshes["tree13"] = models.tree.mesh.clone();
-	meshes["tree14"] = models.tree.mesh.clone();
-	meshes["tree15"] = models.tree.mesh.clone();
-	meshes["tree16"] = models.tree.mesh.clone();
-	meshes["tree17"] = models.tree.mesh.clone();
-	meshes["tree18"] = models.tree.mesh.clone();
-	meshes["tree19"] = models.tree.mesh.clone();
-	meshes["tree20"] = models.tree.mesh.clone();
-
-	//reposition individual meshes
-	meshes["tree1"].position.set (5, 0.5, -30);
-	meshes["tree1"].scale.set(3,3,3);
-	scene.add(meshes["tree1"]);
-
-	meshes["tree2"].position.set (100, 0.5, 10);
-	meshes["tree2"].scale.set(3,3,3);
-	scene.add(meshes["tree2"]);
-
-	meshes["tree3"].position.set (50, 0.5, -20);
-	meshes["tree3"].scale.set(3,3,3);
-	scene.add(meshes["tree3"]);
-
-	meshes["tree4"].position.set (-50, 0.5, 110);
-	meshes["tree4"].scale.set(2,2,2);
-	scene.add(meshes["tree4"]);
-
-	meshes["tree5"].position.set (-50, 0.5, 110);
-	meshes["tree5"].scale.set(2,2,2);
-	scene.add(meshes["tree5"]);
-
-	meshes["tree6"].position.set (-50, 0.5, 110);
-	meshes["tree6"].scale.set(2,2,2);
-	scene.add(meshes["tree6"]);
-
-	meshes["tree7"].position.set (-50, 0.5, 110);
-	meshes["tree7"].scale.set(2,2,2);
-	scene.add(meshes["tree7"]);
-
-	meshes["tree8"].position.set (-50, 0.5, 110);
-	meshes["tree8"].scale.set(2,2,2);
-	scene.add(meshes["tree8"]);
-
-	meshes["tree9"].position.set (-50, 0.5, 110);
-	meshes["tree9"].scale.set(2,2,2);
-	scene.add(meshes["tree9"]);
-
-	meshes["tree10"].position.set (-50, 0.5, 110);
-	meshes["tree10"].scale.set(2,2,2);
-	scene.add(meshes["tree10"]);
-
-	meshes["tree11"].position.set (-50, 0.5, 110);
-	meshes["tree11"].scale.set(2,2,2);
-	scene.add(meshes["tree11"]);
-
-	meshes["tree12"].position.set (-50, 0.5, 110);
-	meshes["tree12"].scale.set(2,2,2);
-	scene.add(meshes["tree12"]);
-
-	meshes["tree13"].position.set (-50, 0.5, 110);
-	meshes["tree13"].scale.set(2,2,2);
-	scene.add(meshes["tree13"]);
-
-	meshes["tree14"].position.set (-50, 0.5, 110);
-	meshes["tree14"].scale.set(2,2,2);
-	scene.add(meshes["tree14"]);
-
-	meshes["tree15"].position.set (-50, 0.5, 110);
-	meshes["tree15"].scale.set(2,2,2);
-	scene.add(meshes["tree15"]);
-
-	meshes["tree16"].position.set (-50, 0.5, 110);
-	meshes["tree16"].scale.set(2,2,2);
-	scene.add(meshes["tree16"]);
-
-	meshes["tree17"].position.set (-50, 0.5, 110);
-	meshes["tree17"].scale.set(2,2,2);
-	scene.add(meshes["tree17"]);
-
-	meshes["tree18"].position.set (-50, 0.5, 110);
-	meshes["tree18"].scale.set(2,2,2);
-	scene.add(meshes["tree18"]);
-
-	meshes["tree19"].position.set (-30, 0.5, -20);
-	meshes["tree19"].scale.set(2,2,2);
-	scene.add(meshes["tree19"]);
-
-	meshes["tree20"].position.set (50, 0.5, -100);
-	meshes["tree20"].scale.set(4,4,4);
-	scene.add(meshes["tree20"]);
-}
+		animate();
+	}
 
 
+// TREE MESH CLONES
+	function onResourcesLoaded() {
+		//clone models into meshes
+		meshes["tree1"] = models.tree.mesh.clone();
+		meshes["tree2"] = models.tree.mesh.clone();
+		meshes["tree3"] = models.tree.mesh.clone();
+		meshes["tree4"] = models.tree.mesh.clone();
+		meshes["tree5"] = models.tree.mesh.clone();
+		meshes["tree6"] = models.tree.mesh.clone();
+		meshes["tree7"] = models.tree.mesh.clone();
+		meshes["tree8"] = models.tree.mesh.clone();
+		meshes["tree9"] = models.tree.mesh.clone();
+		meshes["tree10"] = models.tree.mesh.clone();
+		meshes["tree11"] = models.tree.mesh.clone();
+		meshes["tree12"] = models.tree.mesh.clone();
+		meshes["tree13"] = models.tree.mesh.clone();
+		meshes["tree14"] = models.tree.mesh.clone();
+		meshes["tree15"] = models.tree.mesh.clone();
+		meshes["tree16"] = models.tree.mesh.clone();
+		meshes["tree17"] = models.tree.mesh.clone();
+		meshes["tree18"] = models.tree.mesh.clone();
+		meshes["tree19"] = models.tree.mesh.clone();
+		meshes["tree20"] = models.tree.mesh.clone();
+		meshes["tree21"] = models.tree.mesh.clone();
+		meshes["tree22"] = models.tree.mesh.clone();
+		meshes["tree23"] = models.tree.mesh.clone();
+		meshes["tree24"] = models.tree.mesh.clone();
+		meshes["tree25"] = models.tree.mesh.clone();
+		meshes["tree26"] = models.tree.mesh.clone();
+		meshes["tree27"] = models.tree.mesh.clone();
+		meshes["tree28"] = models.tree.mesh.clone();
+		meshes["tree29"] = models.tree.mesh.clone();
+		meshes["tree30"] = models.tree.mesh.clone();
+		meshes["tree31"] = models.tree.mesh.clone();
+		meshes["tree32"] = models.tree.mesh.clone();
+		meshes["tree33"] = models.tree.mesh.clone();
+		meshes["tree34"] = models.tree.mesh.clone();
+		meshes["tree35"] = models.tree.mesh.clone();
+		meshes["tree36"] = models.tree.mesh.clone();
+		meshes["tree37"] = models.tree.mesh.clone();
+		meshes["tree38"] = models.tree.mesh.clone();
+		meshes["tree39"] = models.tree.mesh.clone();
+		meshes["tree40"] = models.tree.mesh.clone();
+		meshes["tree41"] = models.tree.mesh.clone();
+		meshes["tree42"] = models.tree.mesh.clone();
+		meshes["tree43"] = models.tree.mesh.clone();
+		meshes["tree44"] = models.tree.mesh.clone();
+		meshes["tree45"] = models.tree.mesh.clone();
+		meshes["tree46"] = models.tree.mesh.clone();
+		meshes["tree47"] = models.tree.mesh.clone();
+		meshes["tree48"] = models.tree.mesh.clone();
+		meshes["tree49"] = models.tree.mesh.clone();
+		meshes["tree50"] = models.tree.mesh.clone();
+
+		//reposition individual meshes
+		meshes["tree1"].position.set (35, 1.5, -30);
+		meshes["tree1"].scale.set(3,3,3);
+		scene.add(meshes["tree1"]);
+
+		meshes["tree2"].position.set (60, 1.5, -10);
+		meshes["tree2"].scale.set(6,6,6);
+		scene.add(meshes["tree2"]);
+
+		meshes["tree3"].position.set (55, 1.5, -20);
+		meshes["tree3"].scale.set(3,3,3);
+		scene.add(meshes["tree3"]);
+
+		meshes["tree4"].position.set (-100, 1.5, -65);
+		meshes["tree4"].scale.set(6,6,6);
+		scene.add(meshes["tree4"]);
+
+		meshes["tree5"].position.set (-75, 1.5, -20);
+		meshes["tree5"].scale.set(3,3,3);
+		scene.add(meshes["tree5"]);
+
+		meshes["tree6"].position.set (-30, 1.5, -30);
+		meshes["tree6"].scale.set(3,3,3);
+		scene.add(meshes["tree6"]);
+
+		meshes["tree7"].position.set (-20, 1.5, -35);
+		meshes["tree7"].scale.set(6,6,6);
+		scene.add(meshes["tree7"]);
+
+		meshes["tree8"].position.set (-55, 1.5, -75);
+		meshes["tree8"].scale.set(3,3,3);
+		scene.add(meshes["tree8"]);
+
+		meshes["tree9"].position.set (75, 1.5, -110);
+		meshes["tree9"].scale.set(3,3,3);
+		scene.add(meshes["tree9"]);
+
+		meshes["tree10"].position.set (55, 1.5, -45);
+		meshes["tree10"].scale.set(6,6,6);
+		scene.add(meshes["tree10"]);
+
+		meshes["tree11"].position.set (-65, 1.5, -55);
+		meshes["tree11"].scale.set(3,3,3);
+		scene.add(meshes["tree11"]);
+
+		meshes["tree12"].position.set (-39, 1.5, -37);
+		meshes["tree12"].scale.set(3,3,3);
+		scene.add(meshes["tree12"]);
+
+		meshes["tree13"].position.set (39, 1.5, -92);
+		meshes["tree13"].scale.set(3,3,3);
+		scene.add(meshes["tree13"]);
+
+		meshes["tree14"].position.set (100, 1.5, -110);
+		meshes["tree14"].scale.set(3,3,3);
+		scene.add(meshes["tree14"]);
+
+		meshes["tree15"].position.set (23, 1.5, -50);
+		meshes["tree15"].scale.set(3,3,3);
+		scene.add(meshes["tree15"]);
+
+		meshes["tree16"].position.set (-89, 1.5, -76);
+		meshes["tree16"].scale.set(6,6,6);
+		scene.add(meshes["tree16"]);
+
+		meshes["tree17"].position.set (40, 1.5, -58);
+		meshes["tree17"].scale.set(3,3,3);
+		scene.add(meshes["tree17"]);
+
+		meshes["tree18"].position.set (-50, 1.5, 110);
+		meshes["tree18"].scale.set(4,4,4);
+		scene.add(meshes["tree18"]);
+
+		meshes["tree19"].position.set (-30, 1.5, -20);
+		meshes["tree19"].scale.set(6,6,6);
+		scene.add(meshes["tree19"]);
+
+		meshes["tree20"].position.set (58, 1.5, 86);
+		meshes["tree20"].scale.set(6,6,6);
+		scene.add(meshes["tree20"]);
+
+		meshes["tree21"].position.set (17, 1.5, -100);
+		meshes["tree21"].scale.set(3,3,3);
+		scene.add(meshes["tree21"]);
+
+		meshes["tree22"].position.set (-10, 1.5, -86);
+		meshes["tree22"].scale.set(3,3,3);
+		scene.add(meshes["tree22"]);
+
+		meshes["tree23"].position.set (-40, 1.5, -15);
+		meshes["tree23"].scale.set(5,6,5);
+		scene.add(meshes["tree23"]);
+
+		meshes["tree24"].position.set (40, 1.5, -58);
+		meshes["tree24"].scale.set(3,3,3);
+		scene.add(meshes["tree24"]);
+
+		meshes["tree25"].position.set (50, 1.5, -58);
+		meshes["tree25"].scale.set(3,3,3);
+		scene.add(meshes["tree25"]);
+
+		meshes["tree26"].position.set (75, 1.5, -40);
+		meshes["tree26"].scale.set(6,6,6);
+		scene.add(meshes["tree26"]);
+
+		meshes["tree27"].position.set (9, 1.5, -95);
+		meshes["tree27"].scale.set(3,3,3);
+		scene.add(meshes["tree27"]);
+
+		meshes["tree28"].position.set (40, 1.5, -58);
+		meshes["tree28"].scale.set(3,3,3);
+		scene.add(meshes["tree28"]);
+
+		meshes["tree29"].position.set (79, 1.5, -65);
+		meshes["tree29"].scale.set(4,4,4);
+		scene.add(meshes["tree29"]);
+
+		meshes["tree30"].position.set (25, 1.5, -10);
+		meshes["tree30"].scale.set(5,5,5);
+		scene.add(meshes["tree30"]);
+
+		meshes["tree31"].position.set (90, 1.5, 90);
+		meshes["tree31"].scale.set(3,3,3);
+		scene.add(meshes["tree31"]);
+
+		meshes["tree32"].position.set (55, 1.5, 67);
+		meshes["tree32"].scale.set(7,7,7);
+		scene.add(meshes["tree32"]);
+
+		meshes["tree33"].position.set (85, 1.5, 103);
+		meshes["tree33"].scale.set(4,4,4);
+		scene.add(meshes["tree33"]);
+
+		meshes["tree34"].position.set (77, 1.5, 30);
+		meshes["tree34"].scale.set(5,5,5);
+		scene.add(meshes["tree34"]);
+
+		meshes["tree35"].position.set (114, 1.5, 63);
+		meshes["tree35"].scale.set(3,3,3);
+		scene.add(meshes["tree35"]);
+
+		meshes["tree36"].position.set (93, 1.5, 50);
+		meshes["tree36"].scale.set(4,4,4);
+		scene.add(meshes["tree36"]);
+
+		meshes["tree37"].position.set (107, 1.5, 113);
+		meshes["tree37"].scale.set(4,4,4);
+		scene.add(meshes["tree37"]);
+
+		meshes["tree38"].position.set (105, 1.5, 54);
+		meshes["tree38"].scale.set(6,6,6);
+		scene.add(meshes["tree38"]);
+
+		meshes["tree39"].position.set (115, 1.5, 26);
+		meshes["tree39"].scale.set(6,6,6);
+		scene.add(meshes["tree39"]);
+
+		meshes["tree40"].position.set (-60, 1.5, 81);
+		meshes["tree40"].scale.set(3,3,3);
+		scene.add(meshes["tree40"]);
+
+		meshes["tree41"].position.set (-90, 1.5, 90);
+		meshes["tree41"].scale.set(3,3,3);
+		scene.add(meshes["tree41"]);
+
+		meshes["tree42"].position.set (-76, 1.5, 67);
+		meshes["tree42"].scale.set(7,7,7);
+		scene.add(meshes["tree42"]);
+
+		meshes["tree43"].position.set (-85, 1.5, 103);
+		meshes["tree43"].scale.set(4,4,4);
+		scene.add(meshes["tree43"]);
+
+		meshes["tree44"].position.set (-77, 1.5, 30);
+		meshes["tree44"].scale.set(5,5,5);
+		scene.add(meshes["tree44"]);
+
+		meshes["tree45"].position.set (-114, 1.5, 63);
+		meshes["tree45"].scale.set(3,3,3);
+		scene.add(meshes["tree45"]);
+
+		meshes["tree46"].position.set (-93, 1.5, 50);
+		meshes["tree46"].scale.set(4,4,4);
+		scene.add(meshes["tree46"]);
+
+		meshes["tree47"].position.set (-107, 1.5, 113);
+		meshes["tree47"].scale.set(4,4,4);
+		scene.add(meshes["tree47"]);
+
+		meshes["tree48"].position.set (-105, 1.5, 54);
+		meshes["tree48"].scale.set(6,6,6);
+		scene.add(meshes["tree48"]);
+
+		meshes["tree49"].position.set (-115, 1.5, 26);
+		meshes["tree49"].scale.set(6,6,6);
+		scene.add(meshes["tree49"]);
+
+		meshes["tree50"].position.set (-60, 1.5, 81);
+		meshes["tree50"].scale.set(3,3,3);
+		scene.add(meshes["tree50"]);
+	}
 
 function animate(){
 
