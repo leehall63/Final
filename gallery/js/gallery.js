@@ -1,7 +1,5 @@
-// 'use strict';
-
-// Physijs.scripts.worker = 'js/physijs_worker.js';
-// Physijs.scripts.ammo = 'js/Physijs/examples/js/ammo.js';
+Physijs.scripts.worker = 'Physijs/physijs_worker.js';
+Physijs.scripts.ammo = 'Physijs/examples/js/ammo.js';
 
 var scene, camera, controls, renderer, mesh;
 var meshFloor;
@@ -19,7 +17,7 @@ var USE_WIREFRAME = false;
 var loadingScreen = {
 	scene: new THREE.Scene(),
 	camera: new THREE.PerspectiveCamera (70, window.innerWidth/window.innerHeight, 0.5, 500),
-	box: new THREE.Mesh (
+	box: new Physijs.BoxMesh (
 		new THREE.BoxGeometry(0.5,0.5,0.5),
 		new THREE.MeshBasicMaterial({color: 0x4444ff})
 		)
@@ -61,7 +59,7 @@ function instructionsRemove(id, className) {
 
 function init() {
 
-	scene = new THREE.Scene();
+	scene = new Physijs.Scene();
 	camera = new THREE.PerspectiveCamera (70, window.innerWidth/window.innerHeight, 0.5, 500);
 
 	loadingScreen.box.position.set (0,0,5);
@@ -81,7 +79,7 @@ function init() {
 	};
 
 //create MAIN GALLERY Frame
-	leftWall = new THREE.Mesh (
+	leftWall = new Physijs.BoxMesh (
 		new THREE.BoxGeometry (1,20,100),
 		new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
 		);
@@ -92,7 +90,7 @@ function init() {
 	scene.add(leftWall);
 
 	//create first white wall
-		whiteWall1 = new THREE.Mesh (
+		whiteWall1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (47,20,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
@@ -103,7 +101,7 @@ function init() {
 			scene.add(whiteWall1);
 
 	//create second white wall
-		whiteWall2 = new THREE.Mesh (
+		whiteWall2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (47,20,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
@@ -114,7 +112,7 @@ function init() {
 			scene.add(whiteWall2);
 
 	//create top of door frame for white wall
-		whiteWall3 = new THREE.Mesh (
+		whiteWall3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (25,4,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false}) 
 				);
@@ -125,7 +123,7 @@ function init() {
 			scene.add(whiteWall3);
 
 	//create right wall
-		rightWall = new THREE.Mesh (
+		rightWall = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (1,20,100),
 				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
 				);
@@ -136,7 +134,7 @@ function init() {
 			scene.add(rightWall);
 
 	//create blue wall
-		blueWall = new THREE.Mesh (
+		blueWall = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (101,20,1),
 				new THREE.MeshPhongMaterial({color:0xf0f0f0, wireframe:false})
 				);
@@ -146,7 +144,7 @@ function init() {
 			scene.add(blueWall);
 
 	//create ceiling
-		ceiling = new THREE.Mesh (
+		ceiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (101,1,101),
 				new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false})
 				);
@@ -158,7 +156,7 @@ function init() {
 
 
 	//create the gallery floor
-		floor = new THREE.Mesh (
+		floor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (100,1,100),
 				new THREE.MeshBasicMaterial({color:0xffffff, wireframe:false})
 				);
@@ -180,9 +178,11 @@ function init() {
 //create HOME section
 	//CONTENT
 		//BACK WALL
-			homePicback1 = new THREE.Mesh (
+			hometexture1 = new textureLoader.load("../images/home/seattle tree.jpg");
+
+			homePicback1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(11,8,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: hometexture1, wireframe: false })
 				);
 				homePicback1.castShadow = true;
 				homePicback1.position.x += 12;
@@ -190,9 +190,11 @@ function init() {
 				homePicback1.position.z += 34.5;
 				scene.add(homePicback1);
 
-			homePicback2 = new THREE.Mesh (
+			hometexture2 = new textureLoader.load("../images/home/aquarium.jpg");
+
+			homePicback2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(11,8,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: hometexture2, wireframe: false })
 				);
 				homePicback2.castShadow = true;
 				homePicback2.position.x -= 12;
@@ -201,9 +203,11 @@ function init() {
 				scene.add(homePicback2);
 
 		//FRONT WALL
-			homePicfront1 = new THREE.Mesh (
+			hometexture3 = new textureLoader.load("../images/home/mcHenry.jpg");
+
+			homePicfront1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(11,8,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: hometexture3, wireframe: false })
 				);
 				homePicfront1.castShadow = true;
 				homePicfront1.position.x += 12;
@@ -211,9 +215,11 @@ function init() {
 				homePicfront1.position.z += 6;
 				scene.add(homePicfront1);
 
-			homePicfront2 = new THREE.Mesh (
+			hometexture4 = new textureLoader.load("../images/home/lanterns.jpg");
+
+			homePicfront2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(11,8,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:hometexture4, wireframe: false })
 				);
 				homePicfront2.castShadow = true;
 				homePicfront2.position.x -= 12;
@@ -222,7 +228,7 @@ function init() {
 				scene.add(homePicfront2);
 
 	//Exhibit Signs
-		aboutSignbg = new THREE.Mesh (
+		aboutSignbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (5,2,0.2),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
@@ -232,7 +238,7 @@ function init() {
 		aboutSignbg.rotation.y += Math.PI/2;
 		scene.add(aboutSignbg);
 
-		interactiveSignbg = new THREE.Mesh (
+		interactiveSignbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (5,2,0.2),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
@@ -242,7 +248,7 @@ function init() {
 		interactiveSignbg.rotation.y += Math.PI/2;
 		scene.add(interactiveSignbg);
 
-		mediaSignbg = new THREE.Mesh (
+		mediaSignbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.2,2,5),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
@@ -254,7 +260,7 @@ function init() {
 
 	//WALLS
 		//HOME Left Wall
-			homeLeftdoor1 = new THREE.Mesh (
+			homeLeftdoor1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -264,7 +270,7 @@ function init() {
 			homeLeftdoor1.castShadow = true;
 			scene.add(homeLeftdoor1);
 
-			homeLeftdoor2 = new THREE.Mesh (
+			homeLeftdoor2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -274,7 +280,7 @@ function init() {
 			homeLeftdoor2.castShadow = true;
 			scene.add(homeLeftdoor2);
 
-			homeLeftdoorframe = new THREE.Mesh (
+			homeLeftdoorframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,5,10),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -286,7 +292,7 @@ function init() {
 			scene.add(homeLeftdoorframe);
 
 		//HOME Right Wall
-			homeRightdoor1 = new THREE.Mesh (
+			homeRightdoor1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -296,7 +302,7 @@ function init() {
 			homeRightdoor1.castShadow = true;
 			scene.add(homeRightdoor1);
 
-			homeRightdoor2 = new THREE.Mesh (
+			homeRightdoor2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -306,7 +312,7 @@ function init() {
 			homeRightdoor2.castShadow = true;
 			scene.add(homeRightdoor2);
 
-			homeRightdoorframe = new THREE.Mesh (
+			homeRightdoorframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,5,10),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -318,7 +324,7 @@ function init() {
 			scene.add(homeRightdoorframe);
 
 		//HOME Back Wall
-			homeBackdoor1 = new THREE.Mesh (
+			homeBackdoor1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (16,20,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -328,7 +334,7 @@ function init() {
 			homeBackdoor1.castShadow = true;
 			scene.add(homeBackdoor1);
 
-			homeBackdoor2 = new THREE.Mesh (
+			homeBackdoor2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (16,20,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -338,7 +344,7 @@ function init() {
 			homeBackdoor2.castShadow = true;
 			scene.add(homeBackdoor2);
 
-			homeBackdoorframe = new THREE.Mesh (
+			homeBackdoorframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (10,6,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -350,7 +356,7 @@ function init() {
 			scene.add(homeBackdoorframe);
 
 		//HOME Front Wall
-			homeFrontdoor1 = new THREE.Mesh (
+			homeFrontdoor1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (17,20,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -360,7 +366,7 @@ function init() {
 			homeFrontdoor1.castShadow = true;
 			scene.add(homeFrontdoor1);
 
-			homeFrontdoor2 = new THREE.Mesh (
+			homeFrontdoor2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (17,20,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -370,7 +376,7 @@ function init() {
 			homeFrontdoor2.castShadow = true;
 			scene.add(homeFrontdoor2);
 
-			homeFrontdoorframe = new THREE.Mesh (
+			homeFrontdoorframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (10,4,0.1),
 				new THREE.MeshBasicMaterial({color:0x636363, wireframe:false}) 
 				);
@@ -382,7 +388,7 @@ function init() {
 			scene.add(homeFrontdoorframe);
 
 		//HOME Ceiling
-			homeCeiling = new THREE.Mesh (
+			homeCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (40,0.5,30),
 				new THREE.MeshBasicMaterial({color:0x444444, wireframe:false})
 				);
@@ -394,7 +400,7 @@ function init() {
 			scene.add(homeCeiling);
 
 		//HOME Floor
-			homeFloor = new THREE.Mesh (
+			homeFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (40,0.5,30.7),
 				new THREE.MeshBasicMaterial({color:0x444444, wireframe:false})
 				);
@@ -406,7 +412,7 @@ function init() {
 			scene.add(homeFloor);
 
 	//EXIT SIGN HOME
-			exitHome = new THREE.Mesh (
+			exitHome = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(0.2,2,5),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -417,7 +423,7 @@ function init() {
 			exitHome.rotation.y += Math.PI/2;
 			scene.add(exitHome);
 
-			exitHomebg = new THREE.Mesh (
+			exitHomebg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -431,7 +437,7 @@ function init() {
 
 	profiletexture = new textureLoader.load("../images/Edited Headshot-1.jpg");
 
-	profilePic = new THREE.Mesh (
+	profilePic = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,8,12),
 	new THREE.MeshBasicMaterial({ map: profiletexture, wireframe: false })
 	);
@@ -441,7 +447,7 @@ function init() {
 	profilePic.position.z += 13.5;
 	scene.add(profilePic);
 
-	biographyBg = new THREE.Mesh (
+	biographyBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,8,10),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -453,7 +459,7 @@ function init() {
 
 	contacttexture = new textureLoader.load("../images/camera.jpg");
 
-	contactPic = new THREE.Mesh (
+	contactPic = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,7,10),
 	new THREE.MeshBasicMaterial({ map: contacttexture, wireframe: false })
 	);
@@ -464,7 +470,7 @@ function init() {
 	contactPic.rotation.y += Math.PI/2;
 	scene.add(contactPic);
 
-	contactBg = new THREE.Mesh (
+	contactBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2,7),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -475,7 +481,7 @@ function init() {
 	contactBg.rotation.y += Math.PI/2;
 	scene.add(contactBg);
 
-	emailBg = new THREE.Mesh (
+	emailBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,5,8),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -486,7 +492,7 @@ function init() {
 	emailBg.rotation.y += Math.PI/2;
 	scene.add(emailBg);
 
-	twitterBg = new THREE.Mesh (
+	twitterBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -497,7 +503,7 @@ function init() {
 	twitterBg.rotation.y += Math.PI/2;
 	scene.add(twitterBg);
 
-	ytBg = new THREE.Mesh (
+	ytBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -508,7 +514,7 @@ function init() {
 	ytBg.rotation.y += Math.PI/2;
 	scene.add(ytBg);
 
-	instaBg = new THREE.Mesh (
+	instaBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -519,7 +525,7 @@ function init() {
 	instaBg.rotation.y += Math.PI/2;
 	scene.add(instaBg);
 
-	linkedBg = new THREE.Mesh (
+	linkedBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
 	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 	);
@@ -532,7 +538,7 @@ function init() {
 
 	//RESUME WALL
 		worktexture = new textureLoader.load("../images/Work.png");
-		workBG = new THREE.Mesh (
+		workBG = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (8,8,0.2),
 			new THREE.MeshBasicMaterial({map: worktexture, wireframe:false}) 
 			);
@@ -544,7 +550,7 @@ function init() {
 		scene.add(workBG);
 
 		educationtexture = new textureLoader.load("../images/Education.png");
-		educationBG = new THREE.Mesh (
+		educationBG = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (7,4,0.2),
 			new THREE.MeshBasicMaterial({map: educationtexture, wireframe:false}) 
 			);
@@ -556,7 +562,7 @@ function init() {
 		scene.add(educationBG);
 
 		skilltexture = new textureLoader.load("../images/Skills.png");
-		extracurricularBG = new THREE.Mesh (
+		extracurricularBG = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (9,4,0.2),
 			new THREE.MeshBasicMaterial({map: skilltexture, wireframe:false}) 
 			);
@@ -569,7 +575,7 @@ function init() {
 
 	//EXIT SIGN ABOUT
 
-		exitAbout = new THREE.Mesh (
+		exitAbout = new Physijs.BoxMesh (
 		new THREE.BoxGeometry(5,2,0.2),
 		new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 		);
@@ -579,7 +585,7 @@ function init() {
 		exitAbout.rotation.y += Math.PI/2;
 		scene.add(exitAbout);
 
-		exitAboutbg = new THREE.Mesh (
+		exitAboutbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (5,2,0.2),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 			);
@@ -599,7 +605,7 @@ function init() {
 
 
 	//ABOUT WALLS
-		aboutDoor2 = new THREE.Mesh (
+		aboutDoor2 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -609,7 +615,7 @@ function init() {
 		aboutDoor2.castShadow = true;
 		scene.add(aboutDoor2);
 
-		aboutDoor1 = new THREE.Mesh (
+		aboutDoor1 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -619,7 +625,7 @@ function init() {
 		aboutDoor1.castShadow = true;
 		scene.add(aboutDoor1);
 
-		aboutFrame = new THREE.Mesh (
+		aboutFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,5,10),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -630,7 +636,7 @@ function init() {
 		aboutFrame.castShadow = true;
 		scene.add(aboutFrame);
 
-		aboutBack = new THREE.Mesh (
+		aboutBack = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,30),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -640,7 +646,7 @@ function init() {
 		aboutBack.castShadow = true;
 		scene.add(aboutBack);
 
-		aboutLeft = new THREE.Mesh (
+		aboutLeft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -650,7 +656,7 @@ function init() {
 		aboutLeft.castShadow = true;
 		scene.add(aboutLeft);
 
-		aboutRight = new THREE.Mesh (
+		aboutRight = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x772fe2, wireframe:false}) 
 			);
@@ -660,7 +666,7 @@ function init() {
 		aboutRight.castShadow = true;
 		scene.add(aboutRight);
 
-		aboutCeiling = new THREE.Mesh (
+		aboutCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,0.5,30),
 				new THREE.MeshBasicMaterial({color:0x4e0893, wireframe:false})
 				);
@@ -671,7 +677,7 @@ function init() {
 			aboutCeiling.castShadow = true;
 			scene.add(aboutCeiling);
 
-		aboutFloor = new THREE.Mesh (
+		aboutFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,1,30),
 				new THREE.MeshBasicMaterial({color:0x4e0893, wireframe:false})
 				);
@@ -706,7 +712,7 @@ function init() {
 
 				polylane1texture = new textureLoader.load("../images/music/polylane-logo.png");
 
-				polylane1 = new THREE.Mesh (
+				polylane1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,6,9),
 				new THREE.MeshBasicMaterial({ map:polylane1texture, wireframe: false })
 				);
@@ -718,9 +724,12 @@ function init() {
 
 				polylane1.add(sunbreak);
 
-				polylane2 = new THREE.Mesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+
+				polylane2texture = new textureLoader.load("../images/music/Retrograde.png")
+
+				polylane2 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,7),
+				new THREE.MeshBasicMaterial({ map:polylane2texture, wireframe: false })
 				);
 				polylane2.castShadow = true;
 				polylane2.position.x -= 48.7;
@@ -728,9 +737,11 @@ function init() {
 				polylane2.position.z += 61;
 				scene.add(polylane2);
 
-				polylane3 = new THREE.Mesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				polylane3texture = new textureLoader.load("../images/music/Fullset.png")
+
+				polylane3 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,7),
+				new THREE.MeshBasicMaterial({ map: polylane3texture, wireframe: false })
 				);
 				polylane3.castShadow = true;
 				polylane3.position.x -= 48.7;
@@ -740,9 +751,9 @@ function init() {
 
 			//TSBU (LEFT WALL)
 
-				tsbuDemo1 = new THREE.Mesh (
+				tsbuDemo1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,9,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false })
 				);
 				tsbuDemo1.castShadow = true;
 				tsbuDemo1.position.x -= 25;
@@ -750,9 +761,7 @@ function init() {
 				tsbuDemo1.position.z += 64.5;
 				scene.add(tsbuDemo1);
 
-
-
-				tsbuDemo2 = new THREE.Mesh (
+				tsbuDemo2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,9,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -763,9 +772,11 @@ function init() {
 				scene.add(tsbuDemo2);
 
 			//RIGHT WALL
-				drums1 = new THREE.Mesh (
+				drumtexture = new textureLoader.load("../images/music/drumsPic.jpg")
+
+				drums1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: drumtexture, wireframe: false })
 				);
 				drums1.castShadow = true;
 				drums1.position.x -= 35;
@@ -773,9 +784,11 @@ function init() {
 				drums1.position.z += 36.5;
 				scene.add(drums1);
 
-				bass1 = new THREE.Mesh (
+				basstexture = new textureLoader.load("../images/music/bassPic.jpg")
+
+				bass1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:basstexture, wireframe: false })
 				);
 				bass1.castShadow = true;
 				bass1.position.x -= 45;
@@ -783,7 +796,7 @@ function init() {
 				bass1.position.z += 36.5;
 				scene.add(bass1);
 
-				guitar1 = new THREE.Mesh (
+				guitar1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -794,7 +807,7 @@ function init() {
 				scene.add(guitar1);
 	
 	//WALLS
-		musicDoor1 = new THREE.Mesh (
+		musicDoor1 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -804,7 +817,7 @@ function init() {
 		musicDoor1.castShadow = true;
 		scene.add(musicDoor1);
 
-		musicDoor2 = new THREE.Mesh (
+		musicDoor2 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -814,7 +827,7 @@ function init() {
 		musicDoor2.castShadow = true;
 		scene.add(musicDoor2);
 
-		musicFrame = new THREE.Mesh (
+		musicFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,5,10),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -825,7 +838,7 @@ function init() {
 		musicFrame.castShadow = true;
 		scene.add(musicFrame);
 
-		musicBack = new THREE.Mesh (
+		musicBack = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,30),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -835,7 +848,7 @@ function init() {
 		musicBack.castShadow = true;
 		scene.add(musicBack);
 
-		musicLeft = new THREE.Mesh (
+		musicLeft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -845,7 +858,7 @@ function init() {
 		musicLeft.castShadow = true;
 		scene.add(musicLeft);
 
-		musicRight = new THREE.Mesh (
+		musicRight = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0xa53d30, wireframe:false}) 
 			);
@@ -855,7 +868,7 @@ function init() {
 		musicRight.castShadow = true;
 		scene.add(musicRight);
 
-		musicCeiling = new THREE.Mesh (
+		musicCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,0.5,30),
 				new THREE.MeshBasicMaterial({color:0x772c22, wireframe:false})
 				);
@@ -864,7 +877,7 @@ function init() {
 			musicCeiling.position.x -= 35;
 			scene.add(musicCeiling);
 
-		musicFloor = new THREE.Mesh (
+		musicFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,1,30),
 				new THREE.MeshBasicMaterial({color:0x772c22, wireframe:false})
 				);
@@ -875,7 +888,7 @@ function init() {
 
 		//EXIT SIGN MUSIC
 
-			exitMusic = new THREE.Mesh (
+			exitMusic = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(5,2,0.2),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -885,7 +898,7 @@ function init() {
 			exitMusic.rotation.y += Math.PI/2;
 			scene.add(exitMusic);
 
-			exitMusicbg = new THREE.Mesh (
+			exitMusicbg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -897,7 +910,7 @@ function init() {
 
 //create INTERACTIVE Section
 
-		interactDoor2 = new THREE.Mesh (
+		interactDoor2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (1,20,12),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -907,7 +920,7 @@ function init() {
 			interactDoor2.castShadow = true;
 			scene.add(interactDoor2);
 
-			interactDoor1 = new THREE.Mesh (
+			interactDoor1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (1,20,12),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -917,7 +930,7 @@ function init() {
 			interactDoor1.castShadow = true;
 			scene.add(interactDoor1);
 
-			interactFrame = new THREE.Mesh (
+			interactFrame = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (1,5,10),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -928,7 +941,7 @@ function init() {
 			interactFrame.castShadow = true;
 			scene.add(interactFrame);
 
-			interactBack = new THREE.Mesh (
+			interactBack = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.5,20,30),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -938,7 +951,7 @@ function init() {
 			interactBack.castShadow = true;
 			scene.add(interactBack);
 
-			interactLeft = new THREE.Mesh (
+			interactLeft = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,20,0.5),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -948,7 +961,7 @@ function init() {
 			interactLeft.castShadow = true;
 			scene.add(interactLeft);
 
-			interactRight = new THREE.Mesh (
+			interactRight = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,20,0.5),
 				new THREE.MeshBasicMaterial({color:0xffb6ad, wireframe:false}) 
 				);
@@ -958,7 +971,7 @@ function init() {
 			interactRight.castShadow = true;
 			scene.add(interactRight);
 
-			interactCeiling = new THREE.Mesh (
+			interactCeiling = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (30,0.5,30),
 					new THREE.MeshBasicMaterial({color:0xd69991, wireframe:false})
 					);
@@ -969,7 +982,7 @@ function init() {
 				interactCeiling.castShadow = true;
 				scene.add(interactCeiling);
 
-			interactFloor = new THREE.Mesh (
+			interactFloor = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (30,1,30),
 					new THREE.MeshBasicMaterial({color:0xd69991, wireframe:false})
 					);
@@ -981,7 +994,7 @@ function init() {
 				scene.add(interactFloor);
 
 			//EXIT SIGN INTERACT
-				exitinteract = new THREE.Mesh (
+				exitinteract = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(5,2,0.2),
 				new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 				);
@@ -992,7 +1005,7 @@ function init() {
 				exitinteract.rotation.y += Math.PI/2;
 				scene.add(exitinteract);
 
-				exitInteractbg = new THREE.Mesh (
+				exitInteractbg = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (5,2,0.2),
 					new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 					);
@@ -1014,7 +1027,7 @@ function init() {
 	//CONTENT
 		//BACK WALL
 			//TOP ROW
-				galleryPictop1 = new THREE.Mesh (
+				galleryPictop1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1024,7 +1037,7 @@ function init() {
 				galleryPictop1.position.z += 40;
 				scene.add(galleryPictop1);
 
-				galleryPictop2 = new THREE.Mesh (
+				galleryPictop2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1034,7 +1047,7 @@ function init() {
 				galleryPictop2.position.z += 47;
 				scene.add(galleryPictop2);
 
-				galleryPictop3 = new THREE.Mesh (
+				galleryPictop3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1044,7 +1057,7 @@ function init() {
 				galleryPictop3.position.z += 54;
 				scene.add(galleryPictop3);
 
-				galleryPictop4 = new THREE.Mesh (
+				galleryPictop4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1055,7 +1068,7 @@ function init() {
 				scene.add(galleryPictop4);
 
 			//BOTTOM ROW
-				galleryPicbottom1 = new THREE.Mesh (
+				galleryPicbottom1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1065,7 +1078,7 @@ function init() {
 				galleryPicbottom1.position.z += 40;
 				scene.add(galleryPicbottom1);
 
-				galleryPicbottom2 = new THREE.Mesh (
+				galleryPicbottom2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1075,7 +1088,7 @@ function init() {
 				galleryPicbottom2.position.z += 47;
 				scene.add(galleryPicbottom2);
 
-				galleryPicbottom3 = new THREE.Mesh (
+				galleryPicbottom3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1085,7 +1098,7 @@ function init() {
 				galleryPicbottom3.position.z += 54;
 				scene.add(galleryPicbottom3);
 
-				galleryPicbottom4 = new THREE.Mesh (
+				galleryPicbottom4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1097,7 +1110,7 @@ function init() {
 
 		//LEFT WALL
 			//TOP ROW
-				galleryPiclefttop1 = new THREE.Mesh (
+				galleryPiclefttop1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1107,7 +1120,7 @@ function init() {
 				galleryPiclefttop1.position.z += 36.5;
 				scene.add(galleryPiclefttop1);
 
-				galleryPiclefttop2 = new THREE.Mesh (
+				galleryPiclefttop2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1117,7 +1130,7 @@ function init() {
 				galleryPiclefttop2.position.z += 36.5;
 				scene.add(galleryPiclefttop2);
 
-				galleryPiclefttop3 = new THREE.Mesh (
+				galleryPiclefttop3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1127,7 +1140,7 @@ function init() {
 				galleryPiclefttop3.position.z += 36.5;
 				scene.add(galleryPiclefttop3);
 
-				galleryPiclefttop4 = new THREE.Mesh (
+				galleryPiclefttop4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1138,7 +1151,7 @@ function init() {
 				scene.add(galleryPiclefttop4);
 
 			//BOTTOM ROW
-				galleryPicleftbottom1 = new THREE.Mesh (
+				galleryPicleftbottom1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1148,7 +1161,7 @@ function init() {
 				galleryPicleftbottom1.position.z += 36.5;
 				scene.add(galleryPicleftbottom1);
 
-				galleryPicleftbottom2 = new THREE.Mesh (
+				galleryPicleftbottom2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1158,7 +1171,7 @@ function init() {
 				galleryPicleftbottom2.position.z += 36.5;
 				scene.add(galleryPicleftbottom2);
 
-				galleryPicleftbottom3 = new THREE.Mesh (
+				galleryPicleftbottom3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1168,7 +1181,7 @@ function init() {
 				galleryPicleftbottom3.position.z += 36.5;
 				scene.add(galleryPicleftbottom3);
 
-				galleryPicleftbottom4 = new THREE.Mesh (
+				galleryPicleftbottom4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1180,7 +1193,7 @@ function init() {
 
 		//RIGHT WALL
 			//TOP ROW
-				galleryPicrighttop1 = new THREE.Mesh (
+				galleryPicrighttop1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1190,7 +1203,7 @@ function init() {
 				galleryPicrighttop1.position.z += 64.5;
 				scene.add(galleryPicrighttop1);
 
-				galleryPicrighttop2 = new THREE.Mesh (
+				galleryPicrighttop2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1200,7 +1213,7 @@ function init() {
 				galleryPicrighttop2.position.z += 64.5;
 				scene.add(galleryPicrighttop2);
 
-				galleryPicrighttop3 = new THREE.Mesh (
+				galleryPicrighttop3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1210,7 +1223,7 @@ function init() {
 				galleryPicrighttop3.position.z += 64.5;
 				scene.add(galleryPicrighttop3);
 
-				galleryPicrighttop4 = new THREE.Mesh (
+				galleryPicrighttop4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1221,7 +1234,7 @@ function init() {
 				scene.add(galleryPicrighttop4);
 
 			//BOTTOM ROW
-				galleryPicrightbottom1 = new THREE.Mesh (
+				galleryPicrightbottom1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1231,7 +1244,7 @@ function init() {
 				galleryPicrightbottom1.position.z += 64.5;
 				scene.add(galleryPicrightbottom1);
 
-				galleryPicrightbottom2 = new THREE.Mesh (
+				galleryPicrightbottom2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1241,7 +1254,7 @@ function init() {
 				galleryPicrightbottom2.position.z += 64.5;
 				scene.add(galleryPicrightbottom2);
 
-				galleryPicrightbottom3 = new THREE.Mesh (
+				galleryPicrightbottom3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1251,7 +1264,7 @@ function init() {
 				galleryPicrightbottom3.position.z += 64.5;
 				scene.add(galleryPicrightbottom3);
 
-				galleryPicrightbottom4 = new THREE.Mesh (
+				galleryPicrightbottom4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1263,7 +1276,7 @@ function init() {
 
 		//FRONT WALL
 			//TOP ROW
-				galleryPicfront1 = new THREE.Mesh (
+				galleryPicfront1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,9,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1273,7 +1286,7 @@ function init() {
 				galleryPicfront1.position.z += 41;
 				scene.add(galleryPicfront1);
 
-				galleryPicfront2 = new THREE.Mesh (
+				galleryPicfront2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,9,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1284,7 +1297,7 @@ function init() {
 				scene.add(galleryPicfront2);
 
 	//WALLS
-		photoDoor1 = new THREE.Mesh (
+		photoDoor1 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1294,7 +1307,7 @@ function init() {
 		photoDoor1.castShadow = true;
 		scene.add(photoDoor1);
 
-		photoDoor2 = new THREE.Mesh (
+		photoDoor2 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,20,12),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1304,7 +1317,7 @@ function init() {
 		photoDoor2.castShadow = true;
 		scene.add(photoDoor2);
 
-		photoFrame = new THREE.Mesh (
+		photoFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (1,5,10),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1315,7 +1328,7 @@ function init() {
 		photoFrame.castShadow = true;
 		scene.add(photoFrame);
 
-		photoBack = new THREE.Mesh (
+		photoBack = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,30),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1325,7 +1338,7 @@ function init() {
 		photoBack.castShadow = true;
 		scene.add(photoBack);
 
-		photoLeft = new THREE.Mesh (
+		photoLeft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1335,7 +1348,7 @@ function init() {
 		photoLeft.castShadow = true;
 		scene.add(photoLeft);
 
-		photoRight = new THREE.Mesh (
+		photoRight = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,20,0.5),
 			new THREE.MeshBasicMaterial({color:0xd86b27, wireframe:false}) 
 			);
@@ -1345,7 +1358,7 @@ function init() {
 		photoRight.castShadow = true;
 		scene.add(photoRight);
 
-		photoCeiling = new THREE.Mesh (
+		photoCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,0.5,30),
 				new THREE.MeshBasicMaterial({color:0xb2571e, wireframe:false})
 				);
@@ -1356,7 +1369,7 @@ function init() {
 			photoCeiling.castShadow = true;
 			scene.add(photoCeiling);
 
-		photoFloor = new THREE.Mesh (
+		photoFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (30,1,30),
 				new THREE.MeshBasicMaterial({color:0xb2571e, wireframe:false})
 				);
@@ -1369,7 +1382,7 @@ function init() {
 
 		//EXIT SIGN PHOTO
 
-			exitPhoto = new THREE.Mesh (
+			exitPhoto = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(5,2,0.2),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -1379,7 +1392,7 @@ function init() {
 			exitPhoto.rotation.y += Math.PI/2;
 			scene.add(exitPhoto);
 
-			exitPhotobg = new THREE.Mesh (
+			exitPhotobg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1390,7 +1403,7 @@ function init() {
 			scene.add(exitPhotobg);
 
 //create PROJECTIONS Section
-		projectionsDoorleft = new THREE.Mesh (
+		projectionsDoorleft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1400,7 +1413,7 @@ function init() {
 		projectionsDoorleft.castShadow = true;
 		scene.add(projectionsDoorleft);
 
-		projectionsDoorright = new THREE.Mesh (
+		projectionsDoorright = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (3,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1410,7 +1423,7 @@ function init() {
 		projectionsDoorright.castShadow = true;
 		scene.add(projectionsDoorright);
 
-		projectionsFrame = new THREE.Mesh (
+		projectionsFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (10,5,0.5),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1421,7 +1434,7 @@ function init() {
 		projectionsFrame.castShadow = true;
 		scene.add(projectionsFrame);
 
-		projectionsBack = new THREE.Mesh (
+		projectionsBack = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (50,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1431,7 +1444,7 @@ function init() {
 		projectionsBack.castShadow = true;
 		scene.add(projectionsBack);
 
-		projectionsLeft = new THREE.Mesh (
+		projectionsLeft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,40),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1441,7 +1454,7 @@ function init() {
 		projectionsLeft.castShadow = true;
 		scene.add(projectionsLeft);
 
-		projectionsRight = new THREE.Mesh (
+		projectionsRight = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,39),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
 			);
@@ -1451,7 +1464,7 @@ function init() {
 		projectionsRight.castShadow = true;
 		scene.add(projectionsRight);
 
-		projectionsFloor = new THREE.Mesh (
+		projectionsFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (49,1,39),
 				new THREE.MeshBasicMaterial({color:0x119dc4, wireframe:false})
 				);
@@ -1462,7 +1475,7 @@ function init() {
 			projectionsFloor.castShadow = true;
 			scene.add(projectionsFloor);
 
-		projectionsCeiling = new THREE.Mesh (
+		projectionsCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (49,1,39),
 				new THREE.MeshBasicMaterial({color:0x119dc4, wireframe:false})
 				);
@@ -1474,7 +1487,7 @@ function init() {
 			scene.add(projectionsCeiling);
 
 		//EXIT SIGN PROJECTIONS
-			exitProjections = new THREE.Mesh (
+			exitProjections = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(0.2,2,5),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -1485,7 +1498,7 @@ function init() {
 			exitProjections.rotation.y += Math.PI/2;
 			scene.add(exitProjections);
 
-			exitProjectionsbg = new THREE.Mesh (
+			exitProjectionsbg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1498,8 +1511,18 @@ function init() {
 			scene.add(exitProjectionsbg);
 
 //create VIDEO Section
-
-		videoDoorright = new THREE.Mesh (
+	//CONTENT
+		playitbyear = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,8,14),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				playitbyear.castShadow = true;
+				playitbyear.position.x += 48.5;
+				playitbyear.position.y += 4.7;
+				playitbyear.position.z += 80;
+				scene.add(playitbyear);
+	//WALLS
+		videoDoorright = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1509,7 +1532,7 @@ function init() {
 		videoDoorright.castShadow = true;
 		scene.add(videoDoorright);
 
-		videoDoorleft = new THREE.Mesh (
+		videoDoorleft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (3,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1519,7 +1542,7 @@ function init() {
 		videoDoorleft.castShadow = true;
 		scene.add(videoDoorleft);
 
-		videoFrame = new THREE.Mesh (
+		videoFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (10,5,0.5),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1530,7 +1553,7 @@ function init() {
 		videoFrame.castShadow = true;
 		scene.add(videoFrame);
 
-		videoBack = new THREE.Mesh (
+		videoBack = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (50,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1540,7 +1563,7 @@ function init() {
 		videoBack.castShadow = true;
 		scene.add(videoBack);
 
-		videoLeft = new THREE.Mesh (
+		videoLeft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,39),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1550,7 +1573,7 @@ function init() {
 		videoLeft.castShadow = true;
 		scene.add(videoLeft);
 
-		videoRight = new THREE.Mesh (
+		videoRight = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.5,20,39),
 			new THREE.MeshBasicMaterial({color:0x12e8bd, wireframe:false}) 
 			);
@@ -1560,7 +1583,7 @@ function init() {
 		videoRight.castShadow = true;
 		scene.add(videoRight);
 
-		videoFloor = new THREE.Mesh (
+		videoFloor = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (49,1,39),
 				new THREE.MeshBasicMaterial({color:0x0dc6a1, wireframe:false})
 				);
@@ -1571,7 +1594,7 @@ function init() {
 			videoFloor.castShadow = true;
 			scene.add(videoFloor);
 
-		videoCeiling = new THREE.Mesh (
+		videoCeiling = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (49,1,39),
 				new THREE.MeshBasicMaterial({color:0x0dc6a1, wireframe:false})
 				);
@@ -1583,7 +1606,7 @@ function init() {
 			scene.add(videoCeiling);
 
 		//EXIT SIGN VIDEO
-			exitVideo = new THREE.Mesh (
+			exitVideo = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(0.2,2,5),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -1594,7 +1617,7 @@ function init() {
 			exitVideo.rotation.y += Math.PI/2;
 			scene.add(exitVideo);
 
-			exitVideobg = new THREE.Mesh (
+			exitVideobg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1608,7 +1631,7 @@ function init() {
 
 //create MEDIA section
 	//EXHIBIT SIGNS
-		videoTitle = new THREE.Mesh (
+		videoTitle = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1619,7 +1642,7 @@ function init() {
 			videoTitle.castShadow = true;
 			scene.add(videoTitle);
 
-		projectionsTitle = new THREE.Mesh (
+		projectionsTitle = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1630,7 +1653,7 @@ function init() {
 			projectionsTitle.castShadow = true;
 			scene.add(projectionsTitle);
 
-		photoTitle = new THREE.Mesh (
+		photoTitle = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1641,7 +1664,7 @@ function init() {
 			photoTitle.castShadow = true;
 			scene.add(photoTitle);
 
-		musicTitle = new THREE.Mesh (
+		musicTitle = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1654,7 +1677,7 @@ function init() {
 
 	//CONTENT
 		//BACK WALL
-			mediaPicback1 = new THREE.Mesh (
+			mediaPicback1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1664,7 +1687,7 @@ function init() {
 				mediaPicback1.position.z += 65;
 				scene.add(mediaPicback1);
 
-			mediaPicback2 = new THREE.Mesh (
+			mediaPicback2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1675,7 +1698,7 @@ function init() {
 				scene.add(mediaPicback2);
 
 		//FRONT WALL
-			mediaPicfront1 = new THREE.Mesh (
+			mediaPicfront1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1685,7 +1708,7 @@ function init() {
 				mediaPicfront1.position.z += 35.5;
 				scene.add(mediaPicfront1);
 
-			mediaPicfront2 = new THREE.Mesh (
+			mediaPicfront2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1696,7 +1719,7 @@ function init() {
 				scene.add(mediaPicfront2);
 
 		//LEFT WALL
-			mediaPicleft1 = new THREE.Mesh (
+			mediaPicleft1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1706,7 +1729,7 @@ function init() {
 				mediaPicleft1.position.z += 40;
 				scene.add(mediaPicleft1);
 
-			mediaPicleft2 = new THREE.Mesh (
+			mediaPicleft2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1717,7 +1740,7 @@ function init() {
 				scene.add(mediaPicleft2);
 
 		//RIGHT WALL
-			mediaPicright1 = new THREE.Mesh (
+			mediaPicright1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1727,7 +1750,7 @@ function init() {
 				mediaPicright1.position.z += 40;
 				scene.add(mediaPicright1);
 
-			mediaPicright2 = new THREE.Mesh (
+			mediaPicright2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
 				);
@@ -1739,7 +1762,7 @@ function init() {
 
 	//WALLS
 		//create first media wall
-			mediaDoor1 = new THREE.Mesh (
+			mediaDoor1 = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (46,20,1),
 					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 					);
@@ -1750,7 +1773,7 @@ function init() {
 				scene.add(mediaDoor1);
 
 		//create second media wall
-			mediaDoor2 = new THREE.Mesh (
+			mediaDoor2 = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (46,20,1),
 					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 					);
@@ -1761,7 +1784,7 @@ function init() {
 				scene.add(mediaDoor2);
 
 		//create top of door frame for media wall
-			mediaFrame = new THREE.Mesh (
+			mediaFrame = new Physijs.BoxMesh (
 					new THREE.BoxGeometry (25,5,1),
 					new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 					);
@@ -1771,7 +1794,7 @@ function init() {
 				mediaFrame.castShadow = true;
 				scene.add(mediaFrame);
 
-			mediaFloor = new THREE.Mesh (
+			mediaFloor = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,0.5,32),
 			new THREE.MeshBasicMaterial({color:0xd1bf00, wireframe:false})
 			);
@@ -1782,7 +1805,7 @@ function init() {
 				mediaFloor.castShadow = true;
 				scene.add(mediaFloor);
 
-			mediaCeiling = new THREE.Mesh (
+			mediaCeiling = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,0.5,32),
 			new THREE.MeshBasicMaterial({color:0xd1bf00, wireframe:false})
 			);
@@ -1794,7 +1817,7 @@ function init() {
 				scene.add(mediaCeiling);
 
 		//MEDIA LEFT door
-			mediaLeft1 = new THREE.Mesh (
+			mediaLeft1 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.1,20,11),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1804,7 +1827,7 @@ function init() {
 			mediaLeft1.castShadow = true;
 			scene.add(mediaLeft1);
 
-			mediaLeft2 = new THREE.Mesh (
+			mediaLeft2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 				);
@@ -1814,7 +1837,7 @@ function init() {
 			mediaLeft2.castShadow = true;
 			scene.add(mediaLeft2);
 
-			mediaLeftframe = new THREE.Mesh (
+			mediaLeftframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,5,10),
 				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 				);
@@ -1826,7 +1849,7 @@ function init() {
 			scene.add(mediaLeftframe);
 
 		//MEDIA RIGHT DOOR
-			mediaRight1 = new THREE.Mesh (
+			mediaRight1 = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.1,20,11),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1836,7 +1859,7 @@ function init() {
 			mediaRight1.castShadow = true;
 			scene.add(mediaRight1);
 
-			mediaRight2 = new THREE.Mesh (
+			mediaRight2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,20,12),
 				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 				);
@@ -1846,7 +1869,7 @@ function init() {
 			mediaRight2.castShadow = true;
 			scene.add(mediaRight2);
 
-			mediaRightframe = new THREE.Mesh (
+			mediaRightframe = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.1,5,10),
 				new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 				);
@@ -1858,7 +1881,7 @@ function init() {
 			scene.add(mediaRightframe);
 
 		//MEDIA BACK
-			mediaBackmiddle = new THREE.Mesh (
+			mediaBackmiddle = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (5,20,0.1),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1868,7 +1891,7 @@ function init() {
 			mediaBackmiddle.castShadow = true;
 			scene.add(mediaBackmiddle);
 
-			mediaBackleft = new THREE.Mesh (
+			mediaBackleft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (10,20,0.1),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1878,7 +1901,7 @@ function init() {
 			mediaBackleft.castShadow = true;
 			scene.add(mediaBackleft);
 
-			mediaBackright = new THREE.Mesh (
+			mediaBackright = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (10,20,0.1),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1889,7 +1912,7 @@ function init() {
 			scene.add(mediaBackright);
 
 		//MEDIA door frame
-			mediaFrame = new THREE.Mesh (
+			mediaFrame = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (30,5,0.1),
 			new THREE.MeshBasicMaterial({color:0xffe900, wireframe:false}) 
 			);
@@ -1901,7 +1924,7 @@ function init() {
 			scene.add(mediaFrame);
 
 		//EXIT SIGN MEDIA
-			exitMedia = new THREE.Mesh (
+			exitMedia = new Physijs.BoxMesh (
 			new THREE.BoxGeometry(0.2,2,5),
 			new THREE.MeshBasicMaterial({ map: exittexture, wireframe: false, transparent: true })
 			);
@@ -1912,7 +1935,7 @@ function init() {
 			exitMedia.rotation.y += Math.PI/2;
 			scene.add(exitMedia);
 
-			exitMediabg = new THREE.Mesh (
+			exitMediabg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
@@ -1961,7 +1984,7 @@ function init() {
 
 
 					mesh.traverse(function(node){
-						if ( node instanceof THREE.Mesh ){
+						if ( node instanceof Physijs.BoxMesh ){
 							node.castShadow = true;
 							node.receiveShadow = true;
 						}
@@ -2312,7 +2335,7 @@ function animate(){
 		camera.rotation.y += player.turnSpeed;
 	}
 
-	// scene.simulate();
+	scene.simulate();
 	renderer.render(scene,camera);
 }
 
