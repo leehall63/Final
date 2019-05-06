@@ -1,3 +1,8 @@
+// 'use strict';
+
+// Physijs.scripts.worker = 'js/physijs_worker.js';
+// Physijs.scripts.ammo = 'js/Physijs/examples/js/ammo.js';
+
 var scene, camera, controls, renderer, mesh;
 var meshFloor;
 
@@ -21,15 +26,15 @@ var loadingScreen = {
 };
 
 var objects = [];
-			var raycaster;
-			var moveForward = false;
-			var moveBackward = false;
-			var moveLeft = false;
-			var moveRight = false;
-			var canJump = false;
-			var prevTime = performance.now();
-			var velocity = new THREE.Vector3();
-			var direction = new THREE.Vector3();
+var raycaster;
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+var canJump = false;
+var prevTime = performance.now();
+var velocity = new THREE.Vector3();
+var direction = new THREE.Vector3();
 
 var models = {
 	tree:{
@@ -756,6 +761,37 @@ function init() {
 				tsbuDemo2.position.y += 4.7;
 				tsbuDemo2.position.z += 64.5;
 				scene.add(tsbuDemo2);
+
+			//RIGHT WALL
+				drums1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				drums1.castShadow = true;
+				drums1.position.x -= 35;
+				drums1.position.y += 4.5;
+				drums1.position.z += 36.5;
+				scene.add(drums1);
+
+				bass1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				bass1.castShadow = true;
+				bass1.position.x -= 45;
+				bass1.position.y += 4.5;
+				bass1.position.z += 36.5;
+				scene.add(bass1);
+
+				guitar1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				guitar1.castShadow = true;
+				guitar1.position.x -= 25;
+				guitar1.position.y += 4.5;
+				guitar1.position.z += 36.5;
+				scene.add(guitar1);
 	
 	//WALLS
 		musicDoor1 = new THREE.Mesh (
@@ -1571,6 +1607,137 @@ function init() {
 			scene.add(exitVideobg);
 
 //create MEDIA section
+	//EXHIBIT SIGNS
+		videoTitle = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			videoTitle.position.x -= 6.5;
+			videoTitle.position.y += 6.5;
+			videoTitle.position.z += 65;
+			videoTitle.rotation.y += Math.PI/2;
+			videoTitle.castShadow = true;
+			scene.add(videoTitle);
+
+		projectionsTitle = new THREE.Mesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			projectionsTitle.position.x += 6.5;
+			projectionsTitle.position.y += 6.5;
+			projectionsTitle.position.z += 65;
+			projectionsTitle.rotation.y += Math.PI/2;
+			projectionsTitle.castShadow = true;
+			scene.add(projectionsTitle);
+
+		photoTitle = new THREE.Mesh (
+				new THREE.BoxGeometry (5,2,0.2),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			photoTitle.position.x += 19.5;
+			photoTitle.position.y += 6.5;
+			photoTitle.position.z += 49.5;
+			photoTitle.rotation.y += Math.PI/2;
+			photoTitle.castShadow = true;
+			scene.add(photoTitle);
+
+		musicTitle = new THREE.Mesh (
+				new THREE.BoxGeometry (5,2,0.2),
+				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			musicTitle.position.x -= 19.5;
+			musicTitle.position.y += 6.5;
+			musicTitle.position.z += 49.5;
+			musicTitle.rotation.y += Math.PI/2;
+			musicTitle.castShadow = true;
+			scene.add(musicTitle);
+
+	//CONTENT
+		//BACK WALL
+			mediaPicback1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicback1.castShadow = true;
+				mediaPicback1.position.x += 15;
+				mediaPicback1.position.y += 4;
+				mediaPicback1.position.z += 65;
+				scene.add(mediaPicback1);
+
+			mediaPicback2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicback2.castShadow = true;
+				mediaPicback2.position.x -= 15;
+				mediaPicback2.position.y += 4;
+				mediaPicback2.position.z += 65;
+				scene.add(mediaPicback2);
+
+		//FRONT WALL
+			mediaPicfront1 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicfront1.castShadow = true;
+				mediaPicfront1.position.x += 12;
+				mediaPicfront1.position.y += 4;
+				mediaPicfront1.position.z += 35.5;
+				scene.add(mediaPicfront1);
+
+			mediaPicfront2 = new THREE.Mesh (
+				new THREE.BoxGeometry(6,4,0.2),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicfront2.castShadow = true;
+				mediaPicfront2.position.x -= 12;
+				mediaPicfront2.position.y += 4;
+				mediaPicfront2.position.z += 35.5;
+				scene.add(mediaPicfront2);
+
+		//LEFT WALL
+			mediaPicleft1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicleft1.castShadow = true;
+				mediaPicleft1.position.x += 19.4;
+				mediaPicleft1.position.y += 4;
+				mediaPicleft1.position.z += 40;
+				scene.add(mediaPicleft1);
+
+			mediaPicleft2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicleft2.castShadow = true;
+				mediaPicleft2.position.x += 19.4;
+				mediaPicleft2.position.y += 4;
+				mediaPicleft2.position.z += 60;
+				scene.add(mediaPicleft2);
+
+		//RIGHT WALL
+			mediaPicright1 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicright1.castShadow = true;
+				mediaPicright1.position.x -= 18;
+				mediaPicright1.position.y += 4;
+				mediaPicright1.position.z += 40;
+				scene.add(mediaPicright1);
+
+			mediaPicright2 = new THREE.Mesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				);
+				mediaPicright2.castShadow = true;
+				mediaPicright2.position.x -= 18;
+				mediaPicright2.position.y += 4;
+				mediaPicright2.position.z += 60;
+				scene.add(mediaPicright2);
+
+	//WALLS
 		//create first media wall
 			mediaDoor1 = new THREE.Mesh (
 					new THREE.BoxGeometry (46,20,1),
@@ -1849,7 +2016,6 @@ function init() {
 
 		animate();
 	}
-
 
 // TREE MESH CLONES
 	function onResourcesLoaded() {
@@ -2146,6 +2312,7 @@ function animate(){
 		camera.rotation.y += player.turnSpeed;
 	}
 
+	// scene.simulate();
 	renderer.render(scene,camera);
 }
 
