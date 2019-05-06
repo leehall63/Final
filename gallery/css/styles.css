@@ -3,6 +3,7 @@ body {
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
+	display: absolute;
 }
 
 #profilePic {
@@ -10,7 +11,16 @@ body {
 	height: auto;
 }
 
-/*#blocker {
+#godMode{
+	font-family: 'Ubuntu Mono', monospace;
+	position: absolute;
+	left: 2%;
+	bottom: 2%;
+	font-size: 20px;
+	color: white;
+}
+
+#blocker {
 
 	position: absolute;
 
@@ -47,4 +57,8 @@ body {
 
 	cursor: pointer;
 
-}*/
+}
+
+.hidden {
+	display: none;
+}

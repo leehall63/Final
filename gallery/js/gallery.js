@@ -1,4 +1,4 @@
-var scene, camera, renderer, mesh;
+var scene, camera, controls, renderer, mesh;
 var meshFloor;
 
 var profilePic,profiletexture;
@@ -20,6 +20,17 @@ var loadingScreen = {
 		)
 };
 
+var objects = [];
+			var raycaster;
+			var moveForward = false;
+			var moveBackward = false;
+			var moveLeft = false;
+			var moveRight = false;
+			var canJump = false;
+			var prevTime = performance.now();
+			var velocity = new THREE.Vector3();
+			var direction = new THREE.Vector3();
+
 var models = {
 	tree:{
 		obj:"models/Tree_02.obj", 
@@ -37,6 +48,11 @@ var RESOURCES_LOADED = false;
 var meshes = {};
 
 exittexture = new textureLoader.load("../images/Exit Sign.png");
+
+function instructionsRemove(id, className) {
+  var element = document.getElementById(id);
+  element.classList.add(className);
+}
 
 function init() {
 
@@ -677,19 +693,22 @@ function init() {
 				var audioLoader = new THREE.AudioLoader();
 				audioLoader.load( 'sounds/Sunbreak-polylane.wav', function( buffer ) {
 					sunbreak.setBuffer( buffer );
-					sunbreak.setRefDistance( 2 );
-					sunbreak.setMaxDistance( 0.5 );
+					sunbreak.setRefDistance( 0.1 );
+					sunbreak.setMaxDistance( 0.1 );
+					sunbreak.setLoop ( true );
 					sunbreak.play();
 				});
 
+				polylane1texture = new textureLoader.load("../images/music/polylane-logo.png");
+
 				polylane1 = new THREE.Mesh (
-				new THREE.BoxGeometry(0.2,9,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.BoxGeometry(0.2,6,9),
+				new THREE.MeshBasicMaterial({ map:polylane1texture, wireframe: false })
 				);
 				polylane1.castShadow = true;
 				polylane1.position.x -= 48.7;
 				polylane1.position.y += 4.75;
-				polylane1.position.z += 60;
+				polylane1.position.z += 51;
 				scene.add(polylane1);
 
 				polylane1.add(sunbreak);
@@ -700,8 +719,8 @@ function init() {
 				);
 				polylane2.castShadow = true;
 				polylane2.position.x -= 48.7;
-				polylane2.position.y += 7;
-				polylane2.position.z += 42;
+				polylane2.position.y += 4.5;
+				polylane2.position.z += 61;
 				scene.add(polylane2);
 
 				polylane3 = new THREE.Mesh (
@@ -710,11 +729,12 @@ function init() {
 				);
 				polylane3.castShadow = true;
 				polylane3.position.x -= 48.7;
-				polylane3.position.y += 2.5;
-				polylane3.position.z += 42;
+				polylane3.position.y += 4.5;
+				polylane3.position.z += 41;
 				scene.add(polylane3);
 
 			//TSBU (LEFT WALL)
+
 				tsbuDemo1 = new THREE.Mesh (
 				new THREE.BoxGeometry(6,9,0.2),
 				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
@@ -724,6 +744,8 @@ function init() {
 				tsbuDemo1.position.y += 4.7;
 				tsbuDemo1.position.z += 64.5;
 				scene.add(tsbuDemo1);
+
+
 
 				tsbuDemo2 = new THREE.Mesh (
 				new THREE.BoxGeometry(6,9,0.2),

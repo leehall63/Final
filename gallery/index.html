@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 
 	<!--THREE.js-->
 	<script type="text/javascript" src="js/libs/three.js"></script>
@@ -28,15 +29,19 @@
 </head>
 <body>
 
-	<!-- <div id="blocker">
+	<div id="blocker" onclick="instructionsRemove('blocker', 'hidden')">
 
 			<div id="instructions">
 				<span style="font-size:40px">Click to play</span>
 				<br />
-				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+				(W, A, S, D = Move, Left and Right Arrows = Look Around)
 			</div>
 
-		</div> -->
+	</div>
+
+	<div id="godMode">
+			You are in God Mode.
+	</div>
 
 </body>
 </html>
