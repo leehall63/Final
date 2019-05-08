@@ -7,17 +7,24 @@
 		<link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 		<title>Dig Dig Productions | CHOOSE</title>
 	</head>
-<body id="homePage">
-	<div>
+<body id="choose">
+	<div id="title">
 		<img class="w-full block" src="images/main_no_light.png" onmouseover="this.src='images/main_gallery.png'" onmouseout="this.src='images/main_no_light.png'" alt="Dig Dig Productions title in neon light text" />
+	</div><!--title-->
+	<div class="flex space-between">
+		<div class="bg-black w-1/3 text-center ml-2 flex align-middle shadow-lg">
+			<a href="non-game/index.html" class="font-mono text-white text-3xl no-underline align-middle my-16 hover:text-blue">
+			<p>Click me for "normal" website!</p>
+			</a>
+		</div>
 
-		<img class="w-25 inline-block ml-8" src="images/black_logo.png" alt="Dig Dig Productions Logo: A black graphic that looks like a projector shining light out of the lens.">
+		<img class="w-25 -mt-12 block mx-auto" src="images/black_logo.png" alt="Dig Dig Productions Logo: A black graphic that looks like a projector shining light out of the lens.">
+
+		<div class="bg-black text-center mr-2 w-1/3 flex align-middle shadow-lg">
+			<a href="gallery/index.html" class="font-mono no-underline text-white text-3xl my-16 hover:text-blue">
+				<p>Click me for a 3D walkthrough with WASD controls!</p>
+			</a>
+		</div>
 	</div>
-	<a href="non-game/index.html" class="w-1/4 text-white inline-block">
-		<p>Click me for "normal" website!</p>
-	</a>
-	<a href="gallery/index.html" class="w-1/4 text-white inline-block">
-		<p>Click me for a 3D walkthrough with WASD controls!</p>
-	</a>
 </body>
 </html>

@@ -29,6 +29,10 @@ nav a:hover {
 }
 /* --- Home Page --- */
 
+.doorframe {
+	height: 500px;
+}
+
 #nav {
 	width: 70%;
 	height: 15%;
