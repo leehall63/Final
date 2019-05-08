@@ -1,5 +1,5 @@
-Physijs.scripts.worker = 'Physijs/physijs_worker.js';
-Physijs.scripts.ammo = 'Physijs/examples/js/ammo.js';
+Physijs.scripts.worker = 'js/Physijs/physijs_worker.js';
+Physijs.scripts.ammo = '/Physijs/examples/js/ammo.js';
 
 var scene, camera, controls, renderer, mesh;
 var meshFloor;
@@ -737,7 +737,7 @@ function init() {
 				polylane2.position.z += 61;
 				scene.add(polylane2);
 
-				polylane3texture = new textureLoader.load("../images/music/Fullset.png")
+				polylane3texture = new textureLoader.load("../images/music/Fullset.png");
 
 				polylane3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,7),
@@ -750,10 +750,11 @@ function init() {
 				scene.add(polylane3);
 
 			//TSBU (LEFT WALL)
+				bandcamptexture = new textureLoader.load("../images/music/bandcamp.png");
 
 				tsbuDemo1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,9,0.2),
-				new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({map: bandcamptexture, wireframe: false })
 				);
 				tsbuDemo1.castShadow = true;
 				tsbuDemo1.position.x -= 25;
@@ -763,7 +764,7 @@ function init() {
 
 				tsbuDemo2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,9,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: bandcamptexture, wireframe: false })
 				);
 				tsbuDemo2.castShadow = true;
 				tsbuDemo2.position.x -= 43;
@@ -772,7 +773,7 @@ function init() {
 				scene.add(tsbuDemo2);
 
 			//RIGHT WALL
-				drumtexture = new textureLoader.load("../images/music/drumsPic.jpg")
+				drumtexture = new textureLoader.load("../images/music/drumsPic.jpg");
 
 				drums1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
@@ -784,7 +785,7 @@ function init() {
 				drums1.position.z += 36.5;
 				scene.add(drums1);
 
-				basstexture = new textureLoader.load("../images/music/bassPic.jpg")
+				basstexture = new textureLoader.load("../images/music/bassPic.jpg");
 
 				bass1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
@@ -796,9 +797,11 @@ function init() {
 				bass1.position.z += 36.5;
 				scene.add(bass1);
 
+				guitartexture = new textureLoader.load("../images/music/bass2.jpg");
+
 				guitar1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:guitartexture, wireframe: false })
 				);
 				guitar1.castShadow = true;
 				guitar1.position.x -= 25;
@@ -1025,94 +1028,14 @@ function init() {
 
 //create PHOTO Section
 	//CONTENT
-		//BACK WALL
-			//TOP ROW
-				galleryPictop1 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPictop1.castShadow = true;
-				galleryPictop1.position.x += 48.5;
-				galleryPictop1.position.y += 7;
-				galleryPictop1.position.z += 40;
-				scene.add(galleryPictop1);
-
-				galleryPictop2 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPictop2.castShadow = true;
-				galleryPictop2.position.x += 48.5;
-				galleryPictop2.position.y += 7;
-				galleryPictop2.position.z += 47;
-				scene.add(galleryPictop2);
-
-				galleryPictop3 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPictop3.castShadow = true;
-				galleryPictop3.position.x += 48.5;
-				galleryPictop3.position.y += 7;
-				galleryPictop3.position.z += 54;
-				scene.add(galleryPictop3);
-
-				galleryPictop4 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPictop4.castShadow = true;
-				galleryPictop4.position.x += 48.5;
-				galleryPictop4.position.y += 7;
-				galleryPictop4.position.z += 61;
-				scene.add(galleryPictop4);
-
-			//BOTTOM ROW
-				galleryPicbottom1 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPicbottom1.castShadow = true;
-				galleryPicbottom1.position.x += 48.5;
-				galleryPicbottom1.position.y += 2.5;
-				galleryPicbottom1.position.z += 40;
-				scene.add(galleryPicbottom1);
-
-				galleryPicbottom2 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPicbottom2.castShadow = true;
-				galleryPicbottom2.position.x += 48.5;
-				galleryPicbottom2.position.y += 2.5;
-				galleryPicbottom2.position.z += 47;
-				scene.add(galleryPicbottom2);
-
-				galleryPicbottom3 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPicbottom3.castShadow = true;
-				galleryPicbottom3.position.x += 48.5;
-				galleryPicbottom3.position.y += 2.5;
-				galleryPicbottom3.position.z += 54;
-				scene.add(galleryPicbottom3);
-
-				galleryPicbottom4 = new Physijs.BoxMesh (
-				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
-				);
-				galleryPicbottom4.castShadow = true;
-				galleryPicbottom4.position.x += 48.5;
-				galleryPicbottom4.position.y += 2.5;
-				galleryPicbottom4.position.z += 61;
-				scene.add(galleryPicbottom4);
 
 		//LEFT WALL
 			//TOP ROW
+				gallery1texture = new textureLoader.load("../images/photo/gallery1.jpg");
+
 				galleryPiclefttop1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery1texture, wireframe: false })
 				);
 				galleryPiclefttop1.castShadow = true;
 				galleryPiclefttop1.position.x += 24;
@@ -1120,9 +1043,11 @@ function init() {
 				galleryPiclefttop1.position.z += 36.5;
 				scene.add(galleryPiclefttop1);
 
+				gallery2texture = new textureLoader.load("../images/photo/gallery2.jpg");
+
 				galleryPiclefttop2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery2texture, wireframe: false })
 				);
 				galleryPiclefttop2.castShadow = true;
 				galleryPiclefttop2.position.x += 31;
@@ -1130,9 +1055,11 @@ function init() {
 				galleryPiclefttop2.position.z += 36.5;
 				scene.add(galleryPiclefttop2);
 
+				gallery3texture = new textureLoader.load("../images/photo/gallery3.jpg");
+
 				galleryPiclefttop3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery3texture, wireframe: false })
 				);
 				galleryPiclefttop3.castShadow = true;
 				galleryPiclefttop3.position.x += 38;
@@ -1140,9 +1067,11 @@ function init() {
 				galleryPiclefttop3.position.z += 36.5;
 				scene.add(galleryPiclefttop3);
 
+				gallery4texture = new textureLoader.load("../images/photo/gallery4.jpg");
+
 				galleryPiclefttop4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery4texture, wireframe: false })
 				);
 				galleryPiclefttop4.castShadow = true;
 				galleryPiclefttop4.position.x += 45;
@@ -1151,9 +1080,11 @@ function init() {
 				scene.add(galleryPiclefttop4);
 
 			//BOTTOM ROW
+				gallery5texture = new textureLoader.load("../images/photo/gallery5.jpg");
+
 				galleryPicleftbottom1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery5texture, wireframe: false })
 				);
 				galleryPicleftbottom1.castShadow = true;
 				galleryPicleftbottom1.position.x += 24;
@@ -1161,9 +1092,11 @@ function init() {
 				galleryPicleftbottom1.position.z += 36.5;
 				scene.add(galleryPicleftbottom1);
 
+				gallery6texture = new textureLoader.load("../images/photo/gallery6.jpg");
+
 				galleryPicleftbottom2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery6texture, wireframe: false })
 				);
 				galleryPicleftbottom2.castShadow = true;
 				galleryPicleftbottom2.position.x += 31;
@@ -1171,9 +1104,11 @@ function init() {
 				galleryPicleftbottom2.position.z += 36.5;
 				scene.add(galleryPicleftbottom2);
 
+				gallery7texture = new textureLoader.load("../images/photo/gallery7.jpg");
+
 				galleryPicleftbottom3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery7texture, wireframe: false })
 				);
 				galleryPicleftbottom3.castShadow = true;
 				galleryPicleftbottom3.position.x += 38;
@@ -1181,9 +1116,11 @@ function init() {
 				galleryPicleftbottom3.position.z += 36.5;
 				scene.add(galleryPicleftbottom3);
 
+				gallery8texture = new textureLoader.load("../images/photo/gallery8.jpg");
+
 				galleryPicleftbottom4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery8texture, wireframe: false })
 				);
 				galleryPicleftbottom4.castShadow = true;
 				galleryPicleftbottom4.position.x += 45;
@@ -1191,11 +1128,112 @@ function init() {
 				galleryPicleftbottom4.position.z += 36.5;
 				scene.add(galleryPicleftbottom4);
 
+		//BACK WALL
+			//TOP ROW
+				gallery9texture = new textureLoader.load("../images/photo/gallery9.jpg");
+
+				galleryPictop1 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map:gallery9texture, wireframe: false })
+				);
+				galleryPictop1.castShadow = true;
+				galleryPictop1.position.x += 48.5;
+				galleryPictop1.position.y += 7;
+				galleryPictop1.position.z += 40;
+				scene.add(galleryPictop1);
+
+				gallery10texture = new textureLoader.load("../images/photo/gallery10.jpg");
+
+				galleryPictop2 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map: gallery10texture, wireframe: false })
+				);
+				galleryPictop2.castShadow = true;
+				galleryPictop2.position.x += 48.5;
+				galleryPictop2.position.y += 7;
+				galleryPictop2.position.z += 47;
+				scene.add(galleryPictop2);
+
+				gallery11texture = new textureLoader.load("../images/photo/gallery11.jpg");
+
+				galleryPictop3 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map: gallery11texture, wireframe: false })
+				);
+				galleryPictop3.castShadow = true;
+				galleryPictop3.position.x += 48.5;
+				galleryPictop3.position.y += 7;
+				galleryPictop3.position.z += 54;
+				scene.add(galleryPictop3);
+
+				gallery12texture = new textureLoader.load("../images/photo/gallery12.jpg");
+
+				galleryPictop4 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map: gallery12texture, wireframe: false })
+				);
+				galleryPictop4.castShadow = true;
+				galleryPictop4.position.x += 48.5;
+				galleryPictop4.position.y += 7;
+				galleryPictop4.position.z += 61;
+				scene.add(galleryPictop4);
+
+			//BOTTOM ROW
+				gallery13texture = new textureLoader.load("../images/photo/gallery13.jpg");
+
+				galleryPicbottom1 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map: gallery13texture, wireframe: false })
+				);
+				galleryPicbottom1.castShadow = true;
+				galleryPicbottom1.position.x += 48.5;
+				galleryPicbottom1.position.y += 2.5;
+				galleryPicbottom1.position.z += 40;
+				scene.add(galleryPicbottom1);
+
+				gallery14texture = new textureLoader.load("../images/photo/gallery14.jpg");
+
+				galleryPicbottom2 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map:gallery14texture, wireframe: false })
+				);
+				galleryPicbottom2.castShadow = true;
+				galleryPicbottom2.position.x += 48.5;
+				galleryPicbottom2.position.y += 2.5;
+				galleryPicbottom2.position.z += 47;
+				scene.add(galleryPicbottom2);
+
+				gallery15texture = new textureLoader.load("../images/photo/gallery15.jpg");
+
+				galleryPicbottom3 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map:gallery15texture, wireframe: false })
+				);
+				galleryPicbottom3.castShadow = true;
+				galleryPicbottom3.position.x += 48.5;
+				galleryPicbottom3.position.y += 2.5;
+				galleryPicbottom3.position.z += 54;
+				scene.add(galleryPicbottom3);
+
+				gallery16texture = new textureLoader.load("../images/photo/gallery16.jpg");
+
+				galleryPicbottom4 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,4,6),
+				new THREE.MeshBasicMaterial({ map:gallery16texture, wireframe: false })
+				);
+				galleryPicbottom4.castShadow = true;
+				galleryPicbottom4.position.x += 48.5;
+				galleryPicbottom4.position.y += 2.5;
+				galleryPicbottom4.position.z += 61;
+				scene.add(galleryPicbottom4);
+
 		//RIGHT WALL
 			//TOP ROW
+				gallery17texture = new textureLoader.load("../images/photo/gallery17.jpg");
+
 				galleryPicrighttop1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery17texture, wireframe: false })
 				);
 				galleryPicrighttop1.castShadow = true;
 				galleryPicrighttop1.position.x += 24;
@@ -1203,9 +1241,11 @@ function init() {
 				galleryPicrighttop1.position.z += 64.5;
 				scene.add(galleryPicrighttop1);
 
+				gallery18texture = new textureLoader.load("../images/photo/gallery18.jpg");
+
 				galleryPicrighttop2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery18texture, wireframe: false })
 				);
 				galleryPicrighttop2.castShadow = true;
 				galleryPicrighttop2.position.x += 31;
@@ -1213,9 +1253,11 @@ function init() {
 				galleryPicrighttop2.position.z += 64.5;
 				scene.add(galleryPicrighttop2);
 
+				gallery19texture = new textureLoader.load("../images/photo/gallery19.jpg");
+
 				galleryPicrighttop3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery19texture, wireframe: false })
 				);
 				galleryPicrighttop3.castShadow = true;
 				galleryPicrighttop3.position.x += 38;
@@ -1223,9 +1265,11 @@ function init() {
 				galleryPicrighttop3.position.z += 64.5;
 				scene.add(galleryPicrighttop3);
 
+				gallery20texture = new textureLoader.load("../images/photo/gallery20.jpg");
+
 				galleryPicrighttop4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery20texture, wireframe: false })
 				);
 				galleryPicrighttop4.castShadow = true;
 				galleryPicrighttop4.position.x += 45;
@@ -1234,9 +1278,11 @@ function init() {
 				scene.add(galleryPicrighttop4);
 
 			//BOTTOM ROW
+				gallery21texture = new textureLoader.load("../images/photo/gallery21.jpg");
+
 				galleryPicrightbottom1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery21texture, wireframe: false })
 				);
 				galleryPicrightbottom1.castShadow = true;
 				galleryPicrightbottom1.position.x += 24;
@@ -1244,9 +1290,11 @@ function init() {
 				galleryPicrightbottom1.position.z += 64.5;
 				scene.add(galleryPicrightbottom1);
 
+				gallery22texture = new textureLoader.load("../images/photo/gallery22.jpg");
+
 				galleryPicrightbottom2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:gallery22texture, wireframe: false })
 				);
 				galleryPicrightbottom2.castShadow = true;
 				galleryPicrightbottom2.position.x += 31;
@@ -1254,9 +1302,11 @@ function init() {
 				galleryPicrightbottom2.position.z += 64.5;
 				scene.add(galleryPicrightbottom2);
 
+				gallery23texture = new textureLoader.load("../images/photo/gallery23.jpg");
+
 				galleryPicrightbottom3 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery23texture, wireframe: false })
 				);
 				galleryPicrightbottom3.castShadow = true;
 				galleryPicrightbottom3.position.x += 38;
@@ -1264,9 +1314,11 @@ function init() {
 				galleryPicrightbottom3.position.z += 64.5;
 				scene.add(galleryPicrightbottom3);
 
+				gallery24texture = new textureLoader.load("../images/photo/gallery24.jpg");
+
 				galleryPicrightbottom4 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: gallery24texture, wireframe: false })
 				);
 				galleryPicrightbottom4.castShadow = true;
 				galleryPicrightbottom4.position.x += 45;
@@ -1276,9 +1328,11 @@ function init() {
 
 		//FRONT WALL
 			//TOP ROW
+				galleryfront1texture = new textureLoader.load("../images/photo/front1.jpg");
+
 				galleryPicfront1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,9,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: galleryfront1texture, wireframe: false })
 				);
 				galleryPicfront1.castShadow = true;
 				galleryPicfront1.position.x += 20.5;
@@ -1286,9 +1340,11 @@ function init() {
 				galleryPicfront1.position.z += 41;
 				scene.add(galleryPicfront1);
 
+				galleryfront2texture = new textureLoader.load("../images/photo/front2.jpg");
+
 				galleryPicfront2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,9,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: galleryfront2texture, wireframe: false })
 				);
 				galleryPicfront2.castShadow = true;
 				galleryPicfront2.position.x += 20.5;
@@ -1512,9 +1568,10 @@ function init() {
 
 //create VIDEO Section
 	//CONTENT
+
 		playitbyear = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,8,14),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false })
 				);
 				playitbyear.castShadow = true;
 				playitbyear.position.x += 48.5;
@@ -1677,9 +1734,11 @@ function init() {
 
 	//CONTENT
 		//BACK WALL
+			media1texture = new textureLoader.load("../images/media/pic1.jpg");
+
 			mediaPicback1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: media1texture, wireframe: false })
 				);
 				mediaPicback1.castShadow = true;
 				mediaPicback1.position.x += 15;
@@ -1687,9 +1746,11 @@ function init() {
 				mediaPicback1.position.z += 65;
 				scene.add(mediaPicback1);
 
+			media2texture = new textureLoader.load("../images/media/pic2.jpg");
+
 			mediaPicback2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:media2texture, wireframe: false })
 				);
 				mediaPicback2.castShadow = true;
 				mediaPicback2.position.x -= 15;
@@ -1698,9 +1759,11 @@ function init() {
 				scene.add(mediaPicback2);
 
 		//FRONT WALL
+			media3texture = new textureLoader.load("../images/media/pic3.jpg");
+
 			mediaPicfront1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: media3texture, wireframe: false })
 				);
 				mediaPicfront1.castShadow = true;
 				mediaPicfront1.position.x += 12;
@@ -1708,9 +1771,11 @@ function init() {
 				mediaPicfront1.position.z += 35.5;
 				scene.add(mediaPicfront1);
 
+			media4texture = new textureLoader.load("../images/media/pic4.jpg");
+
 			mediaPicfront2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(6,4,0.2),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: media4texture, wireframe: false })
 				);
 				mediaPicfront2.castShadow = true;
 				mediaPicfront2.position.x -= 12;
@@ -1719,9 +1784,11 @@ function init() {
 				scene.add(mediaPicfront2);
 
 		//LEFT WALL
+			media5texture = new textureLoader.load("../images/media/pic5.jpg");
+
 			mediaPicleft1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map: media5texture, wireframe: false })
 				);
 				mediaPicleft1.castShadow = true;
 				mediaPicleft1.position.x += 19.4;
@@ -1729,9 +1796,11 @@ function init() {
 				mediaPicleft1.position.z += 40;
 				scene.add(mediaPicleft1);
 
+			media6texture = new textureLoader.load("../images/media/pic6.jpg");
+
 			mediaPicleft2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:media6texture, wireframe: false })
 				);
 				mediaPicleft2.castShadow = true;
 				mediaPicleft2.position.x += 19.4;
@@ -1740,22 +1809,26 @@ function init() {
 				scene.add(mediaPicleft2);
 
 		//RIGHT WALL
+			media7texture = new textureLoader.load("../images/media/pic7.JPG");
+
 			mediaPicright1 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:media7texture, wireframe: false })
 				);
 				mediaPicright1.castShadow = true;
-				mediaPicright1.position.x -= 18;
+				mediaPicright1.position.x -= 19;
 				mediaPicright1.position.y += 4;
 				mediaPicright1.position.z += 40;
 				scene.add(mediaPicright1);
 
+			media8texture = new textureLoader.load("../images/media/pic8.JPG");
+
 			mediaPicright2 = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,4,6),
-				new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+				new THREE.MeshBasicMaterial({ map:media8texture, wireframe: false })
 				);
 				mediaPicright2.castShadow = true;
-				mediaPicright2.position.x -= 18;
+				mediaPicright2.position.x -= 19;
 				mediaPicright2.position.y += 4;
 				mediaPicright2.position.z += 60;
 				scene.add(mediaPicright2);

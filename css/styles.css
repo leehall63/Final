@@ -5,6 +5,12 @@ body {
 	padding: 0;
 }
 
+#choose {
+	background-color: grey;
+	margin: 0;
+	padding: 0;
+}
+
 body img{
 	position: relative;
 }
