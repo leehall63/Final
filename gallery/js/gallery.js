@@ -3,6 +3,7 @@ Physijs.scripts.ammo = '/Physijs/examples/js/ammo.js';
 
 var scene, camera, controls, renderer, mesh;
 var meshFloor;
+var video;
 
 var profilePic,profiletexture;
 
@@ -60,7 +61,9 @@ function instructionsRemove(id, className) {
 function init() {
 
 	scene = new Physijs.Scene();
+	scene.background = new THREE.Color (0x94ccf7)
 	camera = new THREE.PerspectiveCamera (70, window.innerWidth/window.innerHeight, 0.5, 500);
+
 
 	loadingScreen.box.position.set (0,0,5);
 	loadingScreen.camera.lookAt(loadingScreen.box.position);
@@ -79,6 +82,31 @@ function init() {
 	};
 
 //create MAIN GALLERY Frame
+	//CONTENT
+		mainsignTexture = new textureLoader.load("../images/main_gallery.png");
+
+		mainSignbg = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (0.05,3,13),
+				new THREE.MeshBasicMaterial({map: mainsignTexture, wireframe:false, transparent: true}) 
+				);
+			mainSignbg.position.x = 0;
+			mainSignbg.position.y += 7.5;
+			mainSignbg.position.z += 4;
+			mainSignbg.rotation.y += Math.PI/2;
+			scene.add(mainSignbg);
+
+		logoTexture = new textureLoader.load("../images/black_logo.png");
+
+		logobg = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (0.2,4,4),
+				new THREE.MeshBasicMaterial({map: logoTexture, wireframe:false, transparent: true}) 
+				);
+			logobg.position.x += 5.5;
+			logobg.position.y += 3.5;
+			logobg.position.z += 4;
+			logobg.rotation.y += Math.PI/2;
+			scene.add(logobg);
+
 	leftWall = new Physijs.BoxMesh (
 		new THREE.BoxGeometry (1,20,100),
 		new THREE.MeshPhongMaterial({color:0xffffff, wireframe:false}) 
@@ -238,6 +266,18 @@ function init() {
 		aboutSignbg.rotation.y += Math.PI/2;
 		scene.add(aboutSignbg);
 
+		aboutTexture = textureLoader.load ('../images/signs/about.png');
+
+		aboutSign = new Physijs.BoxMesh (
+			new THREE.BoxGeometry (5,2,0.2),
+			new THREE.MeshBasicMaterial({map: aboutTexture, wireframe:false, transparent: true}) 
+			);
+		aboutSign.position.x += 19.5;
+		aboutSign.position.y += 6.5;
+		aboutSign.position.z += 20;
+		aboutSign.rotation.y += Math.PI/2;
+		scene.add(aboutSign);
+
 		interactiveSignbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (5,2,0.2),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
@@ -248,6 +288,20 @@ function init() {
 		interactiveSignbg.rotation.y += Math.PI/2;
 		scene.add(interactiveSignbg);
 
+		interactiveTexture = textureLoader.load ('../images/signs/interactive-media.png');
+
+		interactiveSign = new Physijs.BoxMesh (
+			new THREE.BoxGeometry (5,2,0.2),
+			new THREE.MeshBasicMaterial({map: interactiveTexture, wireframe:false, transparent: true}) 
+			);
+		interactiveSign.position.x -= 19.5;
+		interactiveSign.position.y += 6.5;
+		interactiveSign.position.z += 20;
+		interactiveSign.rotation.y += Math.PI/2;
+		scene.add(interactiveSign);
+
+
+
 		mediaSignbg = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (0.2,2,5),
 			new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
@@ -257,6 +311,19 @@ function init() {
 		mediaSignbg.position.z += 34.5;
 		mediaSignbg.rotation.y += Math.PI/2;
 		scene.add(mediaSignbg);
+
+		mediaTexture = textureLoader.load ('../images/signs/media.png');
+
+		mediaSign = new Physijs.BoxMesh (
+			new THREE.BoxGeometry (0.2,2,5),
+			new THREE.MeshBasicMaterial({map: mediaTexture, wireframe:false, transparent: true}) 
+			);
+		mediaSign.position.x = 0;
+		mediaSign.position.y += 6.5;
+		mediaSign.position.z += 34.5;
+		mediaSign.rotation.y += Math.PI/2;
+		scene.add(mediaSign);
+
 
 	//WALLS
 		//HOME Left Wall
@@ -447,9 +514,10 @@ function init() {
 	profilePic.position.z += 13.5;
 	scene.add(profilePic);
 
+	bioTexture = textureLoader.load ('../images/about/Biography.png');
 	biographyBg = new Physijs.BoxMesh (
-	new THREE.BoxGeometry(0.2,8,10),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.BoxGeometry(0.2,8,9),
+	new THREE.MeshBasicMaterial({ map: bioTexture, wireframe: false })
 	);
 	biographyBg.castShadow = true;
 	biographyBg.position.x += 48.5;
@@ -470,9 +538,10 @@ function init() {
 	contactPic.rotation.y += Math.PI/2;
 	scene.add(contactPic);
 
+	contactTexture = textureLoader.load ('../images/signs/contact.png');
 	contactBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2,7),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.MeshBasicMaterial({ map: contactTexture, wireframe: false })
 	);
 	contactBg.castShadow = true;
 	contactBg.position.x += 35;
@@ -481,9 +550,10 @@ function init() {
 	contactBg.rotation.y += Math.PI/2;
 	scene.add(contactBg);
 
+	emailTexture = textureLoader.load ('../images/about/email.png');
 	emailBg = new Physijs.BoxMesh (
-	new THREE.BoxGeometry(0.2,5,8),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.BoxGeometry(0.2,2,8),
+	new THREE.MeshBasicMaterial({ map: emailTexture, wireframe: false })
 	);
 	emailBg.castShadow = true;
 	emailBg.position.x += 35;
@@ -492,9 +562,10 @@ function init() {
 	emailBg.rotation.y += Math.PI/2;
 	scene.add(emailBg);
 
+	twitterTexture = textureLoader.load ('../images/about/twitter.png');
 	twitterBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.MeshBasicMaterial({ map: twitterTexture, wireframe: false })
 	);
 	twitterBg.castShadow = true;
 	twitterBg.position.x += 41;
@@ -503,9 +574,10 @@ function init() {
 	twitterBg.rotation.y += Math.PI/2;
 	scene.add(twitterBg);
 
+	ytTexture = textureLoader.load ('../images/about/youtube.png');
 	ytBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.MeshBasicMaterial({ map: ytTexture, wireframe: false })
 	);
 	ytBg.castShadow = true;
 	ytBg.position.x += 41;
@@ -514,9 +586,10 @@ function init() {
 	ytBg.rotation.y += Math.PI/2;
 	scene.add(ytBg);
 
+	instaTexture = textureLoader.load ('../images/about/instagram.png');
 	instaBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.MeshBasicMaterial({ map: instaTexture, wireframe: false })
 	);
 	instaBg.castShadow = true;
 	instaBg.position.x += 45;
@@ -525,9 +598,10 @@ function init() {
 	instaBg.rotation.y += Math.PI/2;
 	scene.add(instaBg);
 
+	linkedTexture = textureLoader.load ('../images/about/linkedin.png');
 	linkedBg = new Physijs.BoxMesh (
 	new THREE.BoxGeometry(0.2,2.5,2.5),
-	new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false })
+	new THREE.MeshBasicMaterial({ map: linkedTexture, wireframe: false })
 	);
 	linkedBg.castShadow = true;
 	linkedBg.position.x += 45;
@@ -718,7 +792,7 @@ function init() {
 				);
 				polylane1.castShadow = true;
 				polylane1.position.x -= 48.7;
-				polylane1.position.y += 4.75;
+				polylane1.position.y += 4.75
 				polylane1.position.z += 51;
 				scene.add(polylane1);
 
@@ -1459,6 +1533,106 @@ function init() {
 			scene.add(exitPhotobg);
 
 //create PROJECTIONS Section
+	//CONTENT
+		// walwaVideo = document.getElementById( 'walwaVideo' );
+		// walwaVideo.play();
+
+		// walwaTexture = new THREE.VideoTexture( walwaVideo );
+
+		walwa = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,8,14),
+				new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false })
+				);
+				walwa.castShadow = true;
+				walwa.position.x -= 48.5;
+				walwa.position.y += 4.7;
+				walwa.position.z += 83;
+				scene.add(walwa);
+
+			walwatexture1 = new textureLoader.load("../images/projections/projection-walwa1.jpg");
+
+			walwaPictop1 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(11.5,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:walwatexture1, wireframe: false })
+			);
+			walwaPictop1.castShadow = true;
+			walwaPictop1.position.x -= 20;
+			walwaPictop1.position.y += 4.6;
+			walwaPictop1.position.z += 66;
+			scene.add(walwaPictop1);
+
+			walwatexture6 = new textureLoader.load("../images/projections/projection-walwa6.jpg");
+
+			walwaPic6 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(12,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:walwatexture6, wireframe: false })
+			);
+			walwaPic6.castShadow = true;
+			walwaPic6.position.x -= 42;
+			walwaPic6.position.y += 4.6;
+			walwaPic6.position.z += 101.5;
+			scene.add(walwaPic6);
+
+			walwatexture3 = new textureLoader.load("../images/projections/projection-nd1.jpg");
+
+			walwaPictop3 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(12,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:walwatexture3, wireframe: false })
+			);
+			walwaPictop3.castShadow = true;
+			walwaPictop3.position.x -= 34;
+			walwaPictop3.position.y += 4.6;
+			walwaPictop3.position.z += 66;
+			scene.add(walwaPictop3);
+
+			walwatexture4 = new textureLoader.load("../images/projections/projection-walwa4.jpg");
+
+			walwaPictop4 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(5.5,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:walwatexture4, wireframe: false })
+			);
+			walwaPictop4.castShadow = true;
+			walwaPictop4.position.x -= 44;
+			walwaPictop4.position.y += 4.6;
+			walwaPictop4.position.z += 66;
+			scene.add(walwaPictop4);
+
+			walwatexture7 = new textureLoader.load("../images/projections/projection-walwa7.jpg");
+
+			walwaPic7 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(12,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:walwatexture7, wireframe: false })
+			);
+			walwaPic7.castShadow = true;
+			walwaPic7.position.x -= 25;
+			walwaPic7.position.y += 4.6;
+			walwaPic7.position.z += 101.5;
+			scene.add(walwaPic7);
+
+			scorchedTexture1 = new textureLoader.load("../images/projections/projection-scorched4.jpg");
+
+			scorchedPic1 = new Physijs.BoxMesh (
+			new THREE.BoxGeometry(12,8.5,0.2),
+			new THREE.MeshBasicMaterial({ map:scorchedTexture1, wireframe: false })
+			);
+			scorchedPic1.castShadow = true;
+			scorchedPic1.position.x -= 9;
+			scorchedPic1.position.y += 4.6;
+			scorchedPic1.position.z += 101.5;
+			scene.add(scorchedPic1);
+
+			rcsTexture1 = new textureLoader.load("../images/projections/projection2.jpg");
+			rcs1 = new Physijs.BoxMesh (
+				new THREE.BoxGeometry(0.2,8,20),
+				new THREE.MeshBasicMaterial({map: rcsTexture1, wireframe: false })
+				);
+			rcs1.castShadow = true;
+			rcs1.position.x -= 0.5;
+			rcs1.position.y += 4.7;
+			rcs1.position.z += 85;
+			scene.add(rcs1);
+
+	//WALLS
 		projectionsDoorleft = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,20,0.5),
 			new THREE.MeshBasicMaterial({color:0x13b0db, wireframe:false}) 
@@ -1568,6 +1742,10 @@ function init() {
 
 //create VIDEO Section
 	//CONTENT
+		// playitbyearVideo = document.getElementById( 'Video' );
+		// playitbyearVideo.play();
+
+		// playitbyearTexture = new THREE.VideoTexture( playitbyearVideo );
 
 		playitbyear = new Physijs.BoxMesh (
 				new THREE.BoxGeometry(0.2,8,14),
@@ -1578,6 +1756,7 @@ function init() {
 				playitbyear.position.y += 4.7;
 				playitbyear.position.z += 80;
 				scene.add(playitbyear);
+
 	//WALLS
 		videoDoorright = new Physijs.BoxMesh (
 			new THREE.BoxGeometry (40,20,0.5),
@@ -1688,31 +1867,70 @@ function init() {
 
 //create MEDIA section
 	//EXHIBIT SIGNS
-		videoTitle = new Physijs.BoxMesh (
+		videoTitlebg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
-			videoTitle.position.x -= 6.5;
+			videoTitlebg.position.x += 6.5;
+			videoTitlebg.position.y += 6.5;
+			videoTitlebg.position.z += 65;
+			videoTitlebg.rotation.y += Math.PI/2;
+			videoTitlebg.castShadow = true;
+			scene.add(videoTitlebg);
+
+		videoTexture = textureLoader.load ('../images/signs/videos.png');
+		videoTitle = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({map: videoTexture, wireframe:false, transparent: true}) 
+				);
+			videoTitle.position.x += 6.5;
 			videoTitle.position.y += 6.5;
 			videoTitle.position.z += 65;
 			videoTitle.rotation.y += Math.PI/2;
 			videoTitle.castShadow = true;
 			scene.add(videoTitle);
 
-		projectionsTitle = new Physijs.BoxMesh (
+
+
+		projectionsTitlebg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (0.2,2,5),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
 				);
-			projectionsTitle.position.x += 6.5;
+			projectionsTitlebg.position.x -= 6.5;
+			projectionsTitlebg.position.y += 6.5;
+			projectionsTitlebg.position.z += 65;
+			projectionsTitlebg.rotation.y += Math.PI/2;
+			projectionsTitlebg.castShadow = true;
+			scene.add(projectionsTitlebg);
+
+		projectionsTexture = textureLoader.load ('../images/signs/projections.png');
+		projectionsTitle = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (0.2,2,5),
+				new THREE.MeshBasicMaterial({map: projectionsTexture, wireframe:false, transparent: true}) 
+				);
+			projectionsTitle.position.x -= 6.5;
 			projectionsTitle.position.y += 6.5;
 			projectionsTitle.position.z += 65;
 			projectionsTitle.rotation.y += Math.PI/2;
 			projectionsTitle.castShadow = true;
 			scene.add(projectionsTitle);
 
-		photoTitle = new Physijs.BoxMesh (
+
+		photoTitlebg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			photoTitlebg.position.x += 19.5;
+			photoTitlebg.position.y += 6.5;
+			photoTitlebg.position.z += 49.5;
+			photoTitlebg.rotation.y += Math.PI/2;
+			photoTitlebg.castShadow = true;
+			scene.add(photoTitlebg);
+
+		photoTexture = textureLoader.load ('../images/signs/photography.png');
+		photoTitle = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (5,2,0.2),
+				new THREE.MeshBasicMaterial({map: photoTexture, wireframe:false, transparent: true}) 
 				);
 			photoTitle.position.x += 19.5;
 			photoTitle.position.y += 6.5;
@@ -1721,9 +1939,21 @@ function init() {
 			photoTitle.castShadow = true;
 			scene.add(photoTitle);
 
-		musicTitle = new Physijs.BoxMesh (
+		musicTitlebg = new Physijs.BoxMesh (
 				new THREE.BoxGeometry (5,2,0.2),
 				new THREE.MeshBasicMaterial({color:0x000000, wireframe:false}) 
+				);
+			musicTitlebg.position.x -= 19.5;
+			musicTitlebg.position.y += 6.5;
+			musicTitlebg.position.z += 49.5;
+			musicTitlebg.rotation.y += Math.PI/2;
+			musicTitlebg.castShadow = true;
+			scene.add(musicTitlebg);
+
+		musicTexture = textureLoader.load ('../images/signs/music.png');
+		musicTitle = new Physijs.BoxMesh (
+				new THREE.BoxGeometry (5,2,0.2),
+				new THREE.MeshBasicMaterial({map: musicTexture, wireframe:false, transparent: true}) 
 				);
 			musicTitle.position.x -= 19.5;
 			musicTitle.position.y += 6.5;

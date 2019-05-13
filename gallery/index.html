@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="js/loaders/MTLLoader.js"></script>
 	<script type="text/javascript" src="js/loaders/GLTFLoader.js"></script>
 	<script type="text/javascript" src="js/controls/PointerLockControls.js"></script>
-
+	
 	<!--Vue.js-->
 	<script type="text/javascript" src="js/vue-dev/dist/vue.min.js"></script>
 
@@ -26,7 +26,7 @@
 
 	<title>Dig Dig Productions</title>
 </head>
-<body>
+<body id="body">
 
 	<div id="blocker" onclick="instructionsRemove('blocker', 'hidden')">
 
@@ -41,10 +41,10 @@
 	<div id="godMode">
 			YOU ARE IN GOD MODE
 	</div>
-
-	<video id="video" loop crossOrigin="anonymous" webkit-playsinline style="display:none">
-			<source src="../images/music/polylaneMovie.MOV" type='video/mov'>
-		</video>
+	
+	<video title="When At Last We Arrived" id="walwaVideo" width="640" height="360" preload="auto" autoplay loop controls crossOrigin="anonymous" muted webkit-playsinline style="display:none">
+			<source src="../images/projections/WALWA_1.webm" type='video/webm'>
+	</video>
 
 </body>
 </html>
